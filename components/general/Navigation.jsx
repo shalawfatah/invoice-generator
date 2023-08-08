@@ -7,6 +7,9 @@ import AddInvoice from '../../pages/AddInvoice';
 import AddCompany from '../../pages/AddCompany';
 import TemplateArchive from '../templates/TemplateArchive';
 import TemplateView from '../templates/TemplateView';
+import PreviewInvoice from '../../pages/PreviewInvoice';
+import ConfirmSent from '../../pages/ConfirmSent';
+import IncomeReport from '../../pages/IncomeReport';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,20 +25,17 @@ const Navigation = () => {
                         name={"Home"} 
                         component={Home}
                         options={{
-                            tabBarIcon: ({ color, size }) => (
-                            <Ionicons name="home-outline" color={color} size={20} />
-                            ),
-                            tabBarStyle: {
-
-                            }
+                          tabBarIcon: ({ focused, color, size }) => null,
+                          tabBarLabel: ({ focused, color, position, children }) => null,
+                          tabBarButton: (props) => null // use a custom component to replace the default tab button
                         }}
                 />
                 <Tab.Screen 
-                        name={"Invoices"} 
+                        name={"Archive"} 
                         component={InvoiceArchive}
                         options={{
                             tabBarIcon: ({ color, size }) => (
-                            <Ionicons name="mail-open-outline" color={color} size={20} />
+                            <Ionicons name="list-outline" color={color} size={20} />
                             ),
                             tabBarStyle: {
 
@@ -60,6 +60,18 @@ const Navigation = () => {
                         options={{
                             tabBarIcon: ({ color, size }) => (
                             <Ionicons name="business-outline" color={color} size={20} />
+                            ),
+                            tabBarStyle: {
+
+                            }
+                        }}
+                />
+                <Tab.Screen 
+                        name={"Report"} 
+                        component={IncomeReport}
+                        options={{
+                            tabBarIcon: ({ color, size }) => (
+                            <Ionicons name="bar-chart-outline" color={color} size={20} />
                             ),
                             tabBarStyle: {
 
@@ -96,6 +108,33 @@ const Navigation = () => {
           <Tab.Screen 
             name={"AddInvoice"} 
             component={AddInvoice}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
+            name={"PreviewInvoice"} 
+            component={PreviewInvoice}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
+            name={"ConfirmSent"} 
+            component={ConfirmSent}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
+            name={"IncomeReport"} 
+            component={IncomeReport}
             options={{
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,
