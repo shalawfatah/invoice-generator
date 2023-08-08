@@ -1,4 +1,4 @@
-import { View, Text, FlatList, ScrollView } from 'react-native'
+import { View, Text, FlatList, ScrollView, Button } from 'react-native'
 import React, { useState } from 'react'
 import {Picker} from '@react-native-picker/picker'
 import { TextInput } from 'react-native-paper';
@@ -21,13 +21,32 @@ const AddInvoice = () => {
   const filtered_companies = companies.filter(item => item.company.includes(text));
   const navigation = useNavigation()
 
-  // temporary
-  const [desc, setDesc] = useState('')
-  const [amount, setAmount] = useState(0)
+  const [tasks, setTasks] = useState([]);
+  const [counter, setCounter] = useState(1);
 
-  const tax = gst([amount])
-  const total = calc_amount([amount])
+  const addTask = () => {
+    const newTask = {
+      id: counter,
+    };
+    
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+        setCounter((prevCounter) => prevCounter + 1);
+    };
 
+    const updateTask = (id, field, value) => {
+        setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+        task.id === id ? { ...task, [field]: value } : task
+      ));
+    };
+  
+    const amount = Array.from(tasks.map(x => Number(x.number)))
+    console.log('am ', tasks)
+
+  const tax = gst(amount)
+  const total = calc_amount(amount)
+
+  console.log('t ', tasks)
   return (
     <ScrollView className="p-2 bg-white">
       <TextInput
@@ -53,26 +72,32 @@ const AddInvoice = () => {
         icon="plus" 
         mode="contained" 
         text="Add Company" /> 
-      <TextInput
-          label="Task description"
-          placeholder='What task did you perform?'
-          onChangeText={desc => setDesc(desc)}
-          backgroundColor="#FFFFFF"
-        />
-      <TextInput
-          label="Task amount"
-          placeholder='How much did it cost?'
-          onChangeText={amount => setAmount(amount)}
-          backgroundColor="#FFFFFF"
-        />
-        <View className="my-4">
-        <InvoiceBtn 
-          duty={() => console.log('add task')} 
-          icon="plus" 
-          mode="contained" 
-          text="Add Another Task" 
-          /> 
-        </View>
+              <View>
+      <View>
+        {tasks.map((task) => (
+          <View key={task.id}>
+            <TextInput
+              style={{  }}
+              label="Task description"
+              value={task.text}
+              onChangeText={(text) => updateTask(task.id, 'text', text)}
+              backgroundColor="white"
+            />
+            <TextInput
+              style={{ }}
+              label="Task amount"
+              value={task.number}
+              onChangeText={(number) => updateTask(task.id, 'number', number)}
+              keyboardType="numeric"
+              backgroundColor="white"
+            />
+          </View>
+        ))}
+      </View>
+      <View className="my-2">
+        <InvoiceBtn icon="plus" mode="contained" text={tasks.length > 0 ? 'Add another task' : 'Add a task'} duty={addTask} />
+      </View>
+    </View>
         <View className="flex flex-row items-center justify-between m-4">
           <Text className="font-bold">Tax</Text>
           <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 min-w-[150px] text-center">{tax}</Text>
@@ -87,6 +112,7 @@ const AddInvoice = () => {
           icon="plus" 
           mode="contained" 
           text="Save" /> 
+          <View className="my-12"></View>
     </ScrollView>
   )
 }
