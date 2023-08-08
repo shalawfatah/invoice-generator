@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
 import { Button } from 'react-native-paper';
 
-const InvoiceBtn = ({duty, icon, mode}) => {
-    const [text, setText] = useState('Register')
+const InvoiceBtn = ({duty, icon, mode, text}) => {
   return (
-    <Button icon={icon} mode={mode} onPress={duty} className="w-full">
+    <Button 
+      buttonColor="#81F3FA"
+      textColor="#4847A0"
+      icon={icon} 
+      mode={mode} 
+      onPress={duty} className="w-full"
+      >
         {text}
     </Button>
   )

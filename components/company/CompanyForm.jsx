@@ -2,8 +2,12 @@ import React from 'react'
 import { View } from 'react-native'
 import InvoiceBtn from '../general/Button';
 import InvoiceInput from './InvoiceInput';
+import { useNavigation } from '@react-navigation/native'
 
 const CompanyForm = () => {
+
+  const navigation = useNavigation()
+  
   return (
     <View className="flex justify-center items-center w-screen p-4">
         <InvoiceInput 
@@ -25,9 +29,10 @@ const CompanyForm = () => {
             mode="outlined" 
             label="Company Logo"
             placeholder="Write your company's logo..." 
+            theme={{ colors: { onSurfaceVariant: '#D3D3D3'} }}
             />
         <View className="my-8 w-full">
-          <InvoiceBtn mode="contained" duty={() => console.log('name')}/>
+          <InvoiceBtn text="Register" mode="contained" duty={() => navigation.navigate('Templates')}/>
         </View>
     </View>
   )

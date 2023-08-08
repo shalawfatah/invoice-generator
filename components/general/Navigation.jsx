@@ -5,6 +5,8 @@ import Home from '../../pages/Home';
 import InvoiceArchive from '../../pages/InvoiceArchive';
 import AddInvoice from '../../pages/AddInvoice';
 import AddCompany from '../../pages/AddCompany';
+import TemplateArchive from '../templates/TemplateArchive';
+import TemplateView from '../templates/TemplateView';
 
 const Tab = createBottomTabNavigator();
 
@@ -64,6 +66,42 @@ const Navigation = () => {
                             }
                         }}
                 />
+          <Tab.Screen 
+            name={"Templates"} 
+            component={TemplateArchive}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
+            name={"TemplateView"} 
+            component={TemplateView}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
+            name={"AddCompany"} 
+            component={AddCompany}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
+            name={"AddInvoice"} 
+            component={AddInvoice}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
           </Tab.Navigator>
         </NavigationContainer>
     )

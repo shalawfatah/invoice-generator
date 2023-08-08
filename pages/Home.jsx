@@ -4,7 +4,7 @@ import CompanyForm from '../components/company/CompanyForm'
 
 const Home = () => {
   return (
-    <View className="flex h-screen w-screen items-center justify-center">
+    <View className="flex h-screen w-screen items-center justify-center bg-white">
       <CompanyForm />
     </View>
   )
