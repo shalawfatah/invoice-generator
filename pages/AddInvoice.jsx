@@ -1,28 +1,36 @@
 import { View, Text, FlatList, ScrollView, Button } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Picker} from '@react-native-picker/picker'
 import { TextInput } from 'react-native-paper';
 import InvoiceBtn from '../components/general/Button';
 import { useNavigation } from '@react-navigation/native'
 import { calc_amount, gst } from '../util_functions/calc_amount';
 import Border from '../components/general/Border';
+import { supabase } from '../lib/supabase';
 
-const companies = [
-  {id: 1, company: 'F&D'},
-  {id: 2, company: 'Google Construction'},
-  {id: 3, company: 'Yahoo Painting'},
-  {id: 4, company: 'Pepsi'},
-  {id: 5, company: 'Cola'},
-  {id: 6, company: 'Hisense'},
-]
+
 const AddInvoice = () => {
   const [chosen, setChosen] = useState(null)
   const [text, setText] = useState('')
-  const filtered_companies = companies.filter(item => item.company.includes(text));
   const navigation = useNavigation()
-
+  
   const [tasks, setTasks] = useState([]);
   const [counter, setCounter] = useState(1);
+
+  // COMPANIES
+  const [companies, setCompanies] = useState([])
+  const fetch_companies = async() => {
+    let { data: all_companies, error } = await supabase
+    .from('companies')
+    .select()
+    setCompanies(all_companies)
+  }
+  
+  useEffect(() => {
+    fetch_companies()
+  }, [])
+  const filtered_companies = companies.filter(item => item.company_name.includes(text));
+  // END COMPANIES
 
   const addTask = () => {
     const newTask = {
@@ -64,7 +72,7 @@ const AddInvoice = () => {
             onValueChange={(chosen, index) => setChosen(chosen)}
           >
       {filtered_companies.map(item => {
-        return <Picker.Item key={item.id} label={item.company} value={item.id} />
+        return <Picker.Item key={item.id} label={item.company_name} value={item.id} />
       })}
       </Picker>}
       {filtered_companies.length > 0 ? <View></View> :
