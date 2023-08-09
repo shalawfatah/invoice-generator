@@ -9,11 +9,15 @@ const TemplateView = ({route}) => {
     const navigation = useNavigation();
     console.log('item ', item)
   return (
-    <View className="w-screen h-5/6">
-      <WebView source={{ uri: item.source }} />
+    <View className="w-screen min-h-[650px] relative">
+      <WebView source={{ uri: item.url }} />
       <View className="m-2">
-          <InvoiceBtn text="Choose template" mode="contained" duty={() => navigation.navigate('AddCompany', {item})} />
+        <View className="my-2">
+          <InvoiceBtn text="Choose this template" mode="contained" duty={() => navigation.navigate('AddCompany', {item})} />
+        </View>
+        <View className="my-2">
           <InvoiceBtn text="Back to temlpates" mode="contained" duty={() => navigation.navigate('Templates')} />
+        </View>
       </View>
     </View>
   )

@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { Card } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native'
-
-import PdfReader from '../general/PdfReader'
+import { useNavigation } from '@react-navigation/native';
+import { supabase } from '../../lib/supabase';
 
 const pdfs = [
     {id: 1, source: 'https://www.africau.edu/images/default/sample.pdf'},
@@ -13,13 +12,27 @@ const pdfs = [
     {id: 5, source: 'https://www.africau.edu/images/default/sample.pdf'},
 ]
 const TemplateArchive = () => {
+    const [thumbnails, setThumbnails] = useState([])
+
+    const invoice_fetcher = async() => {
+        let { data: templates, error } = await supabase
+        .from('templates')
+        .select()
+        setThumbnails(templates);
+    }
+
     const navigation = useNavigation()
+
+    useEffect(() => {
+        invoice_fetcher()
+    }, [])
+    console.log(thumbnails);
   return (
     <ScrollView className="bg-indigo-400">
         <View className="flex flex-row flex-wrap gap-2 justify-center items-center my-2">
-        {pdfs.map(item => {
+        {thumbnails.map(item => {
             return <TouchableOpacity key={item.id} className="w-28" onPress={() => navigation.navigate('TemplateView', {item})}>
-                <Card.Cover  source={{ uri: 'https://picsum.photos/700' }} />
+                <Card.Cover  source={{ uri: item.thumbnail }} />
             </TouchableOpacity>
         })}
         </View>

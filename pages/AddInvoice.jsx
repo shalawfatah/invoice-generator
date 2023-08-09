@@ -67,12 +67,14 @@ const AddInvoice = () => {
         return <Picker.Item key={item.id} label={item.company} value={item.id} />
       })}
       </Picker>}
+      {filtered_companies.length > 0 ? <View></View> :
       <InvoiceBtn 
         duty={() => navigation.navigate('AddCompany')} 
         icon="plus" 
         mode="contained" 
         text="Add Company" /> 
-              <View>
+      }
+    <View>
       <View>
         {tasks.map((task) => (
           <View key={task.id}>
@@ -100,12 +102,12 @@ const AddInvoice = () => {
     </View>
         <View className="flex flex-row items-center justify-between m-4">
           <Text className="font-bold">Tax</Text>
-          <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 min-w-[150px] text-center">{tax}</Text>
+          <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 min-w-[150px] text-center">{isNaN(tax) ? null : tax}</Text>
         </View>
         <Border />
         <View className="flex flex-row items-center justify-between m-4">
           <Text className="font-bold">Total</Text>
-          <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 font-bold min-w-[150px] text-center">{total}</Text>
+          <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 font-bold min-w-[150px] text-center">{isNaN(total) ? null : total}</Text>
         </View>
         <InvoiceBtn 
           duty={() => navigation.navigate('PreviewInvoice')} 
