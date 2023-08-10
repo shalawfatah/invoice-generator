@@ -1,3 +1,7 @@
+export const subtotal_calc = (amounts) => {
+    const sum = amounts.reduce((total, currentAmount) => Number(total) + Number(currentAmount), 0);
+    return sum;
+}
 export const gst = (amounts) => {
     const sum = amounts.reduce((total, currentAmount) => total + currentAmount, 0);
     const gst = sum * 0.05;

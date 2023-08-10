@@ -3554,10 +3554,20 @@ expo-modules-core@1.5.9:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
 
+expo-print@~12.4.2:
+  version "12.4.2"
+  resolved "https://registry.yarnpkg.com/expo-print/-/expo-print-12.4.2.tgz#116f9d86d971531cf682718e23869d14e8089e63"
+  integrity sha512-kI3yYxEzu+aSDXMndFr8RTTBnahP98zdbRgSkeOHEHzPQ/0cM4dk0LOwIe83q1eLND0gRANM3Qm6eN+hUpnyCA==
+
 expo-secure-store@^12.3.1:
   version "12.3.1"
   resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-12.3.1.tgz#7e5ba94f6e7374f132108c9feb5cc811568f3db6"
   integrity sha512-XLIgWDiIuiR0c+AA4NCWWibAMHCZUyRcy+lQBU49U6rvG+xmd3YrBJfQjfqAPyLroEqnLPGTWUX57GyRsfDOQw==
+
+expo-sharing@~11.5.0:
+  version "11.5.0"
+  resolved "https://registry.yarnpkg.com/expo-sharing/-/expo-sharing-11.5.0.tgz#a8cad65874d882b7f75b12856b4ef55ea9b60a2d"
+  integrity sha512-uerM5YH1FKDZXfkP9ORebvlMVOPP/AfoYgYBez6a8G9fztNYHnRCA6mgK+3aQmpnb3ltmjnAZC39kH18bTNcVw==
 
 expo-splash-screen@^0.20.5:
   version "0.20.5"
@@ -5955,6 +5965,11 @@ react-native-gesture-handler@^2.12.1:
     invariant "^2.2.4"
     lodash "^4.17.21"
     prop-types "^15.7.2"
+
+react-native-html-to-pdf@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/react-native-html-to-pdf/-/react-native-html-to-pdf-0.12.0.tgz#2b467296f85c9c9783a7288b19722a7028dcbcb8"
+  integrity sha512-Yb5WO9SfF86s5Yv9PqXQ7fZDr9zZOJ+6jtweT9zFLraPNHWX7pSxe2dSkeg3cGiNrib65ZXGN6ksHymfYLFSSg==
 
 react-native-paper@^5.10.0:
   version "5.10.0"

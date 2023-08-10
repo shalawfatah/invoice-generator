@@ -4,19 +4,18 @@ import {Picker} from '@react-native-picker/picker'
 import { TextInput } from 'react-native-paper';
 import InvoiceBtn from '../components/general/Button';
 import { useNavigation } from '@react-navigation/native'
-import { calc_amount, gst } from '../util_functions/calc_amount';
+import { calc_amount, gst, subtotal_calc } from '../util_functions/calc_amount';
 import Border from '../components/general/Border';
 import { supabase } from '../lib/supabase';
 
 
 const AddInvoice = () => {
-  const [chosen, setChosen] = useState(null)
   const [text, setText] = useState('')
   const navigation = useNavigation()
   
   const [tasks, setTasks] = useState([]);
   const [counter, setCounter] = useState(1);
-
+  
   // COMPANIES
   const [companies, setCompanies] = useState([])
   const fetch_companies = async() => {
@@ -25,11 +24,22 @@ const AddInvoice = () => {
     .select()
     setCompanies(all_companies)
   }
-  
+  const [company, setCompany] = useState(null)
+  const fetch_company = async() => {
+    let { data: the_company, error } = await supabase
+    .from('companies')
+    .select()
+    setCompany(the_company)
+  }
+  useEffect(() => {
+    fetch_company()
+  }, [])
   useEffect(() => {
     fetch_companies()
-  }, [])
-  const filtered_companies = companies.filter(item => item.company_name.includes(text));
+    setChosen(company)
+  }, [company])
+  const filtered_companies = companies?.filter(item => item.company_name.includes(text));
+  const [chosen, setChosen] = useState({})
   // END COMPANIES
 
   const addTask = () => {
@@ -49,12 +59,12 @@ const AddInvoice = () => {
     };
   
     const amount = Array.from(tasks.map(x => Number(x.number)))
-    console.log('am ', tasks)
 
+  const subtotal = subtotal_calc(amount)
   const tax = gst(amount)
   const total = calc_amount(amount)
+  console.log('mosen ', chosen)
 
-  console.log('t ', tasks)
   return (
     <ScrollView className="p-2 bg-white">
       <TextInput
@@ -64,18 +74,18 @@ const AddInvoice = () => {
           onChangeText={text => setText(text)}
           backgroundColor="#FFFFFF"
         />
-        {filtered_companies.length === 0 ? 
+        {filtered_companies?.length === 0 ? 
         <Text className="m-4 text-lg font-bold">This company is not registered. Please add it.</Text> 
         : <Picker
             selectedValue={chosen}
             style={{ height: "auto", width: "auto" }}
             onValueChange={(chosen, index) => setChosen(chosen)}
           >
-      {filtered_companies.map(item => {
-        return <Picker.Item key={item.id} label={item.company_name} value={item.id} />
+      {filtered_companies?.map(item => {
+        return <Picker.Item key={item.id} label={item.company_name} value={JSON.stringify(item)} />
       })}
       </Picker>}
-      {filtered_companies.length > 0 ? <View></View> :
+      {filtered_companies?.length > 0 ? <View></View> :
       <InvoiceBtn 
         duty={() => navigation.navigate('AddCompany')} 
         icon="plus" 
@@ -108,6 +118,11 @@ const AddInvoice = () => {
         <InvoiceBtn icon="plus" mode="contained" text={tasks.length > 0 ? 'Add another task' : 'Add a task'} duty={addTask} />
       </View>
     </View>
+    <View className="flex flex-row items-center justify-between m-4">
+          <Text className="font-bold">Subtotal</Text>
+          <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 min-w-[150px] text-center">{isNaN(subtotal) ? null : subtotal}</Text>
+        </View>
+        <Border />
         <View className="flex flex-row items-center justify-between m-4">
           <Text className="font-bold">Tax</Text>
           <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 min-w-[150px] text-center">{isNaN(tax) ? null : tax}</Text>
@@ -118,7 +133,7 @@ const AddInvoice = () => {
           <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 font-bold min-w-[150px] text-center">{isNaN(total) ? null : total}</Text>
         </View>
         <InvoiceBtn 
-          duty={() => navigation.navigate('PreviewInvoice')} 
+          duty={() => navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, chosen})} 
           icon="plus" 
           mode="contained" 
           text="Save" /> 
