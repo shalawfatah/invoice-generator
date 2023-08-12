@@ -38,6 +38,7 @@ const AddCompany = () => {
   
     return (
       <View className="flex justify-center items-center w-screen p-4 bg-white">
+        <Text>Add a company you want to bill</Text>
         <TextInput
             mode={"outlined"}
             label={"Company Name"}

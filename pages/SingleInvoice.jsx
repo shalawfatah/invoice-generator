@@ -1,9 +1,20 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Border from '../components/general/Border';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const SingleInvoice = ({route}) => {
   const {item} = route.params;
+
+  const delete_invoice = async() => {
+      const { error } = await supabase
+      .from('invoices')
+      .delete()
+      .eq('id', item.id)
+      if(error) {
+        console.log(error)
+      }
+  }
   return (
     <View className="p-4">
         <Text className="font-bold text-lg">To: {item.companies.company_name}</Text>
@@ -25,6 +36,10 @@ const SingleInvoice = ({route}) => {
       <Border />
         <Text className="font-bold text-lg">Total: ${item.total}</Text>
         <Border />
+        <TouchableOpacity onPress={delete_invoice} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-2">
+          <Text className="mx-2 font-bold text-white">Delete</Text>
+          <Ionicons name="trash-outline" color={"white"} size={20} />
+        </TouchableOpacity>
     </View>
   )
 }

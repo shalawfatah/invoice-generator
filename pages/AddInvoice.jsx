@@ -1,4 +1,4 @@
-import { View, Text, FlatList, ScrollView, Button } from 'react-native'
+import { View, Text, FlatList, ScrollView, Button, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import {Picker} from '@react-native-picker/picker'
 import { TextInput } from 'react-native-paper';
@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import { calc_amount, gst, subtotal_calc } from '../util_functions/calc_amount';
 import Border from '../components/general/Border';
 import { supabase } from '../lib/supabase';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const AddInvoice = () => {
   const [text, setText] = useState('')
@@ -66,6 +66,7 @@ const AddInvoice = () => {
 
   return (
     <ScrollView className="p-2 bg-white">
+      <View className="relative">
       <TextInput
           label="Company"
           value={text}
@@ -73,6 +74,10 @@ const AddInvoice = () => {
           onChangeText={text => setText(text)}
           backgroundColor="#FFFFFF"
         />
+        <TouchableOpacity className="absolute right-0 top-4" onPress={() => navigation.navigate('AddCompany')}>
+              <Ionicons style={{textAlign: 'center'}}  name="add-circle-outline" size={24} color={"#2b3252"} />
+        </TouchableOpacity>
+      </View>
         {filtered_companies?.length === 0 ? 
         <Text className="m-4 text-lg font-bold">This company is not registered. Please add it.</Text> 
         : <Picker
