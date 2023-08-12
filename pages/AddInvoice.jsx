@@ -63,7 +63,6 @@ const AddInvoice = () => {
   const subtotal = subtotal_calc(amount)
   const tax = gst(amount)
   const total = calc_amount(amount)
-  console.log('mosen ', chosen)
 
   return (
     <ScrollView className="p-2 bg-white">

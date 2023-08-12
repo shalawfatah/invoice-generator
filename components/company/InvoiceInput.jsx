@@ -9,7 +9,7 @@ const InvoiceInput = ({placeholder, label, mode}) => {
           mode={mode}
           label={label}
           placeholder={placeholder}
-          text={text}
+          value={text}
           className="w-full"
           outlineColor="#81F3FA"
           theme={{ colors: { onSurfaceVariant: '#D3D3D3'} }}
