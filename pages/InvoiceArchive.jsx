@@ -1,9 +1,10 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { SessionContext } from '../App';
 import { supabase } from '../lib/supabase';
 import InvoiceItem from '../components/invoice/InvoiceItem';
 import { useNavigation } from '@react-navigation/native';
+import { format } from 'date-fns';
 
 const InvoiceArchive = () => {
   const {id} = useContext(SessionContext);
@@ -29,10 +30,11 @@ const InvoiceArchive = () => {
   return (
     <ScrollView className="bg-white">
       {invoice.map(item => {
+        const time = format(new Date(item.created_at), "dd MMMM yyyy 'at' HH:mm ")
         return <View key={item.id} className="m-2">
                   <InvoiceItem 
                           company={item.companies.company_name} 
-                          date={item.created_at} 
+                          date={time} 
                           total={item.total}
                           link={() => navigation.navigate('SingleInvoice', {item})}
                           />

@@ -2,9 +2,11 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Border from '../components/general/Border';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { format } from 'date-fns';
 
 const SingleInvoice = ({route}) => {
   const {item} = route.params;
+  const time = format(new Date(item.created_at), "dd MMMM yyyy 'at' HH:mm ")
 
   const delete_invoice = async() => {
       const { error } = await supabase
@@ -18,7 +20,7 @@ const SingleInvoice = ({route}) => {
   return (
     <View className="p-4">
         <Text className="font-bold text-lg">To: {item.companies.company_name}</Text>
-        <Text className="text-gray-500">On: {item.created_at}</Text>
+        <Text className="text-gray-500">On: {time}</Text>
         <Text className="font-bold text-lg bg-indigo-100">Tasks</Text>
         <Border />
         <View>

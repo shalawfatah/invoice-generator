@@ -40,7 +40,7 @@ const SignUp = ({handleSignin}) => {
         setPhoto(body)
         const {data, error} = await supabase.storage.from('avatars')
         .upload(imgName, photo)
-        const url = 'https://wpgudirqvazauqnseyvk.supabase.co/storage/v1/object/public/avatars/' + newName;
+        const url = 'https://bkcsaqsiloxvfsnhymgk.supabase.co/storage/v1/object/public/avatars/' + newName;
         await setPhotoURL(url)
       }
     };
