@@ -11,6 +11,7 @@ import PreviewInvoice from '../../pages/PreviewInvoice';
 import ConfirmSent from '../../pages/ConfirmSent';
 import IncomeReport from '../../pages/IncomeReport';
 import SingleInvoice from '../../pages/SingleInvoice';
+import EditProfile from '../../pages/EditProfile';
 
 const Tab = createBottomTabNavigator();
 
@@ -145,6 +146,15 @@ const Navigation = () => {
           <Tab.Screen 
             name={"SingleInvoice"} 
             component={SingleInvoice}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
+            name={"EditProfile"} 
+            component={EditProfile}
             options={{
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,

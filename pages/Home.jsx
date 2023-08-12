@@ -3,20 +3,27 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { supabase } from '../lib/supabase'
 import { SessionContext } from '../App'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
   const user = useContext(SessionContext);
+  const navigation = useNavigation()
   const signout = async() => {
       const { error } = await supabase.auth.signOut()
       console.log(error)
   }
   
   const edit_user = () => {
-    console.log('user', user)
+    navigation.navigate('EditProfile', {user})
   }
-  const delete_user = async() => {
 
+  const delete_user = async() => {
+    const { data, error } = await supabase.auth.admin.deleteUser(user.id)
+    if(error) {
+      console.log(error)
+    }
   }
+  
   return (
     <View className="flex h-screen w-screen items-center bg-white p-2">
       <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">

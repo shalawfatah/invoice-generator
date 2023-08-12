@@ -45,6 +45,7 @@ const SignIn = ({handleSignup}) => {
           label={"Password"}
           placeholder={"Write your password"}
           value={password}
+          secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
           disabled={loading}
           className="w-full my-2"

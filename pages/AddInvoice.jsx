@@ -1,7 +1,7 @@
-import { View, Text, FlatList, ScrollView, Button, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, ScrollView, Button, TouchableOpacity, Switch } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import {Picker} from '@react-native-picker/picker'
-import { TextInput } from 'react-native-paper';
+import { TextInput, Checkbox } from 'react-native-paper';
 import InvoiceBtn from '../components/general/Button';
 import { useNavigation } from '@react-navigation/native'
 import { calc_amount, gst, subtotal_calc } from '../util_functions/calc_amount';
@@ -12,7 +12,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const AddInvoice = () => {
   const [text, setText] = useState('')
   const navigation = useNavigation()
-  
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);  
   const [tasks, setTasks] = useState([]);
   const [counter, setCounter] = useState(1);
   
@@ -45,6 +46,8 @@ const AddInvoice = () => {
   const addTask = () => {
     const newTask = {
       id: counter,
+      quantity: 1,
+      tax: false,
     };
     
     setTasks((prevTasks) => [...prevTasks, newTask]);
@@ -58,11 +61,11 @@ const AddInvoice = () => {
       ));
     };
   
-    const amount = Array.from(tasks.map(x => Number(x.number)))
+  const amount = calc_amount(tasks)
 
-  const subtotal = subtotal_calc(amount)
-  const tax = gst(amount)
-  const total = calc_amount(amount)
+  const subtotal = amount.subtotal;
+  const tax = amount.taxAmount;
+  const total = amount.total;
 
   return (
     <ScrollView className="p-2 bg-white">
@@ -108,13 +111,39 @@ const AddInvoice = () => {
               backgroundColor="white"
             />
             <TextInput
-              style={{ }}
+              style={{ width: '%50' }}
               label="Task amount"
               value={task.number}
               onChangeText={(number) => updateTask(task.id, 'number', number)}
               keyboardType="numeric"
               backgroundColor="white"
             />
+            <View className="flex flex-row items-center justify-between my-2 mx-4">
+              <View>
+                <Text className="font-bold text-md">Qunatity</Text>
+              </View>
+            <View className="flex flex-row items-center">
+              <TouchableOpacity onPress={() => updateTask(task.id, 'quantity', Math.max(task.quantity - 1, 1))}>
+                <Ionicons name="remove-circle-outline" size={24} color={"#2b3252"} />
+              </TouchableOpacity>
+              <Text className="mx-2 font-bold">{task.quantity}</Text>
+              <TouchableOpacity onPress={() => updateTask(task.id, 'quantity', task.quantity + 1)}>
+                <Ionicons name="add-circle-outline" size={24} color={"#2b3252"} />
+              </TouchableOpacity>
+            </View>
+            </View>
+            <View className="flex flex-row items-center justify-between my-2 mx-4">
+              <View>
+                <Text className="font-bold text-md">GST</Text>
+              </View>
+            <Switch
+              trackColor={{false: '#767577', true: '#81b0ff'}}
+              thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={() => updateTask(task.id, 'tax', !task.tax)}
+              value={task.tax}
+            />
+            </View>
           </View>
         ))}
       </View>
@@ -124,17 +153,17 @@ const AddInvoice = () => {
     </View>
     <View className="flex flex-row items-center justify-between m-4">
           <Text className="font-bold">Subtotal</Text>
-          <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 min-w-[150px] text-center">{isNaN(subtotal) ? null : subtotal}</Text>
+          <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 min-w-[150px] text-center">{isNaN(subtotal) ? null : `$${subtotal}`}</Text>
         </View>
         <Border />
         <View className="flex flex-row items-center justify-between m-4">
           <Text className="font-bold">Tax</Text>
-          <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 min-w-[150px] text-center">{isNaN(tax) ? null : tax}</Text>
+          <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 min-w-[150px] text-center">{isNaN(tax) ? null : `$${tax}`}</Text>
         </View>
         <Border />
         <View className="flex flex-row items-center justify-between m-4">
           <Text className="font-bold">Total</Text>
-          <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 font-bold min-w-[150px] text-center">{isNaN(total) ? null : total}</Text>
+          <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 font-bold min-w-[150px] text-center">{isNaN(total) ? null : `$${total}`}</Text>
         </View>
         <InvoiceBtn 
           duty={() => navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, chosen})} 
