@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { View, ScrollView, TouchableOpacity, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import Classic from '../components/templates/invoice_templates/Classic'
+import Classic from '../components/templates/invoice_templates/classic/classic'
 import { supabase } from '../lib/supabase'
 import * as Print from 'expo-print';
 import { shareAsync } from 'expo-sharing';
-import { classic_template } from '../components/templates/invoice_templates/classic'
+import { classic_template } from '../components/templates/invoice_templates/classic/classic'
 import InvoiceBtn from '../components/general/Button'
 import * as MailComposer from 'expo-mail-composer';
 import * as FileSystem from 'expo-file-system';

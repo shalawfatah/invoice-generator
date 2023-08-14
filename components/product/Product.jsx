@@ -1,10 +1,12 @@
 import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import ProductCard from './ProductCard';
+import { useStripe } from '@stripe/stripe-react-native';
 
 const Product = () => {
     const url = "https://ray-mobile-backend.onrender.com";
     const [result, setResult] = useState([])
+    const stripe = useStripe()
     const product_fetcher = async() => {
         try {            
             const response = await fetch(`${url}/invoice_list`)
@@ -26,7 +28,7 @@ const Product = () => {
             body: JSON.stringify(data),
           });
           const result = await response.json()
-          console.log('result ', result)
+          c
       
           // Handle the response as needed
         } catch (error) {

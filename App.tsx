@@ -3,10 +3,9 @@ import React, {createContext, useState, useEffect } from 'react'
 import 'react-native-url-polyfill/auto'
 import { supabase } from './lib/supabase'
 import Auth from './components/account/Auth'
-import Account from './components/account/Account'
-import { View } from 'react-native'
 import { Session } from '@supabase/supabase-js'
 import Navigation from './components/general/Navigation';
+import { StripeProvider } from '@stripe/stripe-react-native';
 
 export const SessionContext = createContext(null);
 
@@ -27,9 +26,11 @@ export default function App() {
   }, [])
 
   return (
-    <SessionContext.Provider value={user}>
-      {session && session.user ? <Navigation /> : <Auth />}
-    </SessionContext.Provider>
+    <StripeProvider publishableKey='pk_test_51HhPuUK1omnuMJYrNMXx9TZgm4MhtRewC2QU8WTBBcHUTBUFshVHc3HCI7xXoPwjUC8asvr03tz9hLOWBRUXasSy00uLZxpufi'>
+      <SessionContext.Provider value={user}>
+        {session && session.user ? <Navigation /> : <Auth />}
+      </SessionContext.Provider>
+    </StripeProvider>
   )
 }
 

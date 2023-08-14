@@ -3,7 +3,7 @@ import { ScrollView, TouchableOpacity, View, Text } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../lib/supabase';
-import Classic from './invoice_templates/Classic';
+import Classic from './invoice_templates/classic/classic';
 
 const pdfs = [
     {id: 1, source: 'https://www.africau.edu/images/default/sample.pdf'},
