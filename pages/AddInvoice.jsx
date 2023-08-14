@@ -16,6 +16,7 @@ const AddInvoice = () => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);  
   const [tasks, setTasks] = useState([]);
   const [counter, setCounter] = useState(1);
+  const [note, setNote] = useState('');
   
   // COMPANIES
   const [companies, setCompanies] = useState([])
@@ -151,6 +152,14 @@ const AddInvoice = () => {
         <InvoiceBtn icon="plus" mode="contained" text={tasks.length > 0 ? 'Add another task' : 'Add a task'} duty={addTask} />
       </View>
     </View>
+    <TextInput
+              style={{ }}
+              label="Additional Notes"
+              placeholder='Write a note'
+              value={note}
+              onChangeText={(note) => setNote(note)}
+              backgroundColor="white"
+            />
     <View className="flex flex-row items-center justify-between m-4">
           <Text className="font-bold">Subtotal</Text>
           <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 min-w-[150px] text-center">{isNaN(subtotal) ? null : `$${subtotal}`}</Text>
@@ -166,7 +175,7 @@ const AddInvoice = () => {
           <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 font-bold min-w-[150px] text-center">{isNaN(total) ? null : `$${total}`}</Text>
         </View>
         <InvoiceBtn 
-          duty={() => navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, chosen})} 
+          duty={() => navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, chosen, note})} 
           icon="plus" 
           mode="contained" 
           text="Save" /> 

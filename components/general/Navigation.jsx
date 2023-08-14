@@ -12,6 +12,7 @@ import ConfirmSent from '../../pages/ConfirmSent';
 import IncomeReport from '../../pages/IncomeReport';
 import SingleInvoice from '../../pages/SingleInvoice';
 import EditProfile from '../../pages/EditProfile';
+import Product from '../product/Product';
 
 const Tab = createBottomTabNavigator();
 
@@ -155,6 +156,15 @@ const Navigation = () => {
           <Tab.Screen 
             name={"EditProfile"} 
             component={EditProfile}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
+            name={"Product"} 
+            component={Product}
             options={{
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,

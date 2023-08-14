@@ -13,7 +13,7 @@ import { SessionContext } from '../App'
 
 const PreviewInvoice = ({route}) => {
   const {email, id, user_metadata: {avatar, address, company}} = useContext(SessionContext);
-  const {tasks, tax, subtotal, total, chosen} = route.params;
+  const {tasks, tax, subtotal, total, chosen, note} = route.params;
   const navigation = useNavigation();
   const [pdf, setPdf] = useState(null);
   const [client, setClient] = useState(chosen)
@@ -56,7 +56,7 @@ const PreviewInvoice = ({route}) => {
       const file = await Print.printToFileAsync({
         html: classic_template(company, address, email, avatar,
           client?.client_name, client?.client_address, client?.client_email,
-          tasks, subtotal, tax, total),
+          tasks, subtotal, tax, total, note),
           base64:false,
       })
       const contentUri = await FileSystem.getContentUriAsync(file.uri);
@@ -83,7 +83,9 @@ const PreviewInvoice = ({route}) => {
         tasks={tasks} 
         subtotal={subtotal}
         tax={tax} 
-        total={total} />
+        total={total}
+        note={note}
+        />
     </ScrollView>
     <View className="m-2">
       <InvoiceBtn 

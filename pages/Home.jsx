@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import { SessionContext } from '../App'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import InvoiceBtn from '../components/general/Button';
 
 const Home = () => {
   const user = useContext(SessionContext);
@@ -54,6 +55,7 @@ const Home = () => {
           <Text className="mx-2 font-bold text-white">Delete Profile</Text>
           <Ionicons name="trash-outline" color={"white"} size={20} />
         </TouchableOpacity>
+        <InvoiceBtn buttonColor='#312e81' textColor='#FFF' icon="email" classes="my-2" text="Products" mode="contained" duty={() => navigation.navigate('Product')} />
     </View>
   )
 }
