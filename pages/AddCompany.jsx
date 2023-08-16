@@ -76,6 +76,9 @@ const AddCompany = () => {
           <View className="my-8 w-full">
             <InvoiceBtn text="Register" mode="contained" duty={add_company}/>
           </View>
+          <View className="my-8 w-full">
+            <InvoiceBtn text="List of clients" mode="contained" duty={() => navigation.navigate('Client Archive')}/>
+          </View>
       </View>
     )
 }

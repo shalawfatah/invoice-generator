@@ -13,6 +13,13 @@ import IncomeReport from '../../pages/IncomeReport';
 import SingleInvoice from '../../pages/SingleInvoice';
 import EditProfile from '../../pages/EditProfile';
 import Product from '../product/Product';
+import AddEstimate from '../../pages/AddEstimate';
+import PreviewEstimate from '../../pages/PreviewEstimate';
+import ClientArchive from '../../pages/ClientArchive';
+import ClientUpdate from '../../pages/ClientUpdate';
+import CompanyRegister from '../launch/CompanyRegister';
+import SubscribePackages from '../launch/SubscribePackages';
+import PaySubscription from '../launch/PaySubscription';
 
 const Tab = createBottomTabNavigator();
 
@@ -31,21 +38,26 @@ const Navigation = () => {
                               tabBarIcon: ({ color, size }) => (
                               <Ionicons name="create-outline" color={color} size={20} />
                               ),
-                              tabBarStyle: {
-  
-                              }
+                              tabBarStyle: {}
+                          }}
+                  />
+                  <Tab.Screen 
+                          name={"Add Estimate"} 
+                          component={AddEstimate}
+                          options={{
+                              tabBarIcon: ({ color, size }) => (
+                              <Ionicons name="newspaper-outline" color={color} size={20} />
+                              ),
+                              tabBarStyle: {}
                           }}
                   />
                 <Tab.Screen 
                           name={"Archive"} 
                           component={InvoiceArchive}
                           options={{
-                              tabBarIcon: ({ color, size }) => (
-                              <Ionicons name="list-outline" color={color} size={20} />
-                              ),
-                              tabBarStyle: {
-  
-                              }
+                            tabBarIcon: ({ focused, color, size }) => null,
+                            tabBarLabel: ({ focused, color, position, children }) => null,
+                            tabBarButton: (props) => null // use a custom component to replace the default tab button
                           }}
                   />
                 <Tab.Screen 
@@ -55,9 +67,7 @@ const Navigation = () => {
                           tabBarIcon: ({ color, size }) => (
                           <Ionicons name="person-circle-outline" color={color} size={20} />
                           ),
-                          tabBarStyle: {
-
-                          }
+                          tabBarStyle: {}
                       }}
                 />
                     <Tab.Screen 
@@ -76,9 +86,7 @@ const Navigation = () => {
                             tabBarIcon: ({ color, size }) => (
                             <Ionicons name="bar-chart-outline" color={color} size={20} />
                             ),
-                            tabBarStyle: {
-
-                            }
+                            tabBarStyle: {}
                         }}
                 />
           <Tab.Screen 
@@ -127,6 +135,15 @@ const Navigation = () => {
             }}
           />
           <Tab.Screen 
+            name={"PreviewEstimate"} 
+            component={PreviewEstimate}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
             name={"ConfirmSent"} 
             component={ConfirmSent}
             options={{
@@ -165,6 +182,51 @@ const Navigation = () => {
           <Tab.Screen 
             name={"Product"} 
             component={Product}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
+            name={"Client Archive"} 
+            component={ClientArchive}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
+            name={"Client Update"} 
+            component={ClientUpdate}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
+            name={"Company Register"} 
+            component={CompanyRegister}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
+            name={"Subscribe Packages"} 
+            component={SubscribePackages}
+            options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
+            name={"Pay for Subscription"} 
+            component={PaySubscription}
             options={{
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,

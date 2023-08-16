@@ -10,7 +10,7 @@ import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SessionContext } from '../App';
 
-const AddInvoice = () => {
+const AddEstimate = () => {
   const [text, setText] = useState('')
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
@@ -19,21 +19,19 @@ const AddInvoice = () => {
   const [counter, setCounter] = useState(1);
   const [note, setNote] = useState('');
   const user = useContext(SessionContext);
-
   
   // COMPANIES
   const [companies, setCompanies] = useState([])
   const fetch_companies = async() => {
     let { data: all_companies, error } = await supabase
     .from('companies')
-    .select().eq('user_id', user?.id)
+    .select().eq('user_id', user.id)
     setCompanies(all_companies)
   }
   const [company, setCompany] = useState(null)
   const fetch_company = async() => {
     let { data: the_company, error } = await supabase
     .from('companies')
-    .select()
     setCompany(the_company)
   }
   useEffect(() => {
@@ -178,7 +176,7 @@ const AddInvoice = () => {
           <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 font-bold min-w-[150px] text-center">{isNaN(total) ? null : `$${total}`}</Text>
         </View>
         <InvoiceBtn 
-          duty={() => navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, chosen, note})} 
+          duty={() => navigation.navigate('PreviewEstimate', {tasks, subtotal, tax, total, chosen, note})} 
           icon="plus" 
           mode="contained" 
           text="Save" /> 
@@ -187,4 +185,4 @@ const AddInvoice = () => {
   )
 }
 
-export default AddInvoice
+export default AddEstimate

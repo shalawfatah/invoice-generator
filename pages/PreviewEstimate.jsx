@@ -10,14 +10,14 @@ import * as MailComposer from 'expo-mail-composer';
 import * as FileSystem from 'expo-file-system';
 import { SessionContext } from '../App'
 
-const PreviewInvoice = ({route}) => {
+const PreviewEstimate = ({route}) => {
   const {email, id, user_metadata: {avatar, address, company}} = useContext(SessionContext);
   const {tasks, tax, subtotal, total, chosen, note} = route.params;
   const navigation = useNavigation();
   const [pdf, setPdf] = useState(null);
   const [client, setClient] = useState(chosen)
   const [isAvailable, setIsAvailable] = useState(false)
-  const dox = "Invoice"
+  const dox = "Estimate"
 
   useEffect(() => {
     async function checkAvailability() {
@@ -61,7 +61,7 @@ const PreviewInvoice = ({route}) => {
       })
       const contentUri = await FileSystem.getContentUriAsync(file.uri);
         MailComposer.composeAsync({
-          Subject: `${company}. ${dox}"`,
+          Subject: `"${company}. ${dox}`,
           body: `This is an ${dox}`,
           recipients: "shalaw.fatah@gmail.com",
           attachments: [contentUri]
@@ -90,12 +90,12 @@ const PreviewInvoice = ({route}) => {
     </ScrollView>
     <View className="m-2">
       <InvoiceBtn 
-        text="Edit Invoice" 
+        text="Edit Estimate" 
         classes="my-2" 
-        duty={() => navigation.navigate('Add Invoice')} 
+        duty={() => navigation.navigate('Add Estimate')} 
         />
       <InvoiceBtn 
-        text="Send Invoice" 
+        text="Send Estimate" 
         classes="my-2 " 
         buttonColor='#dc143c' 
         textColor='#FFF'
@@ -106,4 +106,4 @@ const PreviewInvoice = ({route}) => {
   )
 }
 
-export default PreviewInvoice
+export default PreviewEstimate;

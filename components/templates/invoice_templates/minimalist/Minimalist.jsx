@@ -4,10 +4,9 @@ import {WebView} from 'react-native-webview';
 const Minimalist = ({
     company_name, company_address, company_email, company_logo, 
     client_name, client_address, client_email, 
-    tasks, subtotal, tax, total, note
+    tasks, subtotal, tax, total, note, dox
                 }) => {
-    const htmlContent = `<!DOCTYPE html>
-    <html lang="en">
+    const htmlContent = `<html lang="en">
     
     <body class="p-8">
     
@@ -15,11 +14,11 @@ const Minimalist = ({
         <img src=${company_logo} alt="Company Logo" class="h-10">
       </div>
       <div class="text-center mb-12">
-        <h2 class="text-xl font-semibold">Invoice</h2>
+          <h2 class="text-5xl font-semibold">${dox}</h2>
       </div>
     
       <div class="mb-12">
-        <h2 class="text-lg font-bold mb-2">Bill To:</h2>
+        <h2 class="text-lg font-bold mb-2">To:</h2>
         <p>${client_name}</p>
         <p>${client_address}</p>
         <p>${client_email}</p>

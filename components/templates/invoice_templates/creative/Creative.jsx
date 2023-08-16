@@ -4,11 +4,9 @@ import {WebView} from 'react-native-webview';
 const Creative = ({
     company_name, company_address, company_email, company_logo, 
     client_name, client_address, client_email, 
-    tasks, subtotal, tax, total, note
+    tasks, subtotal, tax, total, note, dox
                 }) => {
-    const htmlContent = `
-    <!DOCTYPE html>
-    <html lang="en">
+    const htmlContent = `<html lang="en">
     <body class="p-8">
     
       <div class="flex items-center justify-between mb-12">
@@ -21,9 +19,11 @@ const Creative = ({
           <p>${company_email}</p>
         </div>
       </div>
-    
+      <div class="text-center mb-12">
+        <h2 class="text-5xl font-semibold">${dox}</h2>
+    </div>    
       <div class="mb-12">
-        <h2 class="text-lg font-bold mb-2">Bill To:</h2>
+        <h2 class="text-lg font-bold mb-2">To:</h2>
         <p>${client_name}</p>
         <p>${client_address}</p>
         <p>${client_email}</p>
