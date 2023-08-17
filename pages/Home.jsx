@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { supabase } from '../lib/supabase'
 import { SessionContext } from '../App'
@@ -13,7 +13,7 @@ const Home = () => {
       const { error } = await supabase.auth.signOut()
       console.log(error)
   }
-  
+
   const edit_user = () => {
     navigation.navigate('EditProfile', {user})
   }
@@ -24,7 +24,7 @@ const Home = () => {
       console.log(error)
     }
   }
-  
+
   return (
     <View className="flex h-screen w-screen items-center bg-white p-2">
       <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
