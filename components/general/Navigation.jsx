@@ -20,17 +20,55 @@ import ClientUpdate from '../../pages/ClientUpdate';
 import CompanyRegister from '../launch/CompanyRegister';
 import SubscribePackages from '../launch/SubscribePackages';
 import PaySubscription from '../launch/PaySubscription';
+import { useEffect, useState } from 'react';
 
 const Tab = createBottomTabNavigator();
 
-const Navigation = () => {
+const Navigation = ({user = null}) => {
+  const [status, setStatus] = useState(null)
+  useEffect(() => {
+    setStatus(user?.user_metadata?.subscription_status)
+  }, [user])
     return (
         <NavigationContainer>
-            <Tab.Navigator
+          <Tab.Navigator
                 screenOptions={{
                 tabBarActiveTintColor: '#2b3252',
                 }}
                 >
+          {status !== 'active' ? (
+            <>
+                  <Tab.Screen 
+                  name={"Company Register"} 
+                  component={CompanyRegister}
+                  options={{
+                    tabBarIcon: ({ focused, color, size }) => null,
+                    tabBarLabel: ({ focused, color, position, children }) => null,
+                    tabBarButton: (props) => null // use a custom component to replace the default tab button
+                  }}
+                />
+                <Tab.Screen 
+                  name={"Subscribe Packages"} 
+                  component={SubscribePackages}
+                  options={{
+                    tabBarIcon: ({ focused, color, size }) => null,
+                    tabBarLabel: ({ focused, color, position, children }) => null,
+                    tabBarButton: (props) => null // use a custom component to replace the default tab button
+                  }}
+                />
+                <Tab.Screen 
+                  name={"Pay for Subscription"} 
+                  component={PaySubscription}
+                  options={{
+                    tabBarIcon: ({ focused, color, size }) => null,
+                    tabBarLabel: ({ focused, color, position, children }) => null,
+                    tabBarButton: (props) => null // use a custom component to replace the default tab button
+                  }}
+                />
+                </>
+          ) : (
+            <>
+
                   <Tab.Screen 
                           name={"Add Invoice"} 
                           component={AddInvoice}
@@ -70,15 +108,7 @@ const Navigation = () => {
                           tabBarStyle: {}
                       }}
                 />
-                    <Tab.Screen 
-                        name={"Add Company"} 
-                        component={AddCompany}
-                        options={{
-                          tabBarIcon: ({ focused, color, size }) => null,
-                          tabBarLabel: ({ focused, color, position, children }) => null,
-                          tabBarButton: (props) => null // use a custom component to replace the default tab button
-                        }}
-                />
+
                 <Tab.Screen 
                         name={"Report"} 
                         component={IncomeReport}
@@ -89,6 +119,15 @@ const Navigation = () => {
                             tabBarStyle: {}
                         }}
                 />
+                <Tab.Screen 
+                          name={"Add Company"} 
+                          component={AddCompany}
+                          options={{
+                            tabBarIcon: ({ focused, color, size }) => null,
+                            tabBarLabel: ({ focused, color, position, children }) => null,
+                            tabBarButton: (props) => null // use a custom component to replace the default tab button
+                          }}
+                  />
           <Tab.Screen 
             name={"Templates"} 
             component={TemplateArchive}
@@ -206,33 +245,9 @@ const Navigation = () => {
               tabBarButton: (props) => null // use a custom component to replace the default tab button
             }}
           />
-          <Tab.Screen 
-            name={"Company Register"} 
-            component={CompanyRegister}
-            options={{
-              tabBarIcon: ({ focused, color, size }) => null,
-              tabBarLabel: ({ focused, color, position, children }) => null,
-              tabBarButton: (props) => null // use a custom component to replace the default tab button
-            }}
-          />
-          <Tab.Screen 
-            name={"Subscribe Packages"} 
-            component={SubscribePackages}
-            options={{
-              tabBarIcon: ({ focused, color, size }) => null,
-              tabBarLabel: ({ focused, color, position, children }) => null,
-              tabBarButton: (props) => null // use a custom component to replace the default tab button
-            }}
-          />
-          <Tab.Screen 
-            name={"Pay for Subscription"} 
-            component={PaySubscription}
-            options={{
-              tabBarIcon: ({ focused, color, size }) => null,
-              tabBarLabel: ({ focused, color, position, children }) => null,
-              tabBarButton: (props) => null // use a custom component to replace the default tab button
-            }}
-          />
+          </>
+          )}
+
           </Tab.Navigator>
         </NavigationContainer>
     )

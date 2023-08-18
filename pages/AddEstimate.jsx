@@ -84,7 +84,7 @@ const AddEstimate = () => {
         </TouchableOpacity>
       </View>
         {filtered_companies?.length === 0 ? 
-        <Text className="m-4 text-lg font-bold">This company is not registered. Please add it.</Text> 
+        <Text className="my-2 text-md text-gray-700">Register company if not found on list.</Text> 
         : <Picker
             selectedValue={chosen}
             style={{ height: "auto", width: "auto" }}

@@ -28,7 +28,7 @@ const Home = () => {
   return (
     <View className="flex h-screen w-screen items-center bg-white p-2">
       <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
-        <Image source={{ uri: user.user_metadata.avatar }} style={{ width: 100, height: 100 }} />
+        <Image source={{ uri: user?.user_metadata?.avatar }} style={{ width: 100, height: 100 }} />
       </View>
       <Text className="text-lg font-bold bg-indigo-100 w-full text-center py-1">Company Profile</Text>
       <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">

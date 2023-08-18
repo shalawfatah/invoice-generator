@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { TextInput } from 'react-native-paper';
 import InvoiceBtn from "../general/Button";
 import { useNavigation } from "@react-navigation/native";
+import { SessionContext } from "../../App";
 
 const CompanyRegister = () => {
-
+  const session = useContext(SessionContext)
   const API_URL = "https://ray-mobile-backend.onrender.com";
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -13,7 +14,8 @@ const CompanyRegister = () => {
   const [loading, setLoading] = useState('');
   const [customerId, setCustomerId] = useState(null);
   const navigation = useNavigation();
-
+  
+  useEffect(() => {setEmail(session?.email)}, [session])
 
   const fetchSession = async() => {
     setLoading(true)
@@ -49,17 +51,16 @@ const CompanyRegister = () => {
       outlineColor="#81F3FA"
       theme={{ colors: { onSurfaceVariant: '#D3D3D3'} }}
       />
-    <TextInput
+    {email !== null && <TextInput
       mode={"outlined"}
-      label={"Email"}
+      label={"Company Email"}
       placeholder={"Write your email"}
       value={email}
-      onChangeText={(email) => setEmail(email)}
-      disabled={loading}
+      disabled={true}
       className="w-full my-2"
       outlineColor="#81F3FA"
       theme={{ colors: { onSurfaceVariant: '#D3D3D3'} }}
-      />
+      />}
     <TextInput
       mode={"outlined"}
       label={"Company's Address"}

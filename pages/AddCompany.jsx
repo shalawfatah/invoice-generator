@@ -7,7 +7,8 @@ import { TextInput } from 'react-native-paper';
 import { supabase } from '../lib/supabase'
 
 const AddCompany = () => {
-    const {id} = useContext(SessionContext);
+    const session = useContext(SessionContext);
+    const id = session?.id;
     const [company, setCompany] = useState('')
     const [address, setAddress] = useState('')
     const [email, setEmail] = useState('')

@@ -28,14 +28,8 @@ export default function App() {
   return (
     <StripeProvider publishableKey='pk_test_51HhPuUK1omnuMJYrNMXx9TZgm4MhtRewC2QU8WTBBcHUTBUFshVHc3HCI7xXoPwjUC8asvr03tz9hLOWBRUXasSy00uLZxpufi'>
       <SessionContext.Provider value={user}>
-        {session && session.user ? <Navigation /> : <Auth />}
+        {session && session.user ? <Navigation user={user} /> : <Auth />}
       </SessionContext.Provider>
     </StripeProvider>
   )
 }
-
-/*
-    <View>
-      {session && session.user ? <Account key={session.user.id} session={session} /> : <Auth />}
-    </View>
-*/

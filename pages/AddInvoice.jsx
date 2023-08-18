@@ -19,7 +19,6 @@ const AddInvoice = () => {
   const [counter, setCounter] = useState(1);
   const [note, setNote] = useState('');
   const user = useContext(SessionContext);
-
   
   // COMPANIES
   const [companies, setCompanies] = useState([])
