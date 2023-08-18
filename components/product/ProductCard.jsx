@@ -6,18 +6,6 @@ import { useStripe } from "@stripe/stripe-react-native";
 import { useEffect, useState } from "react";
 import { Alert, View, Button } from "react-native";
 
-// const ProductCard = ({name, price, subscribe}) => {
-//   return (
-//     <View className="bg-white p-4 m-4 shadow-sm">
-//       <Text className="font-bold text-lg my-2">{name}</Text>
-//       <Text className="text-md my-2">Price: {price} per month</Text>
-//       <InvoiceBtn text="Subscribe" duty={subscribe} classes="my-2" />
-//     </View>
-//   )
-// }
-
-// export default ProductCard
-
 const CheckoutScreen = ({id, amount, email}) => {
   const API_URL = "https://ray-mobile-backend.onrender.com";
   const { initPaymentSheet, presentPaymentSheet } = useStripe();

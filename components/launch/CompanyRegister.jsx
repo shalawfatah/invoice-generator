@@ -72,7 +72,16 @@ const CompanyRegister = () => {
       outlineColor="#81F3FA"
       theme={{ colors: { onSurfaceVariant: '#D3D3D3'} }}
       />
-    <InvoiceBtn disabled={loading} buttonColor='#312e81' textColor='#FFF' icon="domain" classes="my-2" text="Register" duty={fetchSession} />
+    <InvoiceBtn 
+          disabled={loading} 
+          buttonColor='#312e81' 
+          textColor='#FFF' 
+          icon="domain" 
+          classes="my-2"
+          loading={loading} 
+          text="Register" 
+          duty={fetchSession} 
+        />
   </View>
   )
 }

@@ -32,7 +32,11 @@ const CompanyForm = () => {
             theme={{ colors: { onSurfaceVariant: '#D3D3D3'} }}
             />
         <View className="my-8 w-full">
-          <InvoiceBtn text="Register" mode="contained" duty={() => navigation.navigate('Templates')}/>
+          <InvoiceBtn 
+              text="Register" 
+              mode="contained" 
+              duty={() => navigation.navigate('Templates')}
+              />
         </View>
     </View>
   )

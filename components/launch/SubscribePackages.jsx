@@ -66,7 +66,11 @@ const SubscribePackages = ({route}) => {
     <View>
       {packages?.prices?.data?.map(item => {
         return <View key={item.id}>
-                  <ProductCard name={"Pro Package"} price={item.unit_amount} subscribe={() => subscribe(item)} />
+                  <ProductCard 
+                    name={"Pro Package"} 
+                    price={item.unit_amount} 
+                    subscribe={() => subscribe(item)} 
+                  />
               </View>
       })}
     </View>

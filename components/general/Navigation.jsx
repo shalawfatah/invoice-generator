@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -20,11 +21,17 @@ import ClientUpdate from '../../pages/ClientUpdate';
 import CompanyRegister from '../launch/CompanyRegister';
 import SubscribePackages from '../launch/SubscribePackages';
 import PaySubscription from '../launch/PaySubscription';
-import { useEffect, useState } from 'react';
 
 const Tab = createBottomTabNavigator();
 
+const originalWarn = console.warn
+console.warn = (message, ...args) => {
+if (message.startsWith('@supabase/gotrue-js')) return
+originalWarn(message, ...args)
+}
+
 const Navigation = ({user = null}) => {
+  
   const [status, setStatus] = useState(null)
   useEffect(() => {
     setStatus(user?.user_metadata?.subscription_status)
