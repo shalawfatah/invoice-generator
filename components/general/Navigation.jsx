@@ -19,6 +19,7 @@ import ClientUpdate from '../../pages/ClientUpdate';
 import CompanyRegister from '../launch/CompanyRegister';
 import SubscribePackages from '../launch/SubscribePackages';
 import PaySubscription from '../launch/PaySubscription';
+import EstimateArchive from '../../pages/EstimateArchive';
 
 const Tab = createBottomTabNavigator();
 
@@ -65,7 +66,17 @@ const Navigation = ({user}) => {
                       tabBarIcon: ({ focused, color, size }) => null,
                       title: "Invoice Archie",
                       tabBarLabel: ({ focused, color, position, children }) => null,
-                      tabBarButton: (props) => null // use a custom component to replace the default tab button
+                      tabBarButton: (props) => null
+                    }}
+                  />
+                <Tab.Screen 
+                    name={"EstimateArchive"} 
+                    component={EstimateArchive}
+                    options={{
+                      tabBarIcon: ({ focused, color, size }) => null,
+                      title: "Estimate Archie",
+                      tabBarLabel: ({ focused, color, position, children }) => null,
+                      tabBarButton: (props) => null
                     }}
                   />
                 <Tab.Screen 

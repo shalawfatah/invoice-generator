@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import InvoiceBtn from '../components/general/Button';
 import Checking from '../components/account/Checking';
+import Item from '../components/general/Item';
 
 const Home = () => {
   const user = useContext(SessionContext);
@@ -31,11 +32,18 @@ const Home = () => {
   }
 
   return (
-    <View className="bg-white min-h-screen p-2">
+    <View className="bg-white min-h-screen ">
+      <View className="flex flex-row flex-wrap justify-center items-center p-2">
+        <Item onPress={() => navigation.navigate('Archive')} text="Invoice Archive" icon="file-tray-full" />
+        <Item onPress={() => navigation.navigate('EstimateArchive')} text="Est. Archive" icon="file-tray-stacked" />
+        <Item onPress={() => navigation.navigate('Client Archive')} text="Clientele List" icon="file-tray-full" />
+        <Item onPress={() => navigation.navigate('AddCompany')} text="Add Client" icon="file-tray-full" />
+        <Item onPress={() => navigation.navigate('Templates')} text="Templates" icon="file-tray-full" />
+      </View>
       {stripeId === null || stripeId === 'undefined' ? (<Checking />) :  (
     <View className="flex w-screen items-center bg-white p-2">
       <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
-        <Image source={{ uri: user?.user_metadata?.avatar }} style={{ width: 100, height: 100 }} />
+        <Image source={{ uri: user?.user_metadata?.avatar }} />
       </View>
       <Text className="text-lg font-bold bg-indigo-100 w-full text-center py-1">Company Profile</Text>
       <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">

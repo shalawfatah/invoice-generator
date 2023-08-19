@@ -97,7 +97,7 @@ const PreviewInvoice = ({route}) => {
         />
       <InvoiceBtn 
         text="Send Invoice" 
-        icon="send-outline"
+        icon="rocket"
         classes="my-2 " 
         buttonColor='#dc143c' 
         textColor='#FFF'
