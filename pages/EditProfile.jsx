@@ -52,7 +52,7 @@ const EditProfile = ({route}) => {
           />
       </View>
       <View>
-        <InvoiceBtn buttonColor='#312e81' textColor='#FFF' icon="email" classes="my-2" text="Sign Up" duty={() => updateUser()} />
+        <InvoiceBtn  textColor='#FFF' icon="person-circle-outline" classes="my-2" text="Sign Up" duty={() => updateUser()} />
       </View>
       <View >
     </View>

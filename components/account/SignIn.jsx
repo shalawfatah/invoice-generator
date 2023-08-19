@@ -56,14 +56,14 @@ const SignIn = ({handleSignup}) => {
         <InvoiceBtn 
           buttonColor='#312e81' 
           textColor='#FFF' 
-          icon="email" 
+          icon="log-in-outline" 
           classes="my-2"
           loading={loading}
           text="Sign In" duty={() => signInWithEmail()} 
           />
       </View>
       <View >
-        <InvoiceBtn icon="account" classes="my-2" text="Sign Up" duty={handleSignup} />
+        <InvoiceBtn icon="person-circle-outline" classes="my-2" text="Sign Up" duty={handleSignup} />
       </View>
     </View>
     </View>

@@ -34,6 +34,7 @@ const CompanyForm = () => {
         <View className="my-8 w-full">
           <InvoiceBtn 
               text="Register" 
+              icon={"business-outline"}
               mode="contained" 
               duty={() => navigation.navigate('Templates')}
               />

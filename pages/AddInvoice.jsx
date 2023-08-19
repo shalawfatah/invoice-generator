@@ -81,18 +81,24 @@ const AddInvoice = () => {
     <ScrollView className="p-2 bg-white">
       <View className="relative">
       <TextInput
-          label="Company"
+          label="Client"
           value={text}
-          placeholder='Type company name to send invoice to'
+          placeholder='Type client name to send invoice to'
           onChangeText={text => setText(text)}
           backgroundColor="#FFFFFF"
         />
         <TouchableOpacity className="absolute right-0 top-4" onPress={() => navigation.navigate('AddCompany')}>
-              <Ionicons style={{textAlign: 'center'}}  name="add-circle-outline" size={24} color={"#2b3252"} />
+              <Ionicons style={{textAlign: 'center'}}  name="add-circle" size={24} color={"#2b3252"} />
         </TouchableOpacity>
       </View>
         {filtered_companies?.length === 0 ? 
-        <Text className="m-4 text-lg font-bold">This company is not registered. Please add it.</Text> 
+        <View className="flex flex-row items-center justify-center my-2">
+          <Text className="">Tap on</Text>
+          <TouchableOpacity className="mx-1" onPress={() => navigation.navigate('AddCompany')}>
+              <Ionicons  name="add-circle" size={24} color={"#2b3252"} />
+        </TouchableOpacity>
+        <Text>to add a client</Text>
+        </View>
         : <Picker
             selectedValue={chosen}
             style={{ height: "auto", width: "auto" }}
@@ -102,14 +108,7 @@ const AddInvoice = () => {
         return <Picker.Item key={item.id} label={item.company_name} value={JSON.stringify(item)} />
       })}
       </Picker>}
-      {filtered_companies?.length > 0 ? <View></View> :
-      <InvoiceBtn 
-        duty={() => navigation.navigate('AddCompany')} 
-        icon="plus" 
-        mode="contained" 
-        text="Add Company" /> 
-      }
-    <View>
+    <View className="bg-[#F2F2F2] px-2">
       <View>
         {tasks.map((task) => (
           <View key={task.id}>
@@ -118,7 +117,7 @@ const AddInvoice = () => {
               label="Task description"
               value={task.text}
               onChangeText={(text) => updateTask(task.id, 'text', text)}
-              backgroundColor="white"
+              backgroundColor="#F2F2F2"
             />
             <TextInput
               style={{ width: '%50' }}
@@ -126,7 +125,7 @@ const AddInvoice = () => {
               value={task.number}
               onChangeText={(number) => updateTask(task.id, 'number', number)}
               keyboardType="numeric"
-              backgroundColor="white"
+              backgroundColor="#F2F2F2"
             />
             <View className="flex flex-row items-center justify-between my-2 mx-4">
               <View>
@@ -158,7 +157,7 @@ const AddInvoice = () => {
         ))}
       </View>
       <View className="my-2">
-        <InvoiceBtn icon="plus" mode="contained" text={tasks.length > 0 ? 'Add another task' : 'Add a task'} duty={addTask} />
+        <InvoiceBtn icon="add-circle-outline" text={tasks.length > 0 ? 'Add another task' : 'Add a task'} duty={addTask} />
       </View>
     </View>
     <TextInput
@@ -185,7 +184,7 @@ const AddInvoice = () => {
         </View>
         <InvoiceBtn 
           duty={() => navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, chosen, note})} 
-          icon="plus" 
+          icon="bookmark-outline" 
           mode="contained" 
           text="Save" /> 
           <View className="my-12"></View>

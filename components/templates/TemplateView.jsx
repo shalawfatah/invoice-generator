@@ -12,10 +12,10 @@ const TemplateView = ({route}) => {
       <WebView source={{ uri: item.url }} />
       <View className="m-2">
         <View className="my-2">
-          <InvoiceBtn text="Choose this template" mode="contained" duty={() => navigation.navigate('AddInvoice', {item})} />
+          <InvoiceBtn  icon="document-outline" text="Choose this template" mode="contained" duty={() => navigation.navigate('AddInvoice', {item})} />
         </View>
         <View className="my-2">
-          <InvoiceBtn text="Back to temlpates" mode="contained" duty={() => navigation.navigate('Templates')} />
+          <InvoiceBtn icon="newspaper-outline" text="Back to temlpates" mode="contained" duty={() => navigation.navigate('Templates')} />
         </View>
       </View>
     </View>

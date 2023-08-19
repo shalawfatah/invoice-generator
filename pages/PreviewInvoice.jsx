@@ -91,11 +91,13 @@ const PreviewInvoice = ({route}) => {
     <View className="m-2">
       <InvoiceBtn 
         text="Edit Invoice" 
+        icon="pencil-outline"
         classes="my-2" 
         duty={() => navigation.navigate('Add Invoice')} 
         />
       <InvoiceBtn 
         text="Send Invoice" 
+        icon="send-outline"
         classes="my-2 " 
         buttonColor='#dc143c' 
         textColor='#FFF'

@@ -101,13 +101,6 @@ const AddEstimate = () => {
         return <Picker.Item key={item.id} label={item.company_name} value={JSON.stringify(item)} />
       })}
       </Picker>}
-      {filtered_companies?.length > 0 ? <View></View> :
-      <InvoiceBtn 
-        duty={() => navigation.navigate('AddCompany')} 
-        icon="plus" 
-        mode="contained" 
-        text="Add Company" /> 
-      }
     <View>
       <View>
         {tasks.map((task) => (
@@ -157,7 +150,7 @@ const AddEstimate = () => {
         ))}
       </View>
       <View className="my-2">
-        <InvoiceBtn icon="plus" mode="contained" text={tasks.length > 0 ? 'Add another task' : 'Add a task'} duty={addTask} />
+        <InvoiceBtn icon="add-circle-outline" mode="contained" text={tasks.length > 0 ? 'Add another task' : 'Add a task'} duty={addTask} />
       </View>
     </View>
     <TextInput
@@ -184,8 +177,7 @@ const AddEstimate = () => {
         </View>
         <InvoiceBtn 
           duty={() => navigation.navigate('PreviewEstimate', {tasks, subtotal, tax, total, chosen, note})} 
-          icon="plus" 
-          mode="contained" 
+          icon="add-circle-outline" 
           text="Save" /> 
           <View className="my-12"></View>
     </ScrollView>)}

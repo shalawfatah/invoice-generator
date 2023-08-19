@@ -76,7 +76,7 @@ const CompanyRegister = () => {
           disabled={loading} 
           buttonColor='#312e81' 
           textColor='#FFF' 
-          icon="domain" 
+          icon="business-outline" 
           classes="my-2"
           loading={loading} 
           text="Register" 

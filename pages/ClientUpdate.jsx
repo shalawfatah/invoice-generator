@@ -64,10 +64,10 @@ const ClientUpdate = ({route}) => {
         />
         
       <View className="my-8 w-full">
-        <InvoiceBtn text="Update" mode="contained" duty={updat_company}/>
+        <InvoiceBtn text="Update" icon="folder-open-outline" duty={updat_company}/>
       </View>
       <View className="my-8 w-full">
-        <InvoiceBtn text="List of clients" mode="contained" duty={() => navigation.navigate('Client Archive')}/>
+        <InvoiceBtn text="List of clients" icon="pricetag-outline" duty={() => navigation.navigate('Client Archive')}/>
       </View>
   </View>
   )

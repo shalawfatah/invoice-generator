@@ -105,7 +105,7 @@ const SignUp = ({handleSignin}) => {
       <View>
         <InvoiceBtn 
             buttonColor='#312e81' 
-            textColor='#FFF' icon="email" 
+            textColor='#FFF' icon="person-add-outline" 
             classes="my-2" 
             text="Sign Up"
             loading={loading}
@@ -113,7 +113,7 @@ const SignUp = ({handleSignin}) => {
             />
       </View>
       <View >
-        <InvoiceBtn icon="account" classes="my-2" text="Sign In" duty={handleSignin} />
+        <InvoiceBtn icon="log-in-outline" classes="my-2" text="Sign In" duty={handleSignin} />
       </View>
     </View>
     </View>

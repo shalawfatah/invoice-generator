@@ -9,7 +9,7 @@ import { supabase } from "../../lib/supabase";
 const PaySubscription = ({route}) => {
 
   const data = route.params;
-  console.log('ddd ', data)
+
   const session = useContext(SessionContext)
   const navigation = useNavigation();
   const [profile, setProfile] = useState(null)
@@ -32,7 +32,6 @@ const PaySubscription = ({route}) => {
     })
   }
 
-  console.log('p', profile.name)
   useEffect(() => {
     find_profile()
   }, [])
@@ -41,7 +40,8 @@ const PaySubscription = ({route}) => {
     <View className="py-12 px-4 flex justify-center bg-white">
       <InvoiceBtn 
           text="Back"
-          duty={() => navigation.navigate('Add Invoice')}
+          icon={"arrow-back-circle-outline"}
+          duty={() => navigation.navigate('Templates')}
           />
     </View>
   );

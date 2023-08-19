@@ -38,45 +38,45 @@ const Navigation = ({user}) => {
                 tabBarActiveTintColor: '#2b3252',
                 }}
                 >
-                                    <Tab.Screen 
-                          name={"Add Invoice"} 
-                          component={AddInvoice}
-                          initialParams={{ user: user }}
-                          options={{
-                              tabBarIcon: ({ color, size }) => (
-                              <Ionicons name="create-outline" color={color} size={20} />
-                              ),
-                              tabBarStyle: {}
-                          }}
+                <Tab.Screen 
+                    name={"Add Invoice"} 
+                    component={AddInvoice}
+                    initialParams={{ user: user }}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="create-outline" color={color} size={20} />
+                        ),
+                        tabBarStyle: {}
+                    }}
                   />
                   <Tab.Screen 
-                          name={"Add Estimate"} 
-                          component={AddEstimate}
-                          options={{
-                              tabBarIcon: ({ color, size }) => (
-                              <Ionicons name="newspaper-outline" color={color} size={20} />
-                              ),
-                              tabBarStyle: {}
-                          }}
+                    name={"Add Estimate"} 
+                    component={AddEstimate}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="newspaper-outline" color={color} size={20} />
+                        ),
+                        tabBarStyle: {}
+                    }}
                   />
                 <Tab.Screen 
-                          name={"Archive"} 
-                          component={InvoiceArchive}
-                          options={{
-                            tabBarIcon: ({ focused, color, size }) => null,
-                            tabBarLabel: ({ focused, color, position, children }) => null,
-                            tabBarButton: (props) => null // use a custom component to replace the default tab button
-                          }}
+                    name={"Archive"} 
+                    component={InvoiceArchive}
+                    options={{
+                      tabBarIcon: ({ focused, color, size }) => null,
+                      tabBarLabel: ({ focused, color, position, children }) => null,
+                      tabBarButton: (props) => null // use a custom component to replace the default tab button
+                    }}
                   />
                 <Tab.Screen 
-                        name={"Account"} 
-                        component={Home}
-                        options={{
-                          tabBarIcon: ({ color, size }) => (
-                          <Ionicons name="person-circle-outline" color={color} size={20} />
-                          ),
-                          tabBarStyle: {}
-                      }}
+                    name={"Account"} 
+                    component={Home}
+                    options={{
+                      tabBarIcon: ({ color, size }) => (
+                      <Ionicons name="person-circle-outline" color={color} size={20} />
+                      ),
+                      tabBarStyle: {}
+                  }}
                 />
                   <Tab.Screen 
                   name={"Company Register"} 

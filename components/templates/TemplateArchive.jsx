@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ScrollView, TouchableOpacity, View, Text } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../lib/supabase';
-import Classic from './invoice_templates/classic/classic';
+import { SessionContext } from '../../App';
 
 const pdfs = [
     {id: 1, source: 'https://www.africau.edu/images/default/sample.pdf'},
@@ -12,7 +12,36 @@ const pdfs = [
     {id: 4, source: 'https://www.africau.edu/images/default/sample.pdf'},
     {id: 5, source: 'https://www.africau.edu/images/default/sample.pdf'},
 ]
-const TemplateArchive = () => {
+const TemplateArchive = ({route}) => {
+    const data = route.params;
+
+    const session = useContext(SessionContext)
+    const navigation = useNavigation();
+    const [profile, setProfile] = useState(null)
+  
+    const find_profile = async() => {
+      const {data, error} = await supabase.from('profile').select().eq('email', session.email)
+      setProfile(data[0])
+      if(profile !== null) {
+        await update_user()
+      }
+    }
+    
+    const update_user = async() => {
+        const { data, error } = await supabase.auth.updateUser({
+            data: { 
+                name: profile.name, 
+                price: profile.price,
+                stripe_customer_id: profile.stripe_customer_id,
+                subscription_status: profile.subscription_status
+            }
+        })
+    }
+    
+    useEffect(() => {
+        find_profile()
+      }, [])
+
     const [thumbnails, setThumbnails] = useState([])
 
     const invoice_fetcher = async() => {
@@ -22,7 +51,6 @@ const TemplateArchive = () => {
         setThumbnails(templates);
     }
 
-    const navigation = useNavigation()
 
     useEffect(() => {
         invoice_fetcher()
