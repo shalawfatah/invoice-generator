@@ -14,6 +14,7 @@ const Home = () => {
   useEffect(() => {
     setStripeId(user?.user_metadata?.stripe_customer_id)
   }, [user])
+  const status = user?.user_metadata?.subscription_status;
   const navigation = useNavigation()
   const signout = async() => {
       const { error } = await supabase.auth.signOut()
@@ -48,15 +49,18 @@ const Home = () => {
       <Text className="text-lg font-bold bg-indigo-100 w-full text-center py-1">Company Profile</Text>
       <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
         <Text className="text-md font-bold p-1">Company Name:</Text>
-        <Text className="text-md font-bold p-1">{user.user_metadata.company}</Text>
+        <Text className="text-md font-bold p-1">{user.user_metadata.name}</Text>
       </View>
       <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
         <Text className="text-md font-bold p-1">Company Email:</Text>
         <Text className="text-md font-bold p-1">{user.email}</Text>
       </View>
       <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
-        <Text className="text-md font-bold p-1">Company Email:</Text>
-        <Text className="text-md font-bold p-1">{user.user_metadata.address}</Text>
+        <Text className="text-md font-bold p-1">Subscription Status:</Text>
+        <View className={`flex flex-row gap-x-2 items-center p-1 px-1 pr-4  ${status === 'active' ? 'bg-[#09A144]' : 'bg-[#D30000]'}`}>
+          {status === 'active' ? <Ionicons name="play-circle-outline" size={20} color={"white"}/> : <Ionicons name="stop-circle-outline" size={20} color={"white"}/>}
+          <Text className="text-white font-bold">{user.user_metadata.subscription_status}</Text>
+        </View>
       </View>
       <TouchableOpacity onPress={edit_user} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-2">
           <Text className="mx-2 font-bold text-black">Edit Profile</Text>
