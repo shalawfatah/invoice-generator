@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -13,7 +12,6 @@ import ConfirmSent from '../../pages/ConfirmSent';
 import IncomeReport from '../../pages/IncomeReport';
 import SingleInvoice from '../../pages/SingleInvoice';
 import EditProfile from '../../pages/EditProfile';
-import Product from '../product/Product';
 import AddEstimate from '../../pages/AddEstimate';
 import PreviewEstimate from '../../pages/PreviewEstimate';
 import ClientArchive from '../../pages/ClientArchive';
@@ -36,6 +34,7 @@ const Navigation = ({user}) => {
           <Tab.Navigator
                 screenOptions={{
                 tabBarActiveTintColor: '#2b3252',
+                tabBarInactiveTintColor: 'gray',
                 }}
                 >
                 <Tab.Screen 
@@ -64,6 +63,7 @@ const Navigation = ({user}) => {
                     component={InvoiceArchive}
                     options={{
                       tabBarIcon: ({ focused, color, size }) => null,
+                      title: "Invoice Archie",
                       tabBarLabel: ({ focused, color, position, children }) => null,
                       tabBarButton: (props) => null // use a custom component to replace the default tab button
                     }}
@@ -82,6 +82,7 @@ const Navigation = ({user}) => {
                   name={"Company Register"} 
                   component={CompanyRegister}
                   options={{
+                    title: "Register Company",
                     tabBarIcon: ({ focused, color, size }) => null,
                     tabBarLabel: ({ focused, color, position, children }) => null,
                     tabBarButton: (props) => null // use a custom component to replace the default tab button
@@ -91,6 +92,7 @@ const Navigation = ({user}) => {
                   name={"Subscribe Packages"} 
                   component={SubscribePackages}
                   options={{
+                    title: "Subscription",
                     tabBarIcon: ({ focused, color, size }) => null,
                     tabBarLabel: ({ focused, color, position, children }) => null,
                     tabBarButton: (props) => null // use a custom component to replace the default tab button
@@ -109,25 +111,18 @@ const Navigation = ({user}) => {
                         name={"Report"} 
                         component={IncomeReport}
                         options={{
+                            title: "Income Reports",
                             tabBarIcon: ({ color, size }) => (
                             <Ionicons name="bar-chart-outline" color={color} size={20} />
                             ),
                             tabBarStyle: {}
                         }}
                 />
-                <Tab.Screen 
-                          name={"Add Company"} 
-                          component={AddCompany}
-                          options={{
-                            tabBarIcon: ({ focused, color, size }) => null,
-                            tabBarLabel: ({ focused, color, position, children }) => null,
-                            tabBarButton: (props) => null // use a custom component to replace the default tab button
-                          }}
-                  />
           <Tab.Screen 
             name={"Templates"} 
             component={TemplateArchive}
             options={{
+              title: "Choose Templates",
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,
               tabBarButton: (props) => null // use a custom component to replace the default tab button
@@ -137,6 +132,7 @@ const Navigation = ({user}) => {
             name={"TemplateView"} 
             component={TemplateView}
             options={{
+              title: "View Template",
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,
               tabBarButton: (props) => null // use a custom component to replace the default tab button
@@ -146,15 +142,7 @@ const Navigation = ({user}) => {
             name={"AddCompany"} 
             component={AddCompany}
             options={{
-              tabBarIcon: ({ focused, color, size }) => null,
-              tabBarLabel: ({ focused, color, position, children }) => null,
-              tabBarButton: (props) => null // use a custom component to replace the default tab button
-            }}
-          />
-          <Tab.Screen 
-            name={"AddInvoice"} 
-            component={AddInvoice}
-            options={{
+              title: "Add Clients",
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,
               tabBarButton: (props) => null // use a custom component to replace the default tab button
@@ -164,6 +152,7 @@ const Navigation = ({user}) => {
             name={"PreviewInvoice"} 
             component={PreviewInvoice}
             options={{
+              title: "Invoice Preview",
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,
               tabBarButton: (props) => null // use a custom component to replace the default tab button
@@ -173,6 +162,7 @@ const Navigation = ({user}) => {
             name={"PreviewEstimate"} 
             component={PreviewEstimate}
             options={{
+              title: "Preview Estimate",
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,
               tabBarButton: (props) => null // use a custom component to replace the default tab button
@@ -182,15 +172,7 @@ const Navigation = ({user}) => {
             name={"ConfirmSent"} 
             component={ConfirmSent}
             options={{
-              tabBarIcon: ({ focused, color, size }) => null,
-              tabBarLabel: ({ focused, color, position, children }) => null,
-              tabBarButton: (props) => null // use a custom component to replace the default tab button
-            }}
-          />
-          <Tab.Screen 
-            name={"IncomeReport"} 
-            component={IncomeReport}
-            options={{
+              title: "Confirmation",
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,
               tabBarButton: (props) => null // use a custom component to replace the default tab button
@@ -200,6 +182,7 @@ const Navigation = ({user}) => {
             name={"SingleInvoice"} 
             component={SingleInvoice}
             options={{
+              title: "Invoice",
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,
               tabBarButton: (props) => null // use a custom component to replace the default tab button
@@ -209,15 +192,7 @@ const Navigation = ({user}) => {
             name={"EditProfile"} 
             component={EditProfile}
             options={{
-              tabBarIcon: ({ focused, color, size }) => null,
-              tabBarLabel: ({ focused, color, position, children }) => null,
-              tabBarButton: (props) => null // use a custom component to replace the default tab button
-            }}
-          />
-          <Tab.Screen 
-            name={"Product"} 
-            component={Product}
-            options={{
+              title: "Edit Profile",
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,
               tabBarButton: (props) => null // use a custom component to replace the default tab button
@@ -227,6 +202,7 @@ const Navigation = ({user}) => {
             name={"Client Archive"} 
             component={ClientArchive}
             options={{
+              title: "Client List",
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,
               tabBarButton: (props) => null // use a custom component to replace the default tab button

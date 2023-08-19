@@ -13,9 +13,9 @@ import Checking from '../components/account/Checking';
 
 const AddInvoice = () => {
   const user = useContext(SessionContext)
-  const [stripeId, setStripeId] = useState(null)
+  const [status, setStatus] = useState(null)
   useEffect(() => {
-    setStripeId(user?.user_metadata?.stripe_customer_id)
+    setStatus(user?.user_metadata?.subscription_status)
   }, [user])
   const [text, setText] = useState('')
   const navigation = useNavigation()
@@ -77,11 +77,11 @@ const AddInvoice = () => {
 
   return (
     <View>
-      {stripeId === null || stripeId === 'undefined' ? (<Checking />) :  (
+      {status !== 'active' ? (<Checking />) :  (
     <ScrollView className="p-2 bg-white">
       <View className="relative">
       <TextInput
-          label="Client"
+          label="Search For Clients"
           value={text}
           placeholder='Type client name to send invoice to'
           onChangeText={text => setText(text)}
@@ -93,11 +93,11 @@ const AddInvoice = () => {
       </View>
         {filtered_companies?.length === 0 ? 
         <View className="flex flex-row items-center justify-center my-2">
-          <Text className="">Tap on</Text>
+          <Text className="">If not found. Tap</Text>
           <TouchableOpacity className="mx-1" onPress={() => navigation.navigate('AddCompany')}>
               <Ionicons  name="add-circle" size={24} color={"#2b3252"} />
         </TouchableOpacity>
-        <Text>to add a client</Text>
+        <Text>to add clients</Text>
         </View>
         : <Picker
             selectedValue={chosen}
@@ -108,7 +108,7 @@ const AddInvoice = () => {
         return <Picker.Item key={item.id} label={item.company_name} value={JSON.stringify(item)} />
       })}
       </Picker>}
-    <View className="bg-[#F2F2F2] px-2">
+    <View className="bg-[#f5f5f5] px-2">
       <View>
         {tasks.map((task) => (
           <View key={task.id}>
@@ -117,7 +117,7 @@ const AddInvoice = () => {
               label="Task description"
               value={task.text}
               onChangeText={(text) => updateTask(task.id, 'text', text)}
-              backgroundColor="#F2F2F2"
+              backgroundColor="#f5f5f5"
             />
             <TextInput
               style={{ width: '%50' }}
@@ -125,7 +125,7 @@ const AddInvoice = () => {
               value={task.number}
               onChangeText={(number) => updateTask(task.id, 'number', number)}
               keyboardType="numeric"
-              backgroundColor="#F2F2F2"
+              backgroundColor="#f5f5f5"
             />
             <View className="flex flex-row items-center justify-between my-2 mx-4">
               <View>

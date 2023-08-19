@@ -13,9 +13,9 @@ import Checking from '../components/account/Checking';
 
 const AddEstimate = () => {
   const user = useContext(SessionContext)
-  const [stripeId, setStripeId] = useState(null)
+  const [status, setStatus] = useState(null)
   useEffect(() => {
-    setStripeId(user?.user_metadata?.stripe_customer_id)
+    setStatus(user?.user_metadata?.subscription_status)
   }, [user])
   const [text, setText] = useState('')
   const navigation = useNavigation()
@@ -76,7 +76,7 @@ const AddEstimate = () => {
 
   return (
     <View>
-    {stripeId === null || stripeId === 'undefined' ? (<Checking />) :  (
+    {status !== 'active' ? (<Checking />) :  (
     <ScrollView className="p-2 bg-white">
       <View className="relative">
       <TextInput
@@ -91,8 +91,14 @@ const AddEstimate = () => {
         </TouchableOpacity>
       </View>
         {filtered_companies?.length === 0 ? 
-        <Text className="my-2 text-md text-gray-700">Register company if not found on list.</Text> 
-        : <Picker
+        <View className="flex flex-row items-center justify-center my-2">
+          <Text className="">If not found. Tap</Text>
+          <TouchableOpacity className="mx-1" onPress={() => navigation.navigate('AddCompany')}>
+              <Ionicons  name="add-circle" size={24} color={"#2b3252"} />
+        </TouchableOpacity>
+        <Text>to add clients</Text>
+        </View>        
+      : <Picker
             selectedValue={chosen}
             style={{ height: "auto", width: "auto" }}
             onValueChange={(chosen, index) => setChosen(chosen)}
@@ -101,7 +107,7 @@ const AddEstimate = () => {
         return <Picker.Item key={item.id} label={item.company_name} value={JSON.stringify(item)} />
       })}
       </Picker>}
-    <View>
+    <View className="bg-[#f5f5f5] px-2">
       <View>
         {tasks.map((task) => (
           <View key={task.id}>
@@ -110,7 +116,7 @@ const AddEstimate = () => {
               label="Task description"
               value={task.text}
               onChangeText={(text) => updateTask(task.id, 'text', text)}
-              backgroundColor="white"
+              backgroundColor="#f5f5f5"
             />
             <TextInput
               style={{ width: '%50' }}
@@ -118,7 +124,7 @@ const AddEstimate = () => {
               value={task.number}
               onChangeText={(number) => updateTask(task.id, 'number', number)}
               keyboardType="numeric"
-              backgroundColor="white"
+              backgroundColor="#f5f5f5"
             />
             <View className="flex flex-row items-center justify-between my-2 mx-4">
               <View>
@@ -139,9 +145,9 @@ const AddEstimate = () => {
                 <Text className="font-bold text-md">GST</Text>
               </View>
             <Switch
-              trackColor={{false: '#767577', true: '#81b0ff'}}
+              trackColor={{false: '#808080', true: '#2b3252'}}
               thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
+              ios_backgroundColor="#808080"
               onValueChange={() => updateTask(task.id, 'tax', !task.tax)}
               value={task.tax}
             />

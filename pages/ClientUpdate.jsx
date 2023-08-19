@@ -63,10 +63,10 @@ const ClientUpdate = ({route}) => {
         theme={{ colors: { onSurfaceVariant: '#D3D3D3'} }}
         />
         
-      <View className="my-8 w-full">
+      <View className=" w-full">
         <InvoiceBtn text="Update" icon="folder-open-outline" duty={updat_company}/>
       </View>
-      <View className="my-8 w-full">
+      <View className=" w-full">
         <InvoiceBtn text="List of clients" icon="pricetag-outline" duty={() => navigation.navigate('Client Archive')}/>
       </View>
   </View>

@@ -5,13 +5,13 @@ import Checking from '../components/account/Checking';
 
 const IncomeReport = () => {
   const user = useContext(SessionContext);
-  const [stripeId, setStripeId] = useState(null)
+  const [status, setStatus] = useState(null)
   useEffect(() => {
-    setStripeId(user?.user_metadata?.stripe_customer_id)
+    setStatus(user?.user_metadata?.subscription_status)
   }, [user])
   return (
     <View>
-      {stripeId === null || stripeId === 'undefined' ? (<Checking />) :  (
+      {status !== 'active' ? (<Checking />) :  (
       <View>
         <Text>IncomeReport</Text>
       </View>
