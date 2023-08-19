@@ -9,8 +9,14 @@ import Border from '../components/general/Border';
 import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SessionContext } from '../App';
+import Checking from '../components/account/Checking';
 
 const AddEstimate = () => {
+  const user = useContext(SessionContext)
+  const [stripeId, setStripeId] = useState(null)
+  useEffect(() => {
+    setStripeId(user?.user_metadata?.stripe_customer_id)
+  }, [user])
   const [text, setText] = useState('')
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
@@ -18,7 +24,6 @@ const AddEstimate = () => {
   const [tasks, setTasks] = useState([]);
   const [counter, setCounter] = useState(1);
   const [note, setNote] = useState('');
-  const user = useContext(SessionContext);
   
   // COMPANIES
   const [companies, setCompanies] = useState([])
@@ -70,6 +75,8 @@ const AddEstimate = () => {
   const total = amount.total;
 
   return (
+    <View>
+    {stripeId === null || stripeId === 'undefined' ? (<Checking />) :  (
     <ScrollView className="p-2 bg-white">
       <View className="relative">
       <TextInput
@@ -181,7 +188,8 @@ const AddEstimate = () => {
           mode="contained" 
           text="Save" /> 
           <View className="my-12"></View>
-    </ScrollView>
+    </ScrollView>)}
+    </View>
   )
 }
 

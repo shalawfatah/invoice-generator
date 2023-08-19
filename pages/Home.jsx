@@ -5,9 +5,14 @@ import { SessionContext } from '../App'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import InvoiceBtn from '../components/general/Button';
+import Checking from '../components/account/Checking';
 
 const Home = () => {
   const user = useContext(SessionContext);
+  const [stripeId, setStripeId] = useState(null)
+  useEffect(() => {
+    setStripeId(user?.user_metadata?.stripe_customer_id)
+  }, [user])
   const navigation = useNavigation()
   const signout = async() => {
       const { error } = await supabase.auth.signOut()
@@ -26,7 +31,9 @@ const Home = () => {
   }
 
   return (
-    <View className="flex h-screen w-screen items-center bg-white p-2">
+    <View className="bg-white min-h-screen p-2">
+      {stripeId === null || stripeId === 'undefined' ? (<Checking />) :  (
+    <View className="flex w-screen items-center bg-white p-2">
       <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
         <Image source={{ uri: user?.user_metadata?.avatar }} style={{ width: 100, height: 100 }} />
       </View>
@@ -43,10 +50,6 @@ const Home = () => {
         <Text className="text-md font-bold p-1">Company Email:</Text>
         <Text className="text-md font-bold p-1">{user.user_metadata.address}</Text>
       </View>
-      <TouchableOpacity onPress={signout} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-2">
-          <Text className="mx-2 font-bold text-black">Sign Out</Text>
-          <Ionicons name="log-out-outline" color={"black"} size={20} />
-        </TouchableOpacity>
       <TouchableOpacity onPress={edit_user} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-2">
           <Text className="mx-2 font-bold text-black">Edit Profile</Text>
           <Ionicons name="create-outline" color={"black"} size={20} />
@@ -54,6 +57,12 @@ const Home = () => {
         <TouchableOpacity onPress={delete_user} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-2">
           <Text className="mx-2 font-bold text-white">Delete Profile</Text>
           <Ionicons name="trash-outline" color={"white"} size={20} />
+        </TouchableOpacity>
+    </View>
+        )}
+      <TouchableOpacity onPress={signout} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-2">
+          <Text className="mx-2 font-bold text-black">Sign Out</Text>
+          <Ionicons name="log-out-outline" color={"black"} size={20} />
         </TouchableOpacity>
     </View>
   )

@@ -1,4 +1,4 @@
-import { View, Text, FlatList, ScrollView, Button, TouchableOpacity, Switch } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Switch } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import {Picker} from '@react-native-picker/picker'
 import { TextInput, Checkbox } from 'react-native-paper';
@@ -9,8 +9,14 @@ import Border from '../components/general/Border';
 import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SessionContext } from '../App';
+import Checking from '../components/account/Checking';
 
 const AddInvoice = () => {
+  const user = useContext(SessionContext)
+  const [stripeId, setStripeId] = useState(null)
+  useEffect(() => {
+    setStripeId(user?.user_metadata?.stripe_customer_id)
+  }, [user])
   const [text, setText] = useState('')
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
@@ -18,7 +24,6 @@ const AddInvoice = () => {
   const [tasks, setTasks] = useState([]);
   const [counter, setCounter] = useState(1);
   const [note, setNote] = useState('');
-  const user = useContext(SessionContext);
   
   // COMPANIES
   const [companies, setCompanies] = useState([])
@@ -71,6 +76,8 @@ const AddInvoice = () => {
   const total = amount.total;
 
   return (
+    <View>
+      {stripeId === null || stripeId === 'undefined' ? (<Checking />) :  (
     <ScrollView className="p-2 bg-white">
       <View className="relative">
       <TextInput
@@ -183,6 +190,8 @@ const AddInvoice = () => {
           text="Save" /> 
           <View className="my-12"></View>
     </ScrollView>
+    )}
+    </View>
   )
 }
 

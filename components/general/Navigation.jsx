@@ -30,12 +30,7 @@ if (message.startsWith('@supabase/gotrue-js')) return
 originalWarn(message, ...args)
 }
 
-const Navigation = ({user = null}) => {
-  
-  const [status, setStatus] = useState(null)
-  useEffect(() => {
-    setStatus(user?.user_metadata?.subscription_status)
-  }, [user])
+const Navigation = ({user}) => {
     return (
         <NavigationContainer>
           <Tab.Navigator
@@ -43,42 +38,10 @@ const Navigation = ({user = null}) => {
                 tabBarActiveTintColor: '#2b3252',
                 }}
                 >
-          {status !== 'active' ? (
-            <>
-                  <Tab.Screen 
-                  name={"Company Register"} 
-                  component={CompanyRegister}
-                  options={{
-                    tabBarIcon: ({ focused, color, size }) => null,
-                    tabBarLabel: ({ focused, color, position, children }) => null,
-                    tabBarButton: (props) => null // use a custom component to replace the default tab button
-                  }}
-                />
-                <Tab.Screen 
-                  name={"Subscribe Packages"} 
-                  component={SubscribePackages}
-                  options={{
-                    tabBarIcon: ({ focused, color, size }) => null,
-                    tabBarLabel: ({ focused, color, position, children }) => null,
-                    tabBarButton: (props) => null // use a custom component to replace the default tab button
-                  }}
-                />
-                <Tab.Screen 
-                  name={"Pay for Subscription"} 
-                  component={PaySubscription}
-                  options={{
-                    tabBarIcon: ({ focused, color, size }) => null,
-                    tabBarLabel: ({ focused, color, position, children }) => null,
-                    tabBarButton: (props) => null // use a custom component to replace the default tab button
-                  }}
-                />
-                </>
-          ) : (
-            <>
-
-                  <Tab.Screen 
+                                    <Tab.Screen 
                           name={"Add Invoice"} 
                           component={AddInvoice}
+                          initialParams={{ user: user }}
                           options={{
                               tabBarIcon: ({ color, size }) => (
                               <Ionicons name="create-outline" color={color} size={20} />
@@ -115,7 +78,33 @@ const Navigation = ({user = null}) => {
                           tabBarStyle: {}
                       }}
                 />
-
+                  <Tab.Screen 
+                  name={"Company Register"} 
+                  component={CompanyRegister}
+                  options={{
+                    tabBarIcon: ({ focused, color, size }) => null,
+                    tabBarLabel: ({ focused, color, position, children }) => null,
+                    tabBarButton: (props) => null // use a custom component to replace the default tab button
+                  }}
+                />
+                <Tab.Screen 
+                  name={"Subscribe Packages"} 
+                  component={SubscribePackages}
+                  options={{
+                    tabBarIcon: ({ focused, color, size }) => null,
+                    tabBarLabel: ({ focused, color, position, children }) => null,
+                    tabBarButton: (props) => null // use a custom component to replace the default tab button
+                  }}
+                />
+                <Tab.Screen 
+                  name={"Pay for Subscription"} 
+                  component={PaySubscription}
+                  options={{
+                    tabBarIcon: ({ focused, color, size }) => null,
+                    tabBarLabel: ({ focused, color, position, children }) => null,
+                    tabBarButton: (props) => null // use a custom component to replace the default tab button
+                  }}
+                />
                 <Tab.Screen 
                         name={"Report"} 
                         component={IncomeReport}
@@ -252,9 +241,6 @@ const Navigation = ({user = null}) => {
               tabBarButton: (props) => null // use a custom component to replace the default tab button
             }}
           />
-          </>
-          )}
-
           </Tab.Navigator>
         </NavigationContainer>
     )
