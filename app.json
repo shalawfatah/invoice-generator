@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "invoice-generator",
+    "name": "Invoice Generator",
     "slug": "invoice-generator",
     "version": "1.0.0",
     "orientation": "portrait",

@@ -62,18 +62,18 @@ const Home = () => {
           <Text className="text-white font-bold">{user.user_metadata.subscription_status}</Text>
         </View>
       </View>
-      <TouchableOpacity onPress={edit_user} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-2">
+      <TouchableOpacity onPress={edit_user} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 font-bold text-black">Edit Profile</Text>
           <Ionicons name="create-outline" color={"black"} size={20} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={delete_user} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-2">
+        <TouchableOpacity onPress={delete_user} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 font-bold text-white">Delete Profile</Text>
           <Ionicons name="trash-outline" color={"white"} size={20} />
         </TouchableOpacity>
     </View>
         )}
         <View className="px-2">
-      <TouchableOpacity onPress={signout} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-2">
+      <TouchableOpacity onPress={signout} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2">
           <Text className="mx-2 font-bold text-black">Sign Out</Text>
           <Ionicons name="log-out-outline" color={"black"} size={20} />
         </TouchableOpacity>
