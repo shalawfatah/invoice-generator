@@ -80,14 +80,14 @@ const AddEstimate = () => {
     <ScrollView className="p-2 bg-white">
       <View className="relative">
       <TextInput
-          label="Company"
+          label="Search For Clients"
           value={text}
-          placeholder='Type company name to send invoice to'
+          placeholder='Type client name to send invoice to'
           onChangeText={text => setText(text)}
           backgroundColor="#FFFFFF"
         />
         <TouchableOpacity className="absolute right-0 top-4" onPress={() => navigation.navigate('AddCompany')}>
-              <Ionicons style={{textAlign: 'center'}}  name="add-circle-outline" size={24} color={"#2b3252"} />
+              <Ionicons style={{textAlign: 'center'}}  name="add-circle" size={24} color={"#2b3252"} />
         </TouchableOpacity>
       </View>
         {filtered_companies?.length === 0 ? 

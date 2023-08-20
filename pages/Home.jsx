@@ -34,12 +34,12 @@ const Home = () => {
 
   return (
     <View className="bg-white min-h-screen ">
-      <View className="flex flex-row flex-wrap justify-center items-center p-2">
-        <Item onPress={() => navigation.navigate('Archive')} text="Invoice Archive" icon="file-tray-full" />
-        <Item onPress={() => navigation.navigate('EstimateArchive')} text="Est. Archive" icon="file-tray-stacked" />
-        <Item onPress={() => navigation.navigate('Client Archive')} text="Clientele List" icon="file-tray-full" />
-        <Item onPress={() => navigation.navigate('AddCompany')} text="Add Client" icon="file-tray-full" />
-        <Item onPress={() => navigation.navigate('Templates')} text="Templates" icon="file-tray-full" />
+      <View className="p-2">
+        <InvoiceBtn text="Invoice Archive" duty={() => navigation.navigate('Archive')} icon="file-tray-full" />
+        <InvoiceBtn text="Estimate Archive" duty={() => navigation.navigate('EstimateArchive')} icon="file-tray-stacked" />
+        <InvoiceBtn text="Clientele List" duty={() => navigation.navigate('Client Archive')} icon="list" />
+        <InvoiceBtn text="Add Clients" duty={() => navigation.navigate('AddCompany')} icon="add-circle" />
+        <InvoiceBtn text="Invoice Templates" duty={() => navigation.navigate('Templates')} icon="document" />
       </View>
       {stripeId === null || stripeId === 'undefined' ? (<Checking />) :  (
     <View className="flex w-screen items-center bg-white p-2">
@@ -72,10 +72,12 @@ const Home = () => {
         </TouchableOpacity>
     </View>
         )}
+        <View className="px-2">
       <TouchableOpacity onPress={signout} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-2">
           <Text className="mx-2 font-bold text-black">Sign Out</Text>
           <Ionicons name="log-out-outline" color={"black"} size={20} />
         </TouchableOpacity>
+        </View>
     </View>
   )
 }
