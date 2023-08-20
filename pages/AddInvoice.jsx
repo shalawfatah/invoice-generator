@@ -72,8 +72,8 @@ const AddInvoice = () => {
   const amount = calc_amount(tasks)
 
   const subtotal = amount.subtotal;
-  const tax = amount.taxAmount;
-  const total = amount.total;
+  const tax = amount.taxAmount.toFixed(2);
+  const total = amount.total.toFixed(2);
 
   return (
     <View>

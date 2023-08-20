@@ -45,9 +45,6 @@ const Home = () => {
     <Divider />
       {stripeId === null || stripeId === 'undefined' ? (<Checking />) :  (
     <View className="flex w-screen items-center bg-white p-2">
-      <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
-        <Image source={{ uri: user?.user_metadata?.avatar }} />
-      </View>
       <Text className="text-lg font-bold bg-indigo-100 w-full text-center py-1">Company Profile</Text>
       <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
         <Text className="text-md font-bold p-1">Company Name:</Text>

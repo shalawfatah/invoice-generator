@@ -11,13 +11,23 @@ const TemplateView = ({route}) => {
     const session = useContext(SessionContext)
     const [email, setEmail] = useState(null)
     useEffect(() => { setEmail(session?.email)}, [])
+    const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
     const chooseTemplate = async() => {
+      setLoading(true)
       const {data, error} = await supabase.from('profile').update({'template': item.id}).eq('email', email)
       if(error) {
         console.log(error)
       } else {
-        await navigation.navigate('Add Invoice')
+        const { data, error } = await supabase.auth.updateUser({
+          data: { template: item.id }
+        })
+        if(error) {
+          console.log(error)
+        } else {
+          setLoading(false)
+          await navigation.navigate('Add Invoice')
+        }
       }
     }
   return (
@@ -25,7 +35,7 @@ const TemplateView = ({route}) => {
       <WebView source={{ uri: item.url }} />
       <View className="m-2">
         <View className="my-2">
-          <InvoiceBtn  icon="document-outline" text="Choose this template" mode="contained" duty={chooseTemplate} />
+          <InvoiceBtn loading={loading}  icon="document-outline" text="Choose this template" mode="contained" duty={chooseTemplate} />
         </View>
         <View className="my-2">
           <InvoiceBtn icon="newspaper-outline" text="Back to temlpates" mode="contained" duty={() => navigation.navigate('Templates')} />

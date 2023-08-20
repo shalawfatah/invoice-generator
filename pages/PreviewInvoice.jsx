@@ -11,7 +11,7 @@ import * as FileSystem from 'expo-file-system';
 import { SessionContext } from '../App'
 
 const PreviewInvoice = ({route}) => {
-  const {email, id, user_metadata: {avatar, address, company}} = useContext(SessionContext);
+  const {email, id, user_metadata: {avatar, address, company, template}} = useContext(SessionContext);
   const {tasks, tax, subtotal, total, chosen, note} = route.params;
   const navigation = useNavigation();
   const [pdf, setPdf] = useState(null);
