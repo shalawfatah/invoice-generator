@@ -6,7 +6,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import InvoiceBtn from '../components/general/Button';
 import Checking from '../components/account/Checking';
-import Item from '../components/general/Item';
+import { Divider, FAB } from 'react-native-paper';
+import FABComponent from '../components/general/FAB';
 
 const Home = () => {
   const user = useContext(SessionContext);
@@ -41,6 +42,7 @@ const Home = () => {
         <InvoiceBtn text="Add Clients" duty={() => navigation.navigate('AddCompany')} icon="add-circle" />
         <InvoiceBtn text="Invoice Templates" duty={() => navigation.navigate('Templates')} icon="document" />
       </View>
+    <Divider />
       {stripeId === null || stripeId === 'undefined' ? (<Checking />) :  (
     <View className="flex w-screen items-center bg-white p-2">
       <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">

@@ -12,9 +12,7 @@ const IncomeReport = () => {
   return (
     <View>
       {status !== 'active' ? (<Checking />) :  (
-      <View>
-        <Text>IncomeReport</Text>
-      </View>
+        <Text>hello</Text>
       )}
     </View>
   )
