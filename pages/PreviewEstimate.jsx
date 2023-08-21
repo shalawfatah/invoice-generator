@@ -43,7 +43,8 @@ const PreviewEstimate = ({route}) => {
             total: total,
             subtotal: subtotal,
             tax_amount: tax,
-            tasks: tasks
+            tasks: tasks,
+            type: 'estimate'
           },
         ])
         .select()

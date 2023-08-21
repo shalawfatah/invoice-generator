@@ -15,7 +15,7 @@ const InvoiceArchive = () => {
       let { data: invoices, error } = await supabase
       .from('invoices')
       .select('*, companies("*")')
-      .eq('user_id', id)
+      .eq('user_id', id).eq('type', 'invoice')
       if(error) {
         console.log(error)
       } else {

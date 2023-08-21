@@ -33,8 +33,8 @@ const ClientArchive = () => {
   }, [companies])
 
   return (
-    <ScrollView>
-      {companies.map(item => {
+    <ScrollView className="bg-[#fbfbfb] p-1">
+      {companies?.map(item => {
         return <View key={item.id}>
                 <SingleCompany 
                     name={item.company_name} 
