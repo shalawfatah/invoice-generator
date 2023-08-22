@@ -3,32 +3,32 @@ export const elegant_template = (
     client_name, client_address, client_email,
     tasks, subtotal, tax, total, note, dox
 ) => `<html lang="en">
+    
+<body style="padding: 2rem;">
 
-<body class="p-8">
-
-  <div class="flex items-center mb-12">
-    <img src=${company_logo} alt="Company Logo" class="h-16 mr-4">
+  <div style="display: flex; align-items: center; margin-bottom: 3rem;">
+    <img src=${company_logo} alt="Company Logo" style="height: 4rem; margin-right: 1rem;">
     <div>
-      <h1 class="text-2xl font-bold">${company_name}</h1>
+      <h1 style="font-size: 1.25rem; font-weight: bold;">${company_name}</h1>
       <p>${company_address}</p>
       <p>${company_email}</p>
     </div>
   </div>
-  <div class="text-center mb-12">
-    <h2 class="text-5xl font-semibold">${dox}</h2>
-  </div>
-  <div class="mb-12">
-    <h2 class="text-lg font-bold mb-2">To:</h2>
+  <div style="text-align: center; margin-bottom: 3rem;">
+    <h2 style="font-size: 2.5rem; font-weight: bold;">${dox}</h2>
+  </div>    
+  <div style="margin-bottom: 3rem;">
+    <h2 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 0.5rem;">To:</h2>
     <p>${client_name}</p>
     <p>${client_address}</p>
     <p>${client_email}</p>
   </div>
 
-  <table class="w-full border-collapse border">
+  <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
     <thead>
-      <tr class="bg-gray-200">
-        <th class="py-2 px-4 border text-left">Task</th>
-        <th class="py-2 px-4 border text-left">Amount</th>
+      <tr style="background-color: #E2E8F0;">
+        <th style="padding: 0.5rem 1rem; border: 1px solid black; text-align: left;">Task</th>
+        <th style="padding: 0.5rem 1rem; border: 1px solid black; text-align: left;">Amount</th>
       </tr>
     </thead>
     <tbody>
@@ -44,16 +44,17 @@ export const elegant_template = (
     </tbody>
   </table>
 
-  <div class="mt-12 text-right">
-    <p class="mb-2">Subtotal: $${subtotal}</p>
-    <p class="mb-2">Tax: $${tax}</p>
-    <p class="font-bold">Total: $${total}</p>
+  <div style="margin-top: 3rem; text-align: right;">
+    <p style="margin-bottom: 0.5rem;">Subtotal: $${subtotal}</p>
+    <p style="margin-bottom: 0.5rem;">Tax: $${tax}</p>
+    <p style="font-weight: bold;">Total: $${total}</p>
   </div>
 
-  <div class="mt-12 text-center text-sm text-gray-500">
+  <div style="margin-top: 3rem; text-align: center; font-size: 0.875rem; color: #A0AEC0;">
     <p>&copy; 2023 ${company_name}. All rights reserved.</p>
   </div>
 
 </body>
 
-</html>`
+</html>
+`

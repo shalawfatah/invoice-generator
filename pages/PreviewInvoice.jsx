@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { View, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import Classic from '../components/templates/invoice_templates/classic/Classic.jsx'
 import { supabase } from '../lib/supabase'
 import * as Print from 'expo-print';
-import { classic_template } from '../components/templates/invoice_templates/classic/classic.js'
 import InvoiceBtn from '../components/general/Button'
 import * as MailComposer from 'expo-mail-composer';
 import * as FileSystem from 'expo-file-system';
+import TemplateRenderer from '../components/templates/TemplateRenderer.jsx'
+import { template_choice } from '../components/templates/template_choice.js'
 
 const PreviewInvoice = ({route}) => {
   const {tasks, tax, subtotal, total, chosen, note, user} = route.params;
@@ -38,6 +38,12 @@ const PreviewInvoice = ({route}) => {
     setClient(JSON.parse(chosen))
   }, [route])
 
+  const [temp, setTemp] = useState(null)
+  useEffect(() => { 
+    if(profile !== null) {
+      setTemp(template_choice(profile?.name, profile, client, tasks, subtotal, tax, total, note ))
+    }
+  }, [user])
 
     const generatePDF = async () => {
       // SAVE THE DATA FIRST
@@ -63,12 +69,11 @@ const PreviewInvoice = ({route}) => {
         }
       const name = profile.name
       const file = await Print.printToFileAsync({
-        html: classic_template(name, profile.address, profile.email, profile.avatar,
-          client?.client_name, client?.client_address, client?.client_email,
-          tasks, subtotal, tax, total, note),
+        html: temp,
           base64:false,
       })
       const contentUri = await FileSystem.getContentUriAsync(file.uri);
+      profile !== null && (
         MailComposer.composeAsync({
           Subject: `${name}. ${dox}"`,
           body: `This is an ${dox}`,
@@ -76,26 +81,23 @@ const PreviewInvoice = ({route}) => {
           bccRecipients: [profile.email],
           attachments: [contentUri]
         })
+      );
     };
     
 
   return (
     <View>
     <ScrollView>
-      {profile !== null &&  <Classic 
-        company_name={profile.name}
-        company_address={profile.address}
-        company_email={profile.email}
-        company_logo={profile.avatar}
-        client_name={client.company_name}
-        client_address={client.company_address}
-        client_email={client.company_email}
-        tasks={tasks} 
+      {profile !== null && <TemplateRenderer 
+        template_id={profile.template} 
+        profile={profile} 
+        client={client}
+        tasks={tasks}
         subtotal={subtotal}
-        tax={tax} 
+        tax={tax}
         total={total}
         note={note}
-        dox={dox}
+        dox={dox} 
         />}
     </ScrollView>
     <View className="m-2">

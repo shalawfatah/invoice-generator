@@ -8,33 +8,33 @@ const Colorful = ({
                 }) => {
     const htmlContent = `
     <html lang="en">
-    <body class="p-8">
+    <body style="padding: 2rem;">
     
-      <div class="flex justify-between items-center mb-12">
-        <div class="text-left">
-          <h1 class="text-2xl font-bold text-blue-500">${company_name}</h1>
-          <p class="text-green-500">${company_address}</p>
-          <p class="text-purple-500">${company_email}</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
+        <div style="text-align: left;">
+          <h1 style="font-size: 1.25rem; font-weight: bold; color: #1E40AF;">${company_name}</h1>
+          <p style="color: #34D399;">${company_address}</p>
+          <p style="color: #A78BFA;">${company_email}</p>
         </div>
-        <div class="text-right">
-          <img src=${company_logo} alt="Company Logo" class="h-16">
+        <div style="text-align: right;">
+          <img src=${company_logo} alt="Company Logo" style="height: 4rem;">
         </div>
       </div>
-      <div class="text-center mb-12">
-        <h2 class="text-5xl font-semibold">${dox}</h2>
-    </div>    
-      <div class="mb-12">
-        <h2 class="text-lg font-bold mb-2">To:</h2>
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: 2.5rem; font-weight: bold;">${dox}</h2>
+      </div>
+      <div style="margin-bottom: 3rem;">
+        <h2 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 0.5rem;">To:</h2>
         <p>${client_name}</p>
         <p>${client_address}</p>
         <p>${client_email}</p>
       </div>
     
-      <table class="w-full border-collapse border">
+      <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
         <thead>
-          <tr class="bg-gray-200">
-            <th class="py-2 px-4 border text-left">Task</th>
-            <th class="py-2 px-4 border text-left">Amount</th>
+          <tr style="background-color: #E2E8F0;">
+            <th style="padding: 0.5rem 1rem; border: 1px solid black; text-align: left;">Task</th>
+            <th style="padding: 0.5rem 1rem; border: 1px solid black; text-align: left;">Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -50,19 +50,19 @@ const Colorful = ({
         </tbody>
       </table>
     
-      <div class="mt-12 text-right">
-        <p class="mb-2">Subtotal: $${subtotal}</p>
-        <p class="mb-2">Tax: $${tax}</p>
-        <p class="font-bold">Total: $${total}</p>
+      <div style="margin-top: 3rem; text-align: right;">
+        <p style="margin-bottom: 0.5rem;">Subtotal: $${subtotal}</p>
+        <p style="margin-bottom: 0.5rem;">Tax: $${tax}</p>
+        <p style="font-weight: bold;">Total: $${total}</p>
       </div>
     
-      <div class="mt-12 text-center text-sm text-gray-500">
+      <div style="margin-top: 3rem; text-align: center; font-size: 0.75rem; color: #6B7280;">
         <p>&copy; 2023 ${company_name}. All rights reserved.</p>
       </div>
     
     </body>
-    
-    </html>`;
+    </html>
+    `;
   return (
         <WebView 
             source={{html: htmlContent}}
