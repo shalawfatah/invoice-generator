@@ -11,14 +11,23 @@ import * as FileSystem from 'expo-file-system';
 import { SessionContext } from '../App'
 
 const PreviewEstimate = ({route}) => {
-  const {email, id, user_metadata: {avatar, address, company}} = useContext(SessionContext);
-  const {tasks, tax, subtotal, total, chosen, note} = route.params;
+  const {tasks, tax, subtotal, total, chosen, note, user} = route.params;
   const navigation = useNavigation();
   const [pdf, setPdf] = useState(null);
   const [client, setClient] = useState(chosen)
   const [isAvailable, setIsAvailable] = useState(false)
-  const dox = "Estimate"
+  const [profile, setProfile] = useState(null)
+  const fetch_profile = async() => {
+    const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
+    if(error) {
+      console.log(error)
+    } else {
+      setProfile(data)
+    }
+  }
+  useEffect(() => { fetch_profile() }, [user])
 
+  const dox = "Estimate"
   useEffect(() => {
     async function checkAvailability() {
       const isMailAvailable = await MailComposer.isAvailableAsync();
@@ -28,7 +37,7 @@ const PreviewEstimate = ({route}) => {
   })
   useEffect(() => {
     setClient(JSON.parse(chosen))
-  }, [])
+  }, [route])
 
 
     const generatePDF = async () => {
@@ -37,8 +46,8 @@ const PreviewEstimate = ({route}) => {
         .from('invoices')
         .insert([
           {
-            user_id: id,
-            company_id: client?.id,
+            user_id: profile.user_id,
+            company_id: client.id,
             subtotal: subtotal,
             total: total,
             subtotal: subtotal,
@@ -53,16 +62,16 @@ const PreviewEstimate = ({route}) => {
         } else {
           console.log(data)
         }
-
+      const name = profile.name
       const file = await Print.printToFileAsync({
-        html: classic_template(company, address, email, avatar,
+        html: classic_template(name, profile.address, profile.email, profile.avatar,
           client?.client_name, client?.client_address, client?.client_email,
           tasks, subtotal, tax, total, note),
           base64:false,
       })
       const contentUri = await FileSystem.getContentUriAsync(file.uri);
         MailComposer.composeAsync({
-          Subject: `"${company}. ${dox}`,
+          Subject: `${name}. ${dox}"`,
           body: `This is an ${dox}`,
           recipients: "shalaw.fatah@gmail.com",
           attachments: [contentUri]
@@ -73,11 +82,11 @@ const PreviewEstimate = ({route}) => {
   return (
     <View>
     <ScrollView>
-      <Classic 
-        company_name={company}
-        company_address={address}
-        company_email={email}
-        company_logo={avatar}
+      {profile !== null && <Classic 
+        company_name={profile.name}
+        company_address={profile.address}
+        company_email={profile.email}
+        company_logo={profile.avatar}
         client_name={client.company_name}
         client_address={client.company_address}
         client_email={client.company_email}
@@ -87,7 +96,7 @@ const PreviewEstimate = ({route}) => {
         total={total}
         note={note}
         dox={dox}
-        />
+        />}
     </ScrollView>
     <View className="m-2">
       <InvoiceBtn 
@@ -97,8 +106,8 @@ const PreviewEstimate = ({route}) => {
         duty={() => navigation.navigate('Add Estimate')} 
         />
       <InvoiceBtn 
-        text="Send Estimate"
-        icon="rocket" 
+        text="Send Estimate" 
+        icon="rocket"
         classes="my-2 " 
         buttonColor='#dc143c' 
         textColor='#FFF'
@@ -109,4 +118,4 @@ const PreviewEstimate = ({route}) => {
   )
 }
 
-export default PreviewEstimate;
+export default PreviewEstimate

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Classic from '../components/templates/invoice_templates/classic/Classic.jsx'
@@ -8,7 +8,6 @@ import { classic_template } from '../components/templates/invoice_templates/clas
 import InvoiceBtn from '../components/general/Button'
 import * as MailComposer from 'expo-mail-composer';
 import * as FileSystem from 'expo-file-system';
-import { SessionContext } from '../App'
 
 const PreviewInvoice = ({route}) => {
   const {tasks, tax, subtotal, total, chosen, note, user} = route.params;
@@ -25,7 +24,7 @@ const PreviewInvoice = ({route}) => {
       setProfile(data)
     }
   }
-  useEffect(() => { fetch_profile() }, [])
+  useEffect(() => { fetch_profile() }, [user])
 
   const dox = "Invoice"
   useEffect(() => {
@@ -46,7 +45,7 @@ const PreviewInvoice = ({route}) => {
         .from('invoices')
         .insert([
           {
-            user_id: profile.id,
+            user_id: profile.user_id,
             company_id: client?.id,
             subtotal: subtotal,
             total: total,
@@ -73,7 +72,8 @@ const PreviewInvoice = ({route}) => {
         MailComposer.composeAsync({
           Subject: `${name}. ${dox}"`,
           body: `This is an ${dox}`,
-          recipients: "shalaw.fatah@gmail.com",
+          recipients: ["shalaw.fatah@gmail.com", client.company_email],
+          bccRecipients: [profile.email],
           attachments: [contentUri]
         })
     };
@@ -82,7 +82,7 @@ const PreviewInvoice = ({route}) => {
   return (
     <View>
     <ScrollView>
-      <Classic 
+      {profile !== null &&  <Classic 
         company_name={profile.name}
         company_address={profile.address}
         company_email={profile.email}
@@ -96,7 +96,7 @@ const PreviewInvoice = ({route}) => {
         total={total}
         note={note}
         dox={dox}
-        />
+        />}
     </ScrollView>
     <View className="m-2">
       <InvoiceBtn 
