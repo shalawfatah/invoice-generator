@@ -29,7 +29,7 @@ if (message.startsWith('@supabase/gotrue-js')) return
 originalWarn(message, ...args)
 }
 
-const Navigation = ({user}) => {
+const Navigation = () => {
     return (
         <NavigationContainer>
           <Tab.Navigator
@@ -41,7 +41,6 @@ const Navigation = ({user}) => {
                 <Tab.Screen 
                     name={"Add Invoice"} 
                     component={AddInvoice}
-                    initialParams={{ user: user }}
                     options={{
                         tabBarIcon: ({ color, size }) => (
                         <Ionicons name="create-outline" color={color} size={20} />

@@ -11,7 +11,20 @@ import * as FileSystem from 'expo-file-system';
 import { SessionContext } from '../App'
 
 const PreviewInvoice = ({route}) => {
-  const {email, id, user_metadata: {avatar, address, company, template}} = useContext(SessionContext);
+  const user = useContext(SessionContext);
+  const [profile, setProfile] = useState(null)
+  const checkUser = async() => {
+    const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
+    if(error) {
+      console.log(error)
+    } else {
+      setProfile(data)
+    }
+  }
+
+  useEffect(() => {
+    checkUser()
+  }, [user])
   const {tasks, tax, subtotal, total, chosen, note} = route.params;
   const navigation = useNavigation();
   const [pdf, setPdf] = useState(null);
@@ -37,7 +50,7 @@ const PreviewInvoice = ({route}) => {
         .from('invoices')
         .insert([
           {
-            user_id: id,
+            user_id: profile.id,
             company_id: client?.id,
             subtotal: subtotal,
             total: total,
@@ -55,7 +68,7 @@ const PreviewInvoice = ({route}) => {
         }
 
       const file = await Print.printToFileAsync({
-        html: classic_template(company, address, email, avatar,
+        html: classic_template(profile.name, profile.address, profile.email, profile.avatar,
           client?.client_name, client?.client_address, client?.client_email,
           tasks, subtotal, tax, total, note),
           base64:false,
@@ -74,10 +87,10 @@ const PreviewInvoice = ({route}) => {
     <View>
     <ScrollView>
       <Classic 
-        company_name={company}
-        company_address={address}
-        company_email={email}
-        company_logo={avatar}
+        company_name={profile.name}
+        company_address={profile.address}
+        company_email={profile.email}
+        company_logo={profile.avatar}
         client_name={client.company_name}
         client_address={client.company_address}
         client_email={client.company_email}

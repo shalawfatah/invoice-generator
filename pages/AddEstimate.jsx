@@ -10,13 +10,26 @@ import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SessionContext } from '../App';
 import Checking from '../components/account/Checking';
+import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 
 const AddEstimate = () => {
   const user = useContext(SessionContext)
   const [status, setStatus] = useState(null)
+  const [isLoading, setIsLoading] = useState(true);
+
+  const checkUser = async() => {
+    const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
+    if(error) {
+      console.log(error)
+    } else {
+      setStatus(data.subscription_status)
+    }
+    setIsLoading(false);
+  }
+
   useEffect(() => {
-    setStatus(user?.user_metadata?.subscription_status)
-  }, [user])
+    checkUser()
+  }, [status])
   const [text, setText] = useState('')
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
@@ -75,6 +88,14 @@ const AddEstimate = () => {
   const total = amount.total.toFixed(2);
 
   return (
+    <View>
+          {isLoading ? (
+        <ActivityIndicator 
+            animating={true} 
+            color={MD2Colors.black}
+            className="mx-1 p-8"
+            />
+      ) : (
     <View>
     {status !== 'active' ? (<Checking />) :  (
     <ScrollView className="p-2 bg-white">
@@ -186,7 +207,7 @@ const AddEstimate = () => {
           icon="add-circle-outline" 
           text="Save" /> 
           <View className="my-12"></View>
-    </ScrollView>)}
+    </ScrollView>)}</View>)}
     </View>
   )
 }

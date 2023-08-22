@@ -10,7 +10,7 @@ const TemplateView = ({route}) => {
     const {item} = route.params;
     const session = useContext(SessionContext)
     const [email, setEmail] = useState(null)
-    useEffect(() => { setEmail(session?.email)}, [])
+    useEffect(() => { setEmail(session?.email)}, [session])
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
     const chooseTemplate = async() => {
@@ -19,15 +19,8 @@ const TemplateView = ({route}) => {
       if(error) {
         console.log(error)
       } else {
-        const { data, error } = await supabase.auth.updateUser({
-          data: { template: item.id }
-        })
-        if(error) {
-          console.log(error)
-        } else {
-          setLoading(false)
-          await navigation.navigate('Add Invoice')
-        }
+        setLoading(false)
+        navigation.navigate('Add Invoice')
       }
     }
   return (

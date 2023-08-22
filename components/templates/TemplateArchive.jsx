@@ -15,32 +15,35 @@ const pdfs = [
 const TemplateArchive = ({route}) => {
     const data = route.params;
 
-    const session = useContext(SessionContext)
+    // const session = useContext(SessionContext)
     const navigation = useNavigation();
-    const [profile, setProfile] = useState(null)
+    // const [profile, setProfile] = useState(null)
   
-    const find_profile = async() => {
-      const {data, error} = await supabase.from('profile').select().eq('email', session.email)
-      setProfile(data[0])
-      if(profile !== null) {
-        await update_user()
-      }
-    }
+    // const find_profile = async() => {
+    //     const session = useContext(SessionContext)
+    //   const {data, error} = await supabase.from('profile').select().eq('email', session.email)
+    //   setProfile(data[0])
+    //   if(profile !== null) {
+    //     await update_user()
+    //   }
+    // }
     
-    const update_user = async() => {
-        const { data, error } = await supabase.auth.updateUser({
-            data: { 
-                name: profile.name, 
-                price: profile.price,
-                stripe_customer_id: profile.stripe_customer_id,
-                subscription_status: profile.subscription_status
-            }
-        })
-    }
+    // const update_user = async() => {
+    //     if(session !== null) {
+    //     const { data, error } = await supabase.auth.updateUser({
+    //         data: { 
+    //             name: profile.name, 
+    //             price: profile.price,
+    //             stripe_customer_id: profile.stripe_customer_id,
+    //             subscription_status: profile.subscription_status
+    //         }
+    //     })
+    //   }
+    // }
     
-    useEffect(() => {
-        find_profile()
-      }, [])
+    // useEffect(() => {
+    //     find_profile()
+    //   }, [])
 
     const [thumbnails, setThumbnails] = useState([])
 

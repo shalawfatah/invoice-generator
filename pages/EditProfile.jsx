@@ -1,9 +1,10 @@
 import { View, Text } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { TextInput } from 'react-native-paper';
 import InvoiceBtn from '../components/general/Button';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../lib/supabase';
+import { SessionContext } from '../App';
 
 const EditProfile = ({route}) => {
   const {user} = route.params;
@@ -11,15 +12,18 @@ const EditProfile = ({route}) => {
   const [address, setAddress] = useState(user.user_metadata.address);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const session = useContext(SessionContext)
 
   const updateUser = async() => {
-    const { data, error } = await supabase.auth.updateUser({
-      data: { company, address }
-    })
-    if(error) {
-      console.log(error)
-    } else {
-      navigation.navigate('Account')
+    if(session !== null) {
+      const { data, error } = await supabase.auth.updateUser({
+        data: { company, address }
+      })
+      if(error) {
+        console.log(error)
+      } else {
+        navigation.navigate('Account')
+      }
     }
   }
 
@@ -52,7 +56,7 @@ const EditProfile = ({route}) => {
           />
       </View>
       <View>
-        <InvoiceBtn  textColor='#FFF' icon="person-circle-outline" classes="my-2" text="Sign Up" duty={() => updateUser()} />
+        <InvoiceBtn  textColor='#FFF' icon="person-circle-outline" classes="my-2" text="Sign Up" duty={updateUser} />
       </View>
       <View >
     </View>

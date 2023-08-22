@@ -6,7 +6,7 @@ import InvoiceItem from '../components/invoice/InvoiceItem';
 import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
 
-const InvoiceArchive = () => {
+const EstimateArchive = () => {
   const {id} = useContext(SessionContext);
   const [invoice, setInvoice] = useState([])
   const navigation = useNavigation()
