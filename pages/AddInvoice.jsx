@@ -46,20 +46,10 @@ const AddInvoice = () => {
     .select().eq('user_id', user?.id)
     setCompanies(all_companies)
   }
-  const [company, setCompany] = useState(null)
-  const fetch_company = async() => {
-    let { data: the_company, error } = await supabase
-    .from('companies')
-    .select()
-    setCompany(the_company)
-  }
-  useEffect(() => {
-    fetch_company()
-  }, [])
+
   useEffect(() => {
     fetch_companies()
-    setChosen(company)
-  }, [company])
+  }, [companies])
   const filtered_companies = companies?.filter(item => item.company_name.includes(text));
   const [chosen, setChosen] = useState({})
   // END COMPANIES
@@ -81,7 +71,6 @@ const AddInvoice = () => {
         task.id === id ? { ...task, [field]: value } : task
       ));
     };
-  
   const amount = calc_amount(tasks)
 
   const subtotal = amount.subtotal;
@@ -204,7 +193,7 @@ const AddInvoice = () => {
           <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 font-bold min-w-[150px] text-center">{isNaN(total) ? null : `$${total}`}</Text>
         </View>
         <InvoiceBtn 
-          duty={() => navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, chosen, note})} 
+          duty={() => navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, chosen, note, user})} 
           icon="bookmark-outline" 
           mode="contained" 
           text="Save" /> 

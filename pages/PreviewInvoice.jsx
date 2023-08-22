@@ -11,9 +11,13 @@ import * as FileSystem from 'expo-file-system';
 import { SessionContext } from '../App'
 
 const PreviewInvoice = ({route}) => {
-  const user = useContext(SessionContext);
+  const {tasks, tax, subtotal, total, chosen, note, user} = route.params;
+  const navigation = useNavigation();
+  const [pdf, setPdf] = useState(null);
+  const [client, setClient] = useState(chosen)
+  const [isAvailable, setIsAvailable] = useState(false)
   const [profile, setProfile] = useState(null)
-  const checkUser = async() => {
+  const fetch_profile = async() => {
     const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
     if(error) {
       console.log(error)
@@ -21,17 +25,9 @@ const PreviewInvoice = ({route}) => {
       setProfile(data)
     }
   }
+  useEffect(() => { fetch_profile() }, [])
 
-  useEffect(() => {
-    checkUser()
-  }, [user])
-  const {tasks, tax, subtotal, total, chosen, note} = route.params;
-  const navigation = useNavigation();
-  const [pdf, setPdf] = useState(null);
-  const [client, setClient] = useState(chosen)
-  const [isAvailable, setIsAvailable] = useState(false)
   const dox = "Invoice"
-
   useEffect(() => {
     async function checkAvailability() {
       const isMailAvailable = await MailComposer.isAvailableAsync();
@@ -41,7 +37,7 @@ const PreviewInvoice = ({route}) => {
   })
   useEffect(() => {
     setClient(JSON.parse(chosen))
-  }, [])
+  }, [route])
 
 
     const generatePDF = async () => {
@@ -66,16 +62,16 @@ const PreviewInvoice = ({route}) => {
         } else {
           console.log(data)
         }
-
+      const name = profile.name
       const file = await Print.printToFileAsync({
-        html: classic_template(profile.name, profile.address, profile.email, profile.avatar,
+        html: classic_template(name, profile.address, profile.email, profile.avatar,
           client?.client_name, client?.client_address, client?.client_email,
           tasks, subtotal, tax, total, note),
           base64:false,
       })
       const contentUri = await FileSystem.getContentUriAsync(file.uri);
         MailComposer.composeAsync({
-          Subject: `${company}. ${dox}"`,
+          Subject: `${name}. ${dox}"`,
           body: `This is an ${dox}`,
           recipients: "shalaw.fatah@gmail.com",
           attachments: [contentUri]

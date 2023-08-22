@@ -3,10 +3,13 @@ import React from 'react'
 import Border from '../components/general/Border';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { format } from 'date-fns';
+import { supabase } from '../lib/supabase';
+import { useNavigation } from '@react-navigation/native';
 
 const SingleInvoice = ({route}) => {
   const {item} = route.params;
   const time = format(new Date(item.created_at), "dd MMMM yyyy 'at' HH:mm ")
+  const navigation = useNavigation();
 
   const delete_invoice = async() => {
       const { error } = await supabase
@@ -15,6 +18,8 @@ const SingleInvoice = ({route}) => {
       .eq('id', item.id)
       if(error) {
         console.log(error)
+      } else {
+        navigation.navigate('Archive')
       }
   }
   return (

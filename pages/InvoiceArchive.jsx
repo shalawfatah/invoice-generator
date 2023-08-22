@@ -25,7 +25,7 @@ const InvoiceArchive = () => {
 
   useEffect(() => {
     fetch_invoices()
-  }, [])
+  }, [invoice])
 
   return (
     <ScrollView className="bg-white">
