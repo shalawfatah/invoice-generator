@@ -27,7 +27,7 @@ const CompanyRegister = () => {
         body: JSON.stringify({
           email: email,
           name: name,
-          description: address
+          address: address
         }),
     })
     const result = await response.json()
