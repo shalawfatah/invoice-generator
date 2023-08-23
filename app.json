@@ -3,7 +3,7 @@
     "name": "Invoice Generator",
     "slug": "invoice-generator",
     "version": "1.0.0",
-  "description": "Generate invoices, estimates, PTOs on the go and send them to clients with a couple of taps",
+    "description": "Generate invoices, estimates, PTOs on the go and send them to clients with a couple of taps",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -33,6 +33,12 @@
       "eas": {
         "projectId": "bdc81d5d-1868-47c5-8980-27a64b950d1e"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/bdc81d5d-1868-47c5-8980-27a64b950d1e"
     }
   }
 }
