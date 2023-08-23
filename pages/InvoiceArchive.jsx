@@ -62,7 +62,7 @@ const InvoiceArchive = () => {
     <ScrollView className="bg-white">
       {invoice.map(item => {
         const time = format(new Date(item.created_at), "dd MMMM yyyy 'at' HH:mm ")
-        return <View key={item.id} className="m-2">
+        return <View key={item.id} className="mx-2">
                   <InvoiceItem 
                           company={item.companies.company_name} 
                           date={time} 
