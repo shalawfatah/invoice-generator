@@ -1,6 +1,7 @@
 {
   "name": "invoice-generator",
   "version": "1.0.0",
+  "description": "Generate invoices, estimates, PTOs on the go and send them to clients with a couple of taps",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",

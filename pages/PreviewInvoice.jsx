@@ -84,7 +84,7 @@ const PreviewInvoice = ({route}) => {
       );
     };
     
-
+console.log('is email available ', isAvailable)
   return (
     <View>
     <ScrollView>
