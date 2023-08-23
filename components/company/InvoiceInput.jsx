@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
 const InvoiceInput = ({placeholder, label, mode}) => {

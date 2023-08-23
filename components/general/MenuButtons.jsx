@@ -28,11 +28,6 @@ const MenuButtons = () => {
               label: 'Estimate',
               onPress: () => navigation.navigate('Add Estimate'),
             },
-            {
-              icon: 'file-document-outline',
-              label: 'PTO',
-              onPress: () => console.log('Pressed notifications'),
-            },
           ]}
           onStateChange={onStateChange}
         />

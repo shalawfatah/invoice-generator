@@ -1,5 +1,5 @@
-import { View, ScrollView } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
+import { View, ScrollView } from 'react-native'
 import { supabase } from '../lib/supabase';
 import InvoiceItem from '../components/invoice/InvoiceItem';
 import { useNavigation } from '@react-navigation/native';
@@ -71,7 +71,7 @@ const EstimateArchive = () => {
                </View>
       })}
     </ScrollView>
-    <View className="absolute bottom-48 h-32 w-full z-32">
+      <View className="absolute bottom-40 h-32 w-full z-32">
         <MenuButtons />
       </View>
     </View>

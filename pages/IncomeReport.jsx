@@ -1,5 +1,5 @@
-import { View, Text, ScrollView } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
+import { View, Text, ScrollView } from 'react-native'
 import Checking from '../components/account/Checking';
 import { supabase } from '../lib/supabase';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
@@ -43,7 +43,7 @@ const IncomeReport = () => {
         </ScrollView>
       )}</View>)}
       </ScrollView>
-      <View className="absolute bottom-48 h-32 w-full z-32">
+      <View className="absolute bottom-40 h-32 w-full z-32">
         <MenuButtons />
       </View>
     </View>

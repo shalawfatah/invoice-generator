@@ -1,10 +1,10 @@
-import { View, Text, FlatList, ScrollView, Button, TouchableOpacity, Switch } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
+import { View, Text, ScrollView, TouchableOpacity, Switch } from 'react-native'
 import {Picker} from '@react-native-picker/picker'
-import { TextInput, Checkbox } from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
 import InvoiceBtn from '../components/general/Button';
 import { useNavigation } from '@react-navigation/native'
-import { calc_amount, gst, subtotal_calc } from '../util_functions/calc_amount';
+import { calc_amount } from '../util_functions/calc_amount';
 import Border from '../components/general/Border';
 import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';

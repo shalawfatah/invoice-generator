@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TouchableOpacity, View, Text } from 'react-native';
-import { Button } from 'react-native-paper';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 

@@ -108,7 +108,7 @@ const Home = () => {
         </TouchableOpacity>
         </View>
         </ScrollView>
-        <View className="absolute bottom-48 h-32 w-full z-32 bg-white">
+        <View className="absolute bottom-40 h-32 w-full z-32 bg-white">
           <MenuButtons />
         </View>
     </View>

@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { View, Text, TouchableOpacity } from 'react-native'
 import Border from '../components/general/Border';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { format } from 'date-fns';

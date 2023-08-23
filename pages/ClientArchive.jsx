@@ -1,5 +1,5 @@
-import { ScrollView, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
+import { ScrollView, View } from 'react-native'
 import { supabase } from '../lib/supabase'
 import SingleCompany from '../components/company/SingleCompany'
 import { useNavigation } from '@react-navigation/native'

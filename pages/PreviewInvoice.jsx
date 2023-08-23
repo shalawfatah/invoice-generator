@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView } from 'react-native'
+import { View, ScrollView, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { supabase } from '../lib/supabase'
 import * as Print from 'expo-print';
@@ -15,6 +15,7 @@ const PreviewInvoice = ({route}) => {
   const [pdf, setPdf] = useState(null);
   const [client, setClient] = useState(chosen)
   const [isAvailable, setIsAvailable] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [profile, setProfile] = useState(null)
   const fetch_profile = async() => {
     const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
@@ -47,6 +48,7 @@ const PreviewInvoice = ({route}) => {
 
     const generatePDF = async () => {
       // SAVE THE DATA FIRST
+      setLoading(true)
         const { data, error } = await supabase
         .from('invoices')
         .insert([
@@ -82,9 +84,10 @@ const PreviewInvoice = ({route}) => {
           attachments: [contentUri]
         })
       );
+      setLoading(false)
     };
     
-console.log('is email available ', isAvailable)
+
   return (
     <View>
     <ScrollView>
@@ -107,14 +110,17 @@ console.log('is email available ', isAvailable)
         classes="my-2" 
         duty={() => navigation.navigate('Add Invoice')} 
         />
-      <InvoiceBtn 
+      {isAvailable ? <InvoiceBtn 
         text="Send Invoice" 
         icon="rocket"
         classes="my-2 " 
         buttonColor='#dc143c' 
         textColor='#FFF'
+        loading={loading}
         duty={generatePDF}
-        />
+        /> : <View className="p-2">
+                <Text className="text-center text-md my-2">Mail service is not available</Text>
+              </View>}
     </View>
     </View>
   )

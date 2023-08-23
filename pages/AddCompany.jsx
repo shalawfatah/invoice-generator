@@ -13,8 +13,7 @@ const AddCompany = () => {
     const [address, setAddress] = useState('')
     const [email, setEmail] = useState('')
     const [loading, setLoading] = useState(false)
-    console.log('user ', id)
-  
+      
     const navigation = useNavigation()
 
     const add_company = async() => {
