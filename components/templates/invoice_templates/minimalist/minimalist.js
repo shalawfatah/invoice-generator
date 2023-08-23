@@ -2,7 +2,7 @@ export const minimalist_template = (
     company_name, company_address, company_email, company_logo,
     client_name, client_address, client_email,
     tasks, subtotal, tax, total, note, dox
-) => `<html lang="en">
+) => `<!-- template minimalist --><html lang="en">
     
 <body style="padding: 2rem;">
 

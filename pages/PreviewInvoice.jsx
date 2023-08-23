@@ -10,22 +10,13 @@ import TemplateRenderer from '../components/templates/TemplateRenderer.jsx'
 import { template_choice } from '../components/templates/template_choice.js'
 
 const PreviewInvoice = ({route}) => {
-  const {tasks, tax, subtotal, total, chosen, note, user} = route.params;
+  const {tasks, tax, subtotal, total, chosen, note, user, profile} = route.params;
   const navigation = useNavigation();
   const [pdf, setPdf] = useState(null);
   const [client, setClient] = useState(chosen)
   const [isAvailable, setIsAvailable] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [profile, setProfile] = useState(null)
-  const fetch_profile = async() => {
-    const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
-    if(error) {
-      console.log(error)
-    } else {
-      setProfile(data)
-    }
-  }
-  useEffect(() => { fetch_profile() }, [user])
+  const [clientMaker, setClientMaker] = useState(false)
 
   const dox = "Invoice"
   useEffect(() => {
@@ -35,18 +26,24 @@ const PreviewInvoice = ({route}) => {
     }
     checkAvailability()
   })
+  const clienter = () => {
+    const parsedClient = JSON.parse(chosen)
+    setClient(parsedClient)
+    setClientMaker(true)
+  }
   useEffect(() => {
-    setClient(JSON.parse(chosen))
+    clienter()
   }, [route])
 
   const [temp, setTemp] = useState(null)
-  useEffect(() => { 
-    if(profile !== null) {
-      setTemp(template_choice(profile?.name, profile, client, tasks, subtotal, tax, total, note ))
-    }
-  }, [user])
 
-    const generatePDF = async () => {
+  useEffect(() => { 
+    if(clientMaker === true && tasks !== undefined) {
+      setTemp(template_choice(profile, client, tasks, subtotal, tax, total, note, profile.template))
+    }
+  }, [clientMaker])
+
+  const generatePDF = async () => {
       // SAVE THE DATA FIRST
       setLoading(true)
         const { data, error } = await supabase
@@ -75,15 +72,17 @@ const PreviewInvoice = ({route}) => {
           base64:false,
       })
       const contentUri = await FileSystem.getContentUriAsync(file.uri);
-      profile !== null && (
-        await MailComposer.composeAsync({
-          Subject: `${name}. ${dox}"`,
-          body: `This is an ${dox}`,
-          recipients: ["shalaw.fatah@gmail.com"],
-          bccRecipients: [profile.email],
-          attachments: [contentUri]
-        })
-      );
+      if(profile !== null) {
+          await MailComposer.composeAsync({
+            Subject: `${name}. ${dox}"`,
+            body: `This is an ${dox}`,
+            recipients: ["shalaw.fatah@gmail.com"],
+            bccRecipients: [profile.email],
+            attachments: [contentUri]
+          })
+      } else {
+        return;
+      }
       setLoading(false)
     };
     
@@ -110,7 +109,7 @@ const PreviewInvoice = ({route}) => {
         classes="my-2" 
         duty={() => navigation.navigate('Add Invoice')} 
         />
-      {isAvailable ? <InvoiceBtn 
+       <InvoiceBtn 
         text="Send Invoice" 
         icon="rocket"
         classes="my-2 " 
@@ -118,9 +117,7 @@ const PreviewInvoice = ({route}) => {
         textColor='#FFF'
         loading={loading}
         duty={generatePDF}
-        /> : <View className="p-2">
-                <Text className="text-center text-md my-2">Mail service is not available</Text>
-              </View>}
+        />
     </View>
     </View>
   )

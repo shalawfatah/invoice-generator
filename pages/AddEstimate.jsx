@@ -16,6 +16,7 @@ const AddEstimate = () => {
   const user = useContext(SessionContext)
   const [status, setStatus] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
+  const [profile, setProfile] = useState(null)
 
   const checkUser = async() => {
     const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
@@ -23,6 +24,7 @@ const AddEstimate = () => {
       console.log(error)
     } else {
       setStatus(data.subscription_status)
+      setProfile(data)
     }
     setIsLoading(false);
   }
@@ -193,7 +195,7 @@ const AddEstimate = () => {
           <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 font-bold min-w-[150px] text-center">{isNaN(total) ? null : `$${total}`}</Text>
         </View>
         <InvoiceBtn 
-          duty={() => navigation.navigate('PreviewEstimate', {tasks, subtotal, tax, total, chosen, note, user})} 
+          duty={() => navigation.navigate('PreviewEstimate', {tasks, subtotal, tax, total, chosen, note, user, profile})} 
           icon="add-circle-outline" 
           text="Save" /> 
           <View className="my-12"></View>

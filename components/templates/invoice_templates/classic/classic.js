@@ -3,6 +3,7 @@ export const classic_template = (
     client_name, client_address, client_email,
     tasks, subtotal, tax, total, note, dox
 ) => `
+<!-- template classic -->
 <html>
 <body>
 <div style="display:flex; justify-content:center;">
