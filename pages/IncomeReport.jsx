@@ -1,9 +1,10 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { SessionContext } from '../App';
 import Checking from '../components/account/Checking';
 import { supabase } from '../lib/supabase';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import MenuButtons from '../components/general/MenuButtons';
 
 const IncomeReport = () => {
   const user = useContext(SessionContext);
@@ -24,7 +25,8 @@ const IncomeReport = () => {
     checkUser()
   }, [status, user])
   return (
-    <View>
+    <View className="h-screen relative">
+    <ScrollView className="bg-white">
     {isLoading ? (
         <ActivityIndicator 
             animating={true} 
@@ -36,6 +38,10 @@ const IncomeReport = () => {
       {status !== 'active' ? (<Checking />) :  (
         <Text>hello</Text>
       )}</View>)}
+      </ScrollView>
+      <View className="absolute bottom-48 h-32 w-full z-32">
+        <MenuButtons />
+      </View>
     </View>
   )
 }

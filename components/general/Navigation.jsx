@@ -38,56 +38,56 @@ const Navigation = () => {
                 tabBarInactiveTintColor: 'gray',
                 }}
                 >
+                  <Tab.Screen 
+                      name={"Archive"} 
+                      component={InvoiceArchive}
+                      options={{
+                        title: "Invoice Archive",
+                        tabBarIcon: ({ color, size }) => (
+                          <Ionicons name="reader-outline" color={color} size={20} />
+                        ),
+                        tabBarStyle: {}
+                    }}
+                    />
+                  <Tab.Screen 
+                      name={"EstimateArchive"} 
+                      component={EstimateArchive}
+                      options={{
+                        title: "Estimate Archive",
+                        tabBarIcon: ({ color, size }) => (
+                          <Ionicons name="receipt-outline" color={color} size={20} />
+                        ),
+                        tabBarStyle: {}
+                    }}
+                    />
+                  <Tab.Screen 
+                      name={"Account"} 
+                      component={Home}
+                      options={{
+                        tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="person-circle-outline" color={color} size={20} />
+                        ),
+                        tabBarStyle: {}
+                    }}
+                  />
                 <Tab.Screen 
                     name={"Add Invoice"} 
                     component={AddInvoice}
                     options={{
-                        tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="create-outline" color={color} size={20} />
-                        ),
-                        tabBarStyle: {}
+                      tabBarIcon: ({ focused, color, size }) => null,
+                      tabBarLabel: ({ focused, color, position, children }) => null,
+                      tabBarButton: (props) => null // use a custom component to replace the default tab button
                     }}
                   />
                   <Tab.Screen 
                     name={"Add Estimate"} 
                     component={AddEstimate}
                     options={{
-                        tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="newspaper-outline" color={color} size={20} />
-                        ),
-                        tabBarStyle: {}
-                    }}
-                  />
-                <Tab.Screen 
-                    name={"Archive"} 
-                    component={InvoiceArchive}
-                    options={{
                       tabBarIcon: ({ focused, color, size }) => null,
-                      title: "Invoice Archie",
                       tabBarLabel: ({ focused, color, position, children }) => null,
-                      tabBarButton: (props) => null
+                      tabBarButton: (props) => null // use a custom component to replace the default tab button
                     }}
                   />
-                <Tab.Screen 
-                    name={"EstimateArchive"} 
-                    component={EstimateArchive}
-                    options={{
-                      tabBarIcon: ({ focused, color, size }) => null,
-                      title: "Estimate Archie",
-                      tabBarLabel: ({ focused, color, position, children }) => null,
-                      tabBarButton: (props) => null
-                    }}
-                  />
-                <Tab.Screen 
-                    name={"Account"} 
-                    component={Home}
-                    options={{
-                      tabBarIcon: ({ color, size }) => (
-                      <Ionicons name="person-circle-outline" color={color} size={20} />
-                      ),
-                      tabBarStyle: {}
-                  }}
-                />
                   <Tab.Screen 
                   name={"Company Register"} 
                   component={CompanyRegister}

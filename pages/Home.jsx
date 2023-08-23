@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import { supabase } from '../lib/supabase'
 import { SessionContext } from '../App'
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -8,6 +8,7 @@ import InvoiceBtn from '../components/general/Button';
 import Checking from '../components/account/Checking';
 import { Divider } from 'react-native-paper';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import MenuButtons from '../components/general/MenuButtons';
 
 const Home = () => {
       const user = useContext(SessionContext);
@@ -53,7 +54,8 @@ const Home = () => {
       };
 
   return (
-    <View className="bg-white min-h-screen ">
+    <View className="bg-white min-h-screen relative">
+      <ScrollView>
       <View className="p-2">
         <InvoiceBtn text="Invoice Archive" duty={() => navigation.navigate('Archive')} icon="file-tray-full" />
         <InvoiceBtn text="Estimate Archive" duty={() => navigation.navigate('EstimateArchive')} icon="file-tray-stacked" />
@@ -104,6 +106,10 @@ const Home = () => {
           <Text className="mx-2 font-bold text-black">Sign Out</Text>
           <Ionicons name="log-out-outline" color={"black"} size={20} />
         </TouchableOpacity>
+        </View>
+        </ScrollView>
+        <View className="absolute bottom-48 h-32 w-full z-32 bg-white">
+          <MenuButtons />
         </View>
     </View>
   )
