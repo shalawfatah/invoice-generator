@@ -36,7 +36,11 @@ const IncomeReport = () => {
       ) : (
     <View>
       {status !== 'active' ? (<Checking />) :  (
-        <Text>hello</Text>
+        <ScrollView>
+          <View className="p-2">
+            <Text className="text-center text-md my-2">Reports and Charts will be available about your income soon</Text>
+          </View>
+        </ScrollView>
       )}</View>)}
       </ScrollView>
       <View className="absolute bottom-48 h-32 w-full z-32">

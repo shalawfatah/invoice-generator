@@ -35,11 +35,6 @@ const MenuButtons = () => {
             },
           ]}
           onStateChange={onStateChange}
-          onPress={() => {
-            if (open) {
-              // do something if the speed dial is open
-            }
-          }}
         />
       </Portal>
     </PaperProvider>

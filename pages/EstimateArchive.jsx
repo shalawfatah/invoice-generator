@@ -58,7 +58,7 @@ const EstimateArchive = () => {
     <View>
       {status !== 'active' ? (<Checking />) :  (
     <View className="h-screen relative">
-    <ScrollView className="bg-white">
+    <ScrollView className="bg-white py-1">
       {invoice.map(item => {
         const time = format(new Date(item.created_at), "dd MMMM yyyy 'at' HH:mm ")
         return <View key={item.id} className="mx-2">
