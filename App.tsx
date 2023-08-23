@@ -5,9 +5,7 @@ import Auth from './components/account/Auth'
 import { Session } from '@supabase/supabase-js'
 import Navigation from './components/general/Navigation'
 import { StripeProvider } from '@stripe/stripe-react-native'
-import UserProp from './components/general/UserProp'
-
-export const SessionContext = createContext(null)
+import { SessionContext } from './components/general/SessionContext'
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null)
@@ -26,14 +24,6 @@ export default function App() {
       setIsSessionSet(true) // Mark session as set
     })
   }, [])
-
-  useEffect(() => {
-    if (isSessionSet) {
-      // Now, you can set the user state after the session state is set
-      // This will ensure that the user state is only set after session state is available
-      // Do any additional processing or rendering that involves both session and user here
-    }
-  }, [isSessionSet])
 
   return (
     <StripeProvider publishableKey='pk_test_51HhPuUK1omnuMJYrNMXx9TZgm4MhtRewC2QU8WTBBcHUTBUFshVHc3HCI7xXoPwjUC8asvr03tz9hLOWBRUXasSy00uLZxpufi'>

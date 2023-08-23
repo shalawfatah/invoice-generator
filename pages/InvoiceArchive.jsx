@@ -1,6 +1,5 @@
 import { View, ScrollView } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import { SessionContext } from '../App';
 import { supabase } from '../lib/supabase';
 import InvoiceItem from '../components/invoice/InvoiceItem';
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +7,7 @@ import { format } from 'date-fns';
 import MenuButtons from '../components/general/MenuButtons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import Checking from '../components/account/Checking';
+import { SessionContext } from '../components/general/SessionContext';
 
 const InvoiceArchive = () => {
   const {id} = useContext(SessionContext);
@@ -61,7 +61,7 @@ const InvoiceArchive = () => {
     <View className="h-screen">
     <ScrollView className="bg-white py-1">
       {invoice.map(item => {
-        const time = format(new Date(item.created_at), "dd MMMM yyyy 'at' HH:mm ")
+        const time = format(new Date(item.created_at), "dd MMMM yyyy 'at' HH:mm aa")
         return <View key={item.id} className="mx-2">
                   <InvoiceItem 
                           company={item.companies.company_name} 

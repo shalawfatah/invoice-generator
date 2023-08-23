@@ -4,7 +4,7 @@ import {WebView} from 'react-native-webview'
 import InvoiceBtn from '../general/Button';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../lib/supabase';
-import { SessionContext } from '../../App';
+import { SessionContext } from '../general/SessionContext';
 
 const TemplateView = ({route}) => {
     const {item} = route.params;

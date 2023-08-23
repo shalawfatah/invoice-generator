@@ -8,9 +8,9 @@ import { calc_amount, gst, subtotal_calc } from '../util_functions/calc_amount';
 import Border from '../components/general/Border';
 import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { SessionContext } from '../App';
 import Checking from '../components/account/Checking';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import { SessionContext } from '../components/general/SessionContext';
 
 const AddInvoice = () => {
   const user = useContext(SessionContext)

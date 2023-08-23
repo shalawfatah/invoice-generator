@@ -1,10 +1,10 @@
 import { View, Text, ScrollView } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import { SessionContext } from '../App';
 import Checking from '../components/account/Checking';
 import { supabase } from '../lib/supabase';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import MenuButtons from '../components/general/MenuButtons';
+import { SessionContext } from '../components/general/SessionContext';
 
 const IncomeReport = () => {
   const user = useContext(SessionContext);

@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import { TextInput } from 'react-native-paper';
 import InvoiceBtn from "../general/Button";
 import { useNavigation } from "@react-navigation/native";
-import { SessionContext } from "../../App";
+import { SessionContext } from "../general/SessionContext";
 
 const CompanyRegister = () => {
   const session = useContext(SessionContext)

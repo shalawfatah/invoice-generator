@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import { supabase } from '../lib/supabase'
-import { SessionContext } from '../App'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import InvoiceBtn from '../components/general/Button';
@@ -9,6 +8,7 @@ import Checking from '../components/account/Checking';
 import { Divider } from 'react-native-paper';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import MenuButtons from '../components/general/MenuButtons';
+import { SessionContext } from '../components/general/SessionContext';
 
 const Home = () => {
       const user = useContext(SessionContext);

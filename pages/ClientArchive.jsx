@@ -1,9 +1,9 @@
 import { ScrollView, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
-import { SessionContext } from '../App'
 import SingleCompany from '../components/company/SingleCompany'
 import { useNavigation } from '@react-navigation/native'
+import { SessionContext } from '../components/general/SessionContext'
 
 const ClientArchive = () => {
 

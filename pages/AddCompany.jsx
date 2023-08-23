@@ -2,9 +2,9 @@ import { View, Text } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import InvoiceBtn from '../components/general/Button'
-import { SessionContext } from '../App'
 import { TextInput } from 'react-native-paper';
 import { supabase } from '../lib/supabase'
+import { SessionContext } from '../components/general/SessionContext';
 
 const AddCompany = () => {
     const session = useContext(SessionContext);

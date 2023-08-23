@@ -4,7 +4,7 @@ import { TextInput } from 'react-native-paper';
 import InvoiceBtn from '../components/general/Button';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../lib/supabase';
-import { SessionContext } from '../App';
+import { SessionContext } from '../components/general/SessionContext';
 
 const EditProfile = ({route}) => {
   const {user} = route.params;
