@@ -69,17 +69,17 @@ const PreviewInvoice = ({route}) => {
         } else {
           console.log(data)
         }
-      const name = profile.name
+      const name = profile.name || 'default_name';
       const file = await Print.printToFileAsync({
         html: temp,
           base64:false,
       })
       const contentUri = await FileSystem.getContentUriAsync(file.uri);
       profile !== null && (
-        MailComposer.composeAsync({
+        await MailComposer.composeAsync({
           Subject: `${name}. ${dox}"`,
           body: `This is an ${dox}`,
-          recipients: ["shalaw.fatah@gmail.com", client.company_email],
+          recipients: ["shalaw.fatah@gmail.com"],
           bccRecipients: [profile.email],
           attachments: [contentUri]
         })
