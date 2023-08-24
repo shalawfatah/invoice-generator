@@ -14,6 +14,8 @@ const Home = () => {
       const user = useContext(SessionContext);
       const [profile, setProfile] = useState(null);
       const [isLoading, setIsLoading] = useState(true);
+      const API_URL = "https://ray-mobile-backend.onrender.com";
+      const [loading, setLoading] = useState(false);
 
       const checkUser = async () => {
         const { data, error } = await supabase
@@ -52,6 +54,27 @@ const Home = () => {
           console.log(error);
         }
       };
+
+      const stop_subscription = async() => {
+        setLoading(true)
+        const response = await fetch(`${API_URL}/cancel-subscription-invoice`, {
+            method: 'post',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id: profile.stripe_customer_id
+            }),
+        })
+        const result = await response.json()
+        if(error) {
+          console.log(error)
+          return;
+        } else {
+          console.log(result)
+        }
+        setLoading(false)
+      }
 
   return (
     <View className="bg-white min-h-screen relative">
@@ -97,6 +120,10 @@ const Home = () => {
         <TouchableOpacity onPress={delete_user} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 font-bold text-white">Delete Profile</Text>
           <Ionicons name="trash-outline" color={"white"} size={20} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={stop_subscription} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
+          <Text className="mx-2 font-bold text-white">Stop Subscription</Text>
+          <Ionicons name="pause" color={"white"} size={20} />
         </TouchableOpacity>
     </View>
         )}
