@@ -35,26 +35,26 @@ const PreviewEstimate = ({route}) => {
 
     const generatePDF = async () => {
       // SAVE THE DATA FIRST
-        // const { data, error } = await supabase
-        // .from('invoices')
-        // .insert([
-        //   {
-        //     user_id: profile.user_id,
-        //     company_id: client?.id,
-        //     subtotal: subtotal,
-        //     total: total,
-        //     subtotal: subtotal,
-        //     tax_amount: tax,
-        //     tasks: tasks,
-        //     type: 'estimate'
-        //   },
-        // ])
-        // .select()
-        // if(error) {
-        //   console.log(error)
-        // } else {
-        //   console.log(data)
-        // }
+        const { data, error } = await supabase
+        .from('invoices')
+        .insert([
+          {
+            user_id: profile.user_id,
+            company_id: client?.id,
+            subtotal: subtotal,
+            total: total,
+            subtotal: subtotal,
+            tax_amount: tax,
+            tasks: tasks,
+            type: 'estimate'
+          },
+        ])
+        .select()
+        if(error) {
+          console.log(error)
+        } else {
+          console.log(data)
+        }
       const name = profile.name
       const file = await Print.printToFileAsync({
         html: temp,
@@ -69,7 +69,7 @@ const PreviewEstimate = ({route}) => {
                 recipients: ["shalaw.fatah@gmail.com"],
                 bccRecipients: [profile.email],
                 attachments: [contentUri]
-              })
+              }).then((res) => setLoading(false)).catch((error) => Alert.alert(error.message))
           } else {
             return;
           }

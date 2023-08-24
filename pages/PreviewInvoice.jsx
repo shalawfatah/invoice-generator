@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, Text } from 'react-native'
+import { View, ScrollView, Text, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { supabase } from '../lib/supabase'
 import * as Print from 'expo-print';
@@ -37,26 +37,26 @@ const PreviewInvoice = ({route}) => {
   const generatePDF = async () => {
       // SAVE THE DATA FIRST
       setLoading(true)
-        // const { data, error } = await supabase
-        // .from('invoices')
-        // .insert([
-        //   {
-        //     user_id: profile.user_id,
-        //     company_id: client?.id,
-        //     subtotal: subtotal,
-        //     total: total,
-        //     subtotal: subtotal,
-        //     tax_amount: tax,
-        //     tasks: tasks,
-        //     type: 'invoice'
-        //   },
-        // ])
-        // .select()
-        // if(error) {
-        //   console.log(error)
-        // } else {
-        //   console.log(data)
-        // }
+        const { data, error } = await supabase
+        .from('invoices')
+        .insert([
+          {
+            user_id: profile.user_id,
+            company_id: client?.id,
+            subtotal: subtotal,
+            total: total,
+            subtotal: subtotal,
+            tax_amount: tax,
+            tasks: tasks,
+            type: 'invoice'
+          },
+        ])
+        .select()
+        if(error) {
+          console.log(error)
+        } else {
+          console.log(data)
+        }
       const name = profile.name || 'default_name';
       const file = await Print.printToFileAsync({
         html: temp,
@@ -70,7 +70,7 @@ const PreviewInvoice = ({route}) => {
             recipients: ["shalaw.fatah@gmail.com"],
             bccRecipients: [profile.email],
             attachments: [contentUri]
-          })
+          }).then((res) => setLoading(false)).catch((error) => Alert.alert(error.message))
       } else {
         return;
       }
