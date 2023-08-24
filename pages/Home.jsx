@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Alert, TouchableOpacity, ScrollView } from 'react-native'
 import { supabase } from '../lib/supabase'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
@@ -55,6 +55,16 @@ const Home = () => {
         }
       };
 
+      const subscription_trigger = () => {
+        Alert.alert('Stop Subscription', 'Do you really want to stop subscribing to Invoice Generator?', [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => stop_subscription()},
+        ]);
+      }
       const stop_subscription = async() => {
         setLoading(true)
         const response = await fetch(`${API_URL}/cancel-subscription-invoice`, {
@@ -121,7 +131,7 @@ const Home = () => {
           <Text className="mx-2 font-bold text-white">Delete Profile</Text>
           <Ionicons name="trash-outline" color={"white"} size={20} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={stop_subscription} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
+        <TouchableOpacity onPress={subscription_trigger} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 font-bold text-white">Stop Subscription</Text>
           <Ionicons name="pause" color={"white"} size={20} />
         </TouchableOpacity>
