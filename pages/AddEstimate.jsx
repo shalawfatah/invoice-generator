@@ -79,6 +79,10 @@ const AddEstimate = () => {
   const tax = amount.taxAmount.toFixed(2);
   const total = amount.total.toFixed(2);
 
+  const prevEstimate = () => {
+    const choice = JSON.parse(chosen)
+    navigation.navigate('PreviewEstimate', {tasks, subtotal, tax, total, choice, note, user, profile})
+  }
   return (
     <View>
           {isLoading ? (
@@ -195,7 +199,7 @@ const AddEstimate = () => {
           <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 font-bold min-w-[150px] text-center">{isNaN(total) ? null : `$${total}`}</Text>
         </View>
         <InvoiceBtn 
-          duty={() => navigation.navigate('PreviewEstimate', {tasks, subtotal, tax, total, chosen, note, user, profile})} 
+          duty={prevEstimate} 
           icon="add-circle-outline" 
           text="Save" /> 
           <View className="my-12"></View>

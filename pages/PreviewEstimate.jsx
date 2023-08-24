@@ -10,12 +10,11 @@ import TemplateRenderer from '../components/templates/TemplateRenderer.jsx'
 import { template_choice } from '../components/templates/template_choice.js'
 
 const PreviewEstimate = ({route}) => {
-  const {tasks, tax, subtotal, total, chosen, note, user, profile} = route.params;
+  const {tasks, tax, subtotal, total, choice, note, user, profile} = route.params;
   const navigation = useNavigation();
   const [pdf, setPdf] = useState(null);
-  const [client, setClient] = useState(chosen)
+  const [client, setClient] = useState(choice)
   const [isAvailable, setIsAvailable] = useState(false)
-  const [clientMaker, setClientMaker] = useState(false)
   const [loading, setLoading] = useState(false)
   const [temp, setTemp] = useState(null)
 
@@ -28,43 +27,34 @@ const PreviewEstimate = ({route}) => {
     checkAvailability()
   })
 
-  const clienter = () => {
-    const parsedClient = JSON.parse(chosen)
-    setClient(parsedClient)
-    setClientMaker(true)
-  }
-  useEffect(() => {
-    clienter()
-  }, [route])
-
   useEffect(() => { 
-    if(clientMaker === true && tasks !== undefined) {
+    if(tasks !== undefined) {
       setTemp(template_choice(profile, client, tasks, subtotal, tax, total, note, profile.template))
     }
-  }, [clientMaker])
+  }, [])
 
     const generatePDF = async () => {
       // SAVE THE DATA FIRST
-        const { data, error } = await supabase
-        .from('invoices')
-        .insert([
-          {
-            user_id: profile.user_id,
-            company_id: client?.id,
-            subtotal: subtotal,
-            total: total,
-            subtotal: subtotal,
-            tax_amount: tax,
-            tasks: tasks,
-            type: 'estimate'
-          },
-        ])
-        .select()
-        if(error) {
-          console.log(error)
-        } else {
-          console.log(data)
-        }
+        // const { data, error } = await supabase
+        // .from('invoices')
+        // .insert([
+        //   {
+        //     user_id: profile.user_id,
+        //     company_id: client?.id,
+        //     subtotal: subtotal,
+        //     total: total,
+        //     subtotal: subtotal,
+        //     tax_amount: tax,
+        //     tasks: tasks,
+        //     type: 'estimate'
+        //   },
+        // ])
+        // .select()
+        // if(error) {
+        //   console.log(error)
+        // } else {
+        //   console.log(data)
+        // }
       const name = profile.name
       const file = await Print.printToFileAsync({
         html: temp,
