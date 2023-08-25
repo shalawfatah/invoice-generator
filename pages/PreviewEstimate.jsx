@@ -8,6 +8,7 @@ import * as MailComposer from 'expo-mail-composer';
 import * as FileSystem from 'expo-file-system';
 import TemplateRenderer from '../components/templates/TemplateRenderer.jsx'
 import { template_choice } from '../components/templates/template_choice.js'
+import * as Sharing from 'expo-sharing';
 
 const PreviewEstimate = ({route}) => {
   const {tasks, tax, subtotal, total, choice, note, user, profile} = route.params;
@@ -17,7 +18,12 @@ const PreviewEstimate = ({route}) => {
   const [isAvailable, setIsAvailable] = useState(false)
   const [loading, setLoading] = useState(false)
   const [temp, setTemp] = useState(null)
+  const [sharing, setSharing] = useState(false);
+  const isSharingAvilable = () => Sharing.isAvailableAsync().then((res) => setSharing(res)).catch(e => console.log(e))
 
+  useEffect(() => {
+    isSharingAvilable()
+  }, [])
   const dox = "Estimate"
   useEffect(() => {
     async function checkAvailability() {
@@ -61,17 +67,22 @@ const PreviewEstimate = ({route}) => {
           base64:false,
       })
       const contentUri = await FileSystem.getContentUriAsync(file.uri);
-        if(profile !== null) {
-              await MailComposer.composeAsync({
-                Subject: `${name}. ${dox}`,
-                body: `This is an ${dox}`,
-                recipients: [client.company_email, "shalaw.fatah@gmail.com"],
-                bccRecipients: [profile.email],
-                attachments: [contentUri]
-              }).then((res) => setLoading(false)).catch((error) => Alert.alert(error.message))
-          } else {
-            return;
-          }
+    if(sharing) {
+      Sharing.shareAsync(contentUri)
+    } else {
+      Alert.alert('Sharing is not available')
+    }
+      // if(profile !== null) {
+      //       await MailComposer.composeAsync({
+      //         Subject: `${name}. ${dox}`,
+      //         body: `This is an ${dox}`,
+      //         recipients: [client.company_email, "shalaw.fatah@gmail.com"],
+      //         bccRecipients: [profile.email],
+      //         attachments: [contentUri]
+      //       }).then((res) => setLoading(false)).catch((error) => Alert.alert(error.message))
+      //   } else {
+      //     return;
+      //   }
     setLoading(false)
     };
     
@@ -99,7 +110,7 @@ const PreviewEstimate = ({route}) => {
         duty={() => navigation.navigate('Add Estimate')} 
         />
     <InvoiceBtn 
-        text="Send Estimate" 
+        text="Share Estimate" 
         icon="rocket"
         classes="my-2 " 
         buttonColor='#dc143c' 
