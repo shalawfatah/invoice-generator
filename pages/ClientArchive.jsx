@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, TouchableOpacity, View, Text } from 'react-native'
 import { supabase } from '../lib/supabase'
 import SingleCompany from '../components/company/SingleCompany'
 import { useNavigation } from '@react-navigation/native'
 import { SessionContext } from '../components/general/SessionContext'
+import { Surface } from 'react-native-paper'
+import InvoiceBtn from '../components/general/Button'
 
 const ClientArchive = () => {
 
@@ -33,6 +35,10 @@ const ClientArchive = () => {
   }, [companies])
 
   return (
+    <View className="bg-white">
+      <View className="my-2 mx-4">
+        <InvoiceBtn text="Add Client" icon="add-outline" />
+      </View>
     <ScrollView className="bg-[#fbfbfb] p-1">
       {companies?.map(item => {
         return <View key={item.id}>
@@ -45,6 +51,7 @@ const ClientArchive = () => {
                </View>
       })}
     </ScrollView>
+    </View>
   )
 }
 

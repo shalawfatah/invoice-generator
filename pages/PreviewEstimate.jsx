@@ -24,7 +24,8 @@ const PreviewEstimate = ({route}) => {
   useEffect(() => {
     isSharingAvilable()
   }, [])
-  const dox = "Estimate"
+  const dox = "Estimate";
+  
   useEffect(() => {
     async function checkAvailability() {
       const isMailAvailable = await MailComposer.isAvailableAsync();

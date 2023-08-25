@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import InvoiceBtn from '../components/general/Button';
 import Checking from '../components/account/Checking';
 import { Divider } from 'react-native-paper';
-import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import { ActivityIndicator, MD2Colors, Surface } from 'react-native-paper';
 import MenuButtons from '../components/general/MenuButtons';
 import { SessionContext } from '../components/general/SessionContext';
 
@@ -89,12 +89,17 @@ const Home = () => {
   return (
     <View className="bg-white min-h-screen relative">
       <ScrollView>
-      <View className="p-2">
-        <InvoiceBtn text="Invoice Archive" duty={() => navigation.navigate('Archive')} icon="file-tray-full" />
-        <InvoiceBtn text="Estimate Archive" duty={() => navigation.navigate('EstimateArchive')} icon="file-tray-stacked" />
-        <InvoiceBtn text="Clientele List" duty={() => navigation.navigate('Client Archive')} icon="list" />
-        <InvoiceBtn text="Add Clients" duty={() => navigation.navigate('AddCompany')} icon="add-circle" />
-        <InvoiceBtn text="Invoice Templates" duty={() => navigation.navigate('Templates')} icon="document" />
+      <View className="p-2 flex flex-row justify-around py-6">
+        <TouchableOpacity onPress={() => navigation.navigate('Client Archive')}>
+        <Surface elevation={4} className="h-24 w-24 flex flex-row justify-center items-center rounded-md">
+          <Text className="font-bold">Clients</Text>
+        </Surface>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Templates')}>
+        <Surface elevation={4} className="h-24 w-24 flex flex-row justify-center items-center rounded-md">
+          <Text className="font-bold">Templates</Text>
+        </Surface>
+        </TouchableOpacity>
       </View>
     <Divider />
     {isLoading ? (

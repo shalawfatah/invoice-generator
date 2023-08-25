@@ -46,7 +46,7 @@ const PreviewInvoice = ({route}) => {
           subtotal: subtotal,
           tax_amount: tax,
           tasks: tasks,
-          type: 'estimate'
+          type: 'invoice'
         },
       ])
       .select()

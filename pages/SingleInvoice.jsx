@@ -19,7 +19,7 @@ const SingleInvoice = ({route}) => {
       if(error) {
         console.log(error)
       } else {
-        navigation.navigate('Archive')
+        item.type === 'invoice' ? navigation.navigate('Archive') : navigation.navigate('EstimateArchive')
       }
   }
   return (
