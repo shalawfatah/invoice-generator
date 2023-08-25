@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, Text, Alert } from 'react-native'
+import { View, ScrollView, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { supabase } from '../lib/supabase'
 import * as Print from 'expo-print';
@@ -67,7 +67,7 @@ const PreviewInvoice = ({route}) => {
           await MailComposer.composeAsync({
             Subject: `${name}. ${dox}"`,
             body: `This is an ${dox}`,
-            recipients: ["shalaw.fatah@gmail.com"],
+            recipients: [client.company_email, "shalaw.fatah@gmail.com"],
             bccRecipients: [profile.email],
             attachments: [contentUri]
           }).then((res) => setLoading(false)).catch((error) => Alert.alert(error.message))
@@ -100,7 +100,7 @@ const PreviewInvoice = ({route}) => {
         classes="my-2" 
         duty={() => navigation.navigate('Add Invoice')} 
         />
-       <InvoiceBtn 
+       {isAvailable ? <InvoiceBtn 
         text="Send Invoice" 
         icon="rocket"
         classes="my-2 " 
@@ -108,7 +108,7 @@ const PreviewInvoice = ({route}) => {
         textColor='#FFF'
         loading={loading}
         duty={generatePDF}
-        />
+        /> : <Text>Please install defaul Mail app to send this invoice</Text>}
     </View>
     </View>
   )
