@@ -29,7 +29,7 @@ const PreviewInvoice = ({route}) => {
 
   useEffect(() => { 
     if(tasks !== undefined) {
-      setTemp(template_choice(profile, client, tasks, subtotal, tax, total, note, profile.template))
+      setTemp(template_choice(profile, client, tasks, subtotal, tax, total, note, dox, profile.template))
     }
   }, [])
 

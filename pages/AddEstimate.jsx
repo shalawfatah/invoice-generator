@@ -80,9 +80,9 @@ const AddEstimate = () => {
   const tax = amount.taxAmount.toFixed(2);
   const total = amount.total.toFixed(2);
 
-  const prevEstimate = () => {
-    const choice = JSON.parse(chosen)
-    navigation.navigate('PreviewEstimate', {tasks, subtotal, tax, total, choice, note, user, profile})
+  const prevEstimate = async() => {
+    const choice = typeof chosen !== 'object' ? await JSON.parse(chosen) : chosen;
+    await navigation.navigate('PreviewEstimate', {tasks, subtotal, tax, total, choice, note, user, profile})
   }
   return (
     <View>
