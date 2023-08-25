@@ -122,14 +122,14 @@ const PreviewEstimate = ({route}) => {
         classes="my-2" 
         duty={() => navigation.navigate('Add Estimate')} 
         />
-      {isAvailable ? <InvoiceBtn 
+    <InvoiceBtn 
         text="Send Estimate" 
         icon="rocket"
         classes="my-2 " 
         buttonColor='#dc143c' 
         textColor='#FFF'
         duty={generatePDF}
-        />  : <Text>Please install defaul Mail app to send this invoice</Text>}
+        />
     </View>
     </View>
   )

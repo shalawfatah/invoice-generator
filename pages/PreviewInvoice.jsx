@@ -122,7 +122,7 @@ const PreviewInvoice = ({route}) => {
         classes="my-2" 
         duty={() => navigation.navigate('Add Invoice')} 
         />
-       {isAvailable ? <InvoiceBtn 
+      <InvoiceBtn 
         text="Send Invoice" 
         icon="rocket"
         classes="my-2 " 
@@ -130,7 +130,7 @@ const PreviewInvoice = ({route}) => {
         textColor='#FFF'
         loading={loading}
         duty={generatePDF}
-        /> : <Text className="my-6 text-center">Please install defaul Mail app to send this invoice</Text>}
+        />
     </View>
     </View>
   )
