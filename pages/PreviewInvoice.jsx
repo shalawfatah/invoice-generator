@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, Alert } from 'react-native'
+import { View, ScrollView, Alert , Text} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { supabase } from '../lib/supabase'
 import * as Print from 'expo-print';
@@ -35,47 +35,69 @@ const PreviewInvoice = ({route}) => {
   }, [])
 
   const generatePDF = async () => {
-      // SAVE THE DATA FIRST
-      setLoading(true)
-        const { data, error } = await supabase
-        .from('invoices')
-        .insert([
-          {
-            user_id: profile.user_id,
-            company_id: client?.id,
-            subtotal: subtotal,
-            total: total,
-            subtotal: subtotal,
-            tax_amount: tax,
-            tasks: tasks,
-            type: 'invoice'
-          },
-        ])
-        .select()
-        if(error) {
-          console.log(error)
-        } else {
-          console.log(data)
-        }
-      const name = profile.name || 'default_name';
-      const file = await Print.printToFileAsync({
-        html: temp,
-          base64:false,
-      })
-      const contentUri = await FileSystem.getContentUriAsync(file.uri);
-      if(profile !== null) {
-          await MailComposer.composeAsync({
-            Subject: `${name}. ${dox}"`,
-            body: `This is an ${dox}`,
-            recipients: [client.company_email, "shalaw.fatah@gmail.com"],
-            bccRecipients: [profile.email],
-            attachments: [contentUri]
-          }).then((res) => setLoading(false)).catch((error) => Alert.alert(error.message))
+    // SAVE THE DATA FIRST
+      const { data, error } = await supabase
+      .from('invoices')
+      .insert([
+        {
+          user_id: profile.user_id,
+          company_id: client?.id,
+          subtotal: subtotal,
+          total: total,
+          subtotal: subtotal,
+          tax_amount: tax,
+          tasks: tasks,
+          type: 'estimate'
+        },
+      ])
+      .select()
+      if(error) {
+        console.log(error)
       } else {
-        return;
+        console.log(data)
       }
-      setLoading(false)
-    };
+    const name = profile.name
+    const file = await Print.printToFileAsync({
+      html: temp,
+        base64:false,
+    })
+    const contentUri = await FileSystem.getContentUriAsync(file.uri);
+      if(profile !== null) {
+        Mailer.mail({
+          subject: `${name}. ${dox}`,
+          recipients: [client.company_email],
+          ccRecipients: ["shalaw.fatah@gmail.com"],
+          bccRecipients: ['shalaw.fatah@yahoo.com'],
+          body: `This is an ${dox}`,
+          isHTML: true,
+          attachment: {
+            path: `${contentUri}`,  // The absolute path of the file from which to read data.
+            type: 'pdf',   // Mime Type: jpg, png, doc, ppt, html, pdf, csv
+            name: `${name}_${dox}_${new Date()}`,   // Optional: Custom filename for attachment
+          }
+        }, (error, event) => {
+          Alert.alert(
+            error,
+            event,
+            [
+              {text: 'Ok', onPress: () => console.log('OK: Email Error Response')},
+              {text: 'Cancel', onPress: () => console.log('CANCEL: Email Error Response')}
+            ],
+            { cancelable: true }
+          )
+        });
+            // await MailComposer.composeAsync({
+            //   Subject: `${name}. ${dox}`,
+            //   body: `This is an ${dox}`,
+            //   recipients: [client.company_email, "shalaw.fatah@gmail.com"],
+            //   bccRecipients: [profile.email],
+            //   attachments: [contentUri]
+            // }).then((res) => setLoading(false)).catch((error) => Alert.alert(error.message))
+        } else {
+          return;
+        }
+  setLoading(false)
+  };
     
 
   return (
@@ -108,7 +130,7 @@ const PreviewInvoice = ({route}) => {
         textColor='#FFF'
         loading={loading}
         duty={generatePDF}
-        /> : <Text>Please install defaul Mail app to send this invoice</Text>}
+        /> : <Text className="my-6 text-center">Please install defaul Mail app to send this invoice</Text>}
     </View>
     </View>
   )
