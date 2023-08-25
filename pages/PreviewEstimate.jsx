@@ -8,7 +8,6 @@ import * as MailComposer from 'expo-mail-composer';
 import * as FileSystem from 'expo-file-system';
 import TemplateRenderer from '../components/templates/TemplateRenderer.jsx'
 import { template_choice } from '../components/templates/template_choice.js'
-import Mailer from 'react-native-mail';
 
 const PreviewEstimate = ({route}) => {
   const {tasks, tax, subtotal, total, choice, note, user, profile} = route.params;
@@ -63,36 +62,13 @@ const PreviewEstimate = ({route}) => {
       })
       const contentUri = await FileSystem.getContentUriAsync(file.uri);
         if(profile !== null) {
-          Mailer.mail({
-            subject: `${name}. ${dox}`,
-            recipients: [client.company_email],
-            ccRecipients: ["shalaw.fatah@gmail.com"],
-            bccRecipients: ['shalaw.fatah@yahoo.com'],
-            body: `This is an ${dox}`,
-            isHTML: true,
-            attachment: {
-              path: `${contentUri}`,  // The absolute path of the file from which to read data.
-              type: 'pdf',   // Mime Type: jpg, png, doc, ppt, html, pdf, csv
-              name: `${name}_${dox}_${new Date()}`,   // Optional: Custom filename for attachment
-            }
-          }, (error, event) => {
-            Alert.alert(
-              error,
-              event,
-              [
-                {text: 'Ok', onPress: () => console.log('OK: Email Error Response')},
-                {text: 'Cancel', onPress: () => console.log('CANCEL: Email Error Response')}
-              ],
-              { cancelable: true }
-            )
-          });
-              // await MailComposer.composeAsync({
-              //   Subject: `${name}. ${dox}`,
-              //   body: `This is an ${dox}`,
-              //   recipients: [client.company_email, "shalaw.fatah@gmail.com"],
-              //   bccRecipients: [profile.email],
-              //   attachments: [contentUri]
-              // }).then((res) => setLoading(false)).catch((error) => Alert.alert(error.message))
+              await MailComposer.composeAsync({
+                Subject: `${name}. ${dox}`,
+                body: `This is an ${dox}`,
+                recipients: [client.company_email, "shalaw.fatah@gmail.com"],
+                bccRecipients: [profile.email],
+                attachments: [contentUri]
+              }).then((res) => setLoading(false)).catch((error) => Alert.alert(error.message))
           } else {
             return;
           }

@@ -39,21 +39,25 @@ const AddInvoice = () => {
   const [tasks, setTasks] = useState([]);
   const [counter, setCounter] = useState(1);
   const [note, setNote] = useState('');
+  const [chosen, setChosen] = useState(null)
   
   // COMPANIES
   const [companies, setCompanies] = useState([])
+
   const fetch_companies = async() => {
     let { data: all_companies, error } = await supabase
     .from('companies')
     .select().eq('user_id', user?.id)
+    setChosen(all_companies[0])
     setCompanies(all_companies)
   }
 
   useEffect(() => {
     fetch_companies()
   }, [companies])
+
   const filtered_companies = companies?.filter(item => item.company_name.includes(text));
-  const [chosen, setChosen] = useState({})
+
   // END COMPANIES
 
   const addTask = () => {
@@ -79,9 +83,9 @@ const AddInvoice = () => {
   const tax = amount.taxAmount.toFixed(2);
   const total = amount.total.toFixed(2);
 
-  const prevInvoice = () => {
-    const choice = JSON.parse(chosen)
-    navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, choice, note, user, profile})
+  const prevInvoice = async() => {
+    const choice = typeof chosen !== 'object' ? await JSON.parse(chosen) : chosen;
+    await navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, choice, note, user, profile})
   }
 
   return (
