@@ -46,13 +46,14 @@ const AddEstimate = () => {
     let { data: all_companies, error } = await supabase
     .from('companies')
     .select().eq('user_id', user.id)
+    setChosen(all_companies[0])
     setCompanies(all_companies)
   }
   useEffect(() => {
     fetch_companies()
   }, [])
   const filtered_companies = companies?.filter(item => item.company_name.includes(text));
-  const [chosen, setChosen] = useState({})
+  const [chosen, setChosen] = useState(null)
   // END COMPANIES
 
   const addTask = () => {
