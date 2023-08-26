@@ -11,6 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Checking from '../components/account/Checking';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { SessionContext } from '../components/general/SessionContext';
+import Counter from '../components/general/Counter';
 
 const AddInvoice = () => {
   const user = useContext(SessionContext)
@@ -40,6 +41,7 @@ const AddInvoice = () => {
   const [counter, setCounter] = useState(1);
   const [note, setNote] = useState('');
   const [chosen, setChosen] = useState(null)
+  const [invoiceNumber, setInvoiceNumber] = useState(0)
   
   // COMPANIES
   const [companies, setCompanies] = useState([])

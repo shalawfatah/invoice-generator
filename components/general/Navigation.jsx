@@ -35,16 +35,16 @@ const Navigation = () => {
           <Tab.Navigator
                 screenOptions={{
                 tabBarActiveTintColor: '#2b3252',
-                tabBarInactiveTintColor: 'gray',
+                tabBarInactiveTintColor: '#BBBBBB',
                 }}
                 >
                   <Tab.Screen 
                       name={"Archive"} 
                       component={InvoiceArchive}
                       options={{
-                        title: "Invoice Archive",
+                        title: "Invoices",
                         tabBarIcon: ({ color, size }) => (
-                          <Ionicons name="reader-outline" color={color} size={20} />
+                          <Ionicons name="document-text-sharp" color={color} size={20} />
                         ),
                         tabBarStyle: {}
                     }}
@@ -53,9 +53,9 @@ const Navigation = () => {
                       name={"EstimateArchive"} 
                       component={EstimateArchive}
                       options={{
-                        title: "Estimate Archive",
+                        title: "Estimates",
                         tabBarIcon: ({ color, size }) => (
-                          <Ionicons name="receipt-outline" color={color} size={20} />
+                          <Ionicons name="receipt-sharp" color={color} size={20} />
                         ),
                         tabBarStyle: {}
                     }}
@@ -65,7 +65,7 @@ const Navigation = () => {
                       component={Home}
                       options={{
                         tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="person-circle-outline" color={color} size={20} />
+                        <Ionicons name="person-circle-sharp" color={color} size={20} />
                         ),
                         tabBarStyle: {}
                     }}
@@ -121,9 +121,9 @@ const Navigation = () => {
                         name={"Report"} 
                         component={IncomeReport}
                         options={{
-                            title: "Income Reports",
+                            title: "Reports",
                             tabBarIcon: ({ color, size }) => (
-                            <Ionicons name="bar-chart-outline" color={color} size={20} />
+                            <Ionicons name="stats-chart-sharp" color={color} size={20} />
                             ),
                             tabBarStyle: {}
                         }}
