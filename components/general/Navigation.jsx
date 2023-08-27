@@ -20,6 +20,7 @@ import CompanyRegister from '../launch/CompanyRegister';
 import SubscribePackages from '../launch/SubscribePackages';
 import PaySubscription from '../launch/PaySubscription';
 import EstimateArchive from '../../pages/EstimateArchive';
+import Account from '../account/Account';
 
 const Tab = createBottomTabNavigator();
 
@@ -200,7 +201,7 @@ const Navigation = () => {
           />
           <Tab.Screen 
             name={"EditProfile"} 
-            component={EditProfile}
+            component={Account}
             options={{
               title: "Edit Profile",
               tabBarIcon: ({ focused, color, size }) => null,

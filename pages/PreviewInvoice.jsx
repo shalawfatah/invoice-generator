@@ -66,17 +66,6 @@ const PreviewInvoice = ({route}) => {
     } else {
       Alert.alert('Sharing is not available')
     }
-      // if(profile !== null) {
-      //       await MailComposer.composeAsync({
-      //         Subject: `${name}. ${dox}`,
-      //         body: `This is an ${dox}`,
-      //         recipients: [client.company_email, "shalaw.fatah@gmail.com"],
-      //         bccRecipients: [profile.email],
-      //         attachments: [contentUri]
-      //       }).then((res) => setLoading(false)).catch((error) => Alert.alert(error.message))
-      //   } else {
-      //     return;
-      //   }
   setLoading(false)
   };
     
