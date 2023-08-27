@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, Alert , Text} from 'react-native'
+import { View, ScrollView, Alert , Text, Platform} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { supabase } from '../lib/supabase'
 import * as Print from 'expo-print';
@@ -62,7 +62,14 @@ const PreviewInvoice = ({route}) => {
     })
     const contentUri = await FileSystem.getContentUriAsync(file.uri);
     if(sharing) {
-      Sharing.shareAsync(contentUri)
+      if(Platform.OS === 'android') {
+        const tempUri = await FileSystem.cacheDirectory + file.uri;
+        await Sharing.shareAsync(tempUri)
+
+        console.log('hi')
+      } else {
+        await Sharing.shareAsync(contentUri)
+      }
     } else {
       Alert.alert('Sharing is not available')
     }
@@ -94,7 +101,7 @@ const PreviewInvoice = ({route}) => {
         duty={() => navigation.navigate('Add Invoice')} 
         />
       <InvoiceBtn 
-        text="Send Invoice" 
+        text="Share Invoice" 
         icon="rocket"
         classes="my-2 " 
         buttonColor='#dc143c' 
