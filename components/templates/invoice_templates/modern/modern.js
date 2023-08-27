@@ -1,11 +1,12 @@
 export const modern_template = (
     company_name, company_address, company_email, company_logo,
     client_name, client_address, client_email,
-    tasks, subtotal, tax, total, note, dox
+    tasks, subtotal, tax, total, note, dox, document_number
 ) => `<!-- template modern --><html lang="en">
     
 <body style="padding: 2rem;">
 
+<p style="font-size: 1.25rem; font-weight: bold; margin: 0;">${dox} Number: ${document_number}</p>  
   <div style="display: flex; justify-content: center; margin-bottom: 1.5rem;">
     <img src=${company_logo} alt="Company Logo" style="height: 4rem;">
   </div>

@@ -4,7 +4,7 @@ import {WebView} from 'react-native-webview';
 const Classic = ({
     company_name, company_address, company_email, company_logo, 
     client_name, client_address, client_email, 
-    tasks, subtotal, tax, total, note, dox
+    tasks, subtotal, tax, total, note, dox, document_number
                 }) => {
     const htmlContent = `
     <html>
@@ -18,6 +18,7 @@ const Classic = ({
                     <p>${company_email}</p>
                 </div>
                 <div style="text-align: right;">
+                    <p style="font-size: 1.25rem; font-weight: bold; margin: 0;">${dox} Number: ${document_number}</p>
                     <img src=${company_logo} alt="Company Logo" style="height: 4rem;">
                 </div>
             </div>

@@ -11,7 +11,7 @@ import { template_choice } from '../components/templates/template_choice.js'
 import * as Sharing from 'expo-sharing';
 
 const PreviewEstimate = ({route}) => {
-  const {tasks, tax, subtotal, total, choice, note, user, profile} = route.params;
+  const {tasks, tax, subtotal, total, choice, note, user, profile, number} = route.params;
   const navigation = useNavigation();
   const [pdf, setPdf] = useState(null);
   const [client, setClient] = useState(choice)
@@ -73,17 +73,6 @@ const PreviewEstimate = ({route}) => {
     } else {
       Alert.alert('Sharing is not available')
     }
-      // if(profile !== null) {
-      //       await MailComposer.composeAsync({
-      //         Subject: `${name}. ${dox}`,
-      //         body: `This is an ${dox}`,
-      //         recipients: [client.company_email, "shalaw.fatah@gmail.com"],
-      //         bccRecipients: [profile.email],
-      //         attachments: [contentUri]
-      //       }).then((res) => setLoading(false)).catch((error) => Alert.alert(error.message))
-      //   } else {
-      //     return;
-      //   }
     setLoading(false)
     };
     
@@ -100,7 +89,8 @@ const PreviewEstimate = ({route}) => {
         tax={tax}
         total={total}
         note={note}
-        dox={dox} 
+        dox={dox}
+        document_number={number}
         />}
     </ScrollView>
     <View className="m-2">

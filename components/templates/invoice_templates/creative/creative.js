@@ -1,15 +1,16 @@
 export const creative_template = (
     company_name, company_address, company_email, company_logo,
     client_name, client_address, client_email,
-    tasks, subtotal, tax, total, note, dox
+    tasks, subtotal, tax, total, note, dox, document_number
 ) => `<!-- template creative -->
 <html lang="en">
 <body style="padding: 2rem;">
 
   <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 3rem;">
-    <div style="height: 4rem; width: 4rem; border-radius: 50%; overflow: hidden;">
-      <img src=${company_logo} alt="Company Logo" style="height: 100%; width: 100%; object-fit: cover;">
-    </div>
+  <div style="height: 4rem; width: 4rem; border-radius: 50%; overflow: hidden;">
+  <img src=${company_logo} alt="Company Logo" style="height: 100%; width: 100%; object-fit: cover;">
+  </div>
+  <p style="font-size: 1.25rem; font-weight: bold; margin: 0;">${dox} Number: ${document_number}</p>
     <div style="text-align: right;">
       <h1 style="font-size: 1.25rem; font-weight: bold;">${company_name}</h1>
       <p>${company_address}</p>

@@ -10,7 +10,7 @@ import { template_choice } from '../components/templates/template_choice.js'
 import * as Sharing from 'expo-sharing';
 
 const PreviewInvoice = ({route}) => {
-  const {tasks, tax, subtotal, total, choice, note, user, profile} = route.params;
+  const {tasks, tax, subtotal, total, choice, note, user, profile, number} = route.params;
   const navigation = useNavigation();
   const [pdf, setPdf] = useState(null);
   const [client, setClient] = useState(choice)
@@ -82,7 +82,8 @@ const PreviewInvoice = ({route}) => {
         tax={tax}
         total={total}
         note={note}
-        dox={dox} 
+        dox={dox}
+        document_number={number}
         />}
     </ScrollView>
     <View className="m-2">

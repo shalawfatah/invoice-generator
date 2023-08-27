@@ -11,13 +11,29 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Checking from '../components/account/Checking';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { SessionContext } from '../components/general/SessionContext';
-import Counter from '../components/general/Counter';
 
 const AddInvoice = () => {
   const user = useContext(SessionContext)
   const [status, setStatus] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
-  const [profile, setProfile] = useState(null)
+  const [profile, setProfile] = useState(null);
+  const [number, setNumber] = useState('')
+  
+  const invoiceNum = async() => {
+    const {data, error} = await supabase.from('invoices').select().eq('user_id', user.id).eq('type', 'invoice')
+    if(error) {
+      console.log(error)
+      return;
+    } else {
+      const numeric = Number(data[data.length - 1].document_number) + 1;
+      const stringed = numeric.toString()
+      setNumber(stringed)
+    }
+  }
+
+  useEffect(() => {
+    invoiceNum()
+  }, [])
   const checkUser = async() => {
     const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
     if(error) {
@@ -41,7 +57,6 @@ const AddInvoice = () => {
   const [counter, setCounter] = useState(1);
   const [note, setNote] = useState('');
   const [chosen, setChosen] = useState(null)
-  const [invoiceNumber, setInvoiceNumber] = useState(0)
   
   // COMPANIES
   const [companies, setCompanies] = useState([])
@@ -87,7 +102,7 @@ const AddInvoice = () => {
 
   const prevInvoice = async() => {
     const choice = typeof chosen !== 'object' ? await JSON.parse(chosen) : chosen;
-    await navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, choice, note, user, profile})
+    await navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, choice, note, user, profile, number})
   }
 
   return (
@@ -182,6 +197,17 @@ const AddInvoice = () => {
       <View className="my-2">
         <InvoiceBtn icon="add-circle-outline" text={tasks.length > 0 ? 'Add another task' : 'Add a task'} duty={addTask} />
       </View>
+    </View>
+    <View>
+    <TextInput
+              style={{ }}
+              label="Invoice Number"
+              keyboardType='numeric'
+              placeholder='Invoice number'
+              value={number}
+              onChangeText={(number) => setNumber(number)}
+              backgroundColor="white"
+            />
     </View>
     <TextInput
               style={{ }}

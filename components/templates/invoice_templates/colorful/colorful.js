@@ -1,7 +1,7 @@
 export const colorful_template = (
     company_name, company_address, company_email, company_logo,
     client_name, client_address, client_email,
-    tasks, subtotal, tax, total, note, dox
+    tasks, subtotal, tax, total, note, dox, document_number
 ) => `
 <!-- template colorful -->
 <html lang="en">
@@ -13,6 +13,7 @@ export const colorful_template = (
       <p style="color: #34D399;">${company_address}</p>
       <p style="color: #A78BFA;">${company_email}</p>
     </div>
+    <p style="font-size: 1.25rem; font-weight: bold; margin: 0;">${dox} Number: ${document_number}</p>
     <div style="text-align: right;">
       <img src=${company_logo} alt="Company Logo" style="height: 4rem;">
     </div>

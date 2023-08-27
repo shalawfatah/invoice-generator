@@ -6,7 +6,7 @@ import Elegant from "./invoice_templates/elegant/Elegant";
 import Minimalist from "./invoice_templates/minimalist/Minimalist";
 import Modern from "./invoice_templates/modern/Modern";
 
-const TemplateRenderer = ({ template_id, profile, client, tasks, subtotal, tax, total, note, dox }) => {
+const TemplateRenderer = ({ template_id, profile, client, tasks, subtotal, tax, total, note, dox, document_number }) => {
     let component;
   
     switch (template_id) {
@@ -26,6 +26,7 @@ const TemplateRenderer = ({ template_id, profile, client, tasks, subtotal, tax, 
             total={total}
             note={note}
             dox={dox}
+            document_number={document_number}
           />
         );
         break;
@@ -45,6 +46,7 @@ const TemplateRenderer = ({ template_id, profile, client, tasks, subtotal, tax, 
             total={total}
             note={note}
             dox={dox}
+            document_number={document_number}
           />
         );
         break;
@@ -64,6 +66,7 @@ const TemplateRenderer = ({ template_id, profile, client, tasks, subtotal, tax, 
                     total={total}
                     note={note}
                     dox={dox}
+                    document_number={document_number}
                   />)
                 break;
                 case '0dff9e98-8c1a-4261-a17a-ed4302a81b63':
@@ -81,6 +84,7 @@ const TemplateRenderer = ({ template_id, profile, client, tasks, subtotal, tax, 
                         total={total}
                         note={note}
                         dox={dox}
+                        document_number={document_number}
                       />)
                       break;
                       case '44081270-2068-4477-b65b-d8ec28e446fa':
@@ -98,6 +102,7 @@ const TemplateRenderer = ({ template_id, profile, client, tasks, subtotal, tax, 
                             total={total}
                             note={note}
                             dox={dox}
+                            document_number={document_number}
                           />)
                           break;
       default:
@@ -116,6 +121,7 @@ const TemplateRenderer = ({ template_id, profile, client, tasks, subtotal, tax, 
             total={total}
             note={note}
             dox={dox}
+            document_number={document_number}
           />
         );
         break;

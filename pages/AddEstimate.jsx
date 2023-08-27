@@ -18,6 +18,20 @@ const AddEstimate = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState(null)
 
+  const [number, setNumber] = useState('')
+  
+const invoiceNum = async() => {
+  const {data, error} = await supabase.from('invoices').select().eq('user_id', user.id).eq('type', 'estimate')
+  if(error) {
+    console.log(error)
+    return;
+  } else {
+    const numeric = Number(data[data.length - 1].document_number) + 1;
+    const stringed = numeric.toString()
+    setNumber(stringed)
+  }
+}
+
   const checkUser = async() => {
     const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
     if(error) {
@@ -82,7 +96,7 @@ const AddEstimate = () => {
 
   const prevEstimate = async() => {
     const choice = typeof chosen !== 'object' ? await JSON.parse(chosen) : chosen;
-    await navigation.navigate('PreviewEstimate', {tasks, subtotal, tax, total, choice, note, user, profile})
+    await navigation.navigate('PreviewEstimate', {tasks, subtotal, tax, total, choice, note, user, profile, number})
   }
   return (
     <View>
@@ -176,6 +190,17 @@ const AddEstimate = () => {
       <View className="my-2">
         <InvoiceBtn icon="add-circle-outline" mode="contained" text={tasks.length > 0 ? 'Add another task' : 'Add a task'} duty={addTask} />
       </View>
+    </View>
+    <View>
+    <TextInput
+              style={{ }}
+              label="Estimate Number"
+              keyboardType='numeric'
+              placeholder='What is the estimate number'
+              value={number}
+              onChangeText={(number) => setNumber(number)}
+              backgroundColor="white"
+            />
     </View>
     <TextInput
               style={{ }}

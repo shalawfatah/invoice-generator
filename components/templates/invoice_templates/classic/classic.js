@@ -1,7 +1,7 @@
 export const classic_template = (
     company_name, company_address, company_email, company_logo,
     client_name, client_address, client_email,
-    tasks, subtotal, tax, total, note, dox
+    tasks, subtotal, tax, total, note, dox, document_number
 ) => `
 <!-- template classic -->
 <html>
@@ -15,6 +15,7 @@ export const classic_template = (
                 <p>${company_email}</p>
             </div>
             <div style="text-align: right;">
+            <p style="font-size: 1.25rem; font-weight: bold; margin: 0;">${dox} Number: ${document_number}</p>
                 <img src=${company_logo} alt="Company Logo" style="height: 4rem;">
             </div>
         </div>
