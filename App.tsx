@@ -15,12 +15,12 @@ export default function App() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
-      setUser(session.user)
+      setUser(session?.user)
       setIsSessionSet(true) // Mark session as set
     })
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
-      setUser(session.user)
+      setUser(session?.user)
       setIsSessionSet(true) // Mark session as set
     })
   }, [])
@@ -28,7 +28,7 @@ export default function App() {
   return (
     <StripeProvider publishableKey='pk_test_51HhPuUK1omnuMJYrNMXx9TZgm4MhtRewC2QU8WTBBcHUTBUFshVHc3HCI7xXoPwjUC8asvr03tz9hLOWBRUXasSy00uLZxpufi'>
       <SessionContext.Provider value={user}>
-        {isSessionSet && session && session.user ? <Navigation /> : <Auth />}
+        {isSessionSet && session && session?.user ? <Navigation /> : <Auth />}
       </SessionContext.Provider>
     </StripeProvider>
   )

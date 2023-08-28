@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, ScrollView } from 'react-native'
+import { View, ScrollView, Text } from 'react-native'
 import { supabase } from '../lib/supabase';
 import InvoiceItem from '../components/invoice/InvoiceItem';
 import { useNavigation } from '@react-navigation/native';
@@ -10,7 +10,7 @@ import Checking from '../components/account/Checking';
 import { SessionContext } from '../components/general/SessionContext';
 
 const InvoiceArchive = () => {
-  const {id} = useContext(SessionContext);
+  const user = useContext(SessionContext);
   const [invoice, setInvoice] = useState([])
   const navigation = useNavigation()
   const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +20,7 @@ const InvoiceArchive = () => {
       let { data: invoices, error } = await supabase
       .from('invoices')
       .select('*, companies("*")')
-      .eq('user_id', id).eq('type', 'invoice')
+      .eq('user_id', user?.id).eq('type', 'invoice')
       if(error) {
         console.log(error)
       } else {
@@ -31,10 +31,10 @@ const InvoiceArchive = () => {
 
   useEffect(() => {
     fetch_invoices()
-  }, [invoice])
+  }, [invoice, user])
 
   const checkUser = async() => {
-    const {data, error} = await supabase.from('profile').select().eq('user_id', id).single();
+    const {data, error} = await supabase.from('profile').select().eq('user_id', user?.id).single();
     if(error) {
       console.log(error)
     } else {
@@ -45,7 +45,7 @@ const InvoiceArchive = () => {
 
   useEffect(() => {
     checkUser()
-  }, [id])
+  }, [user])
 
   return (
     <View>
@@ -60,7 +60,7 @@ const InvoiceArchive = () => {
       {status !== 'active' ? (<Checking />) :  (
     <View className="h-screen">
     <ScrollView className="bg-white py-1">
-      {invoice.map(item => {
+      {invoice.length > 0 ? invoice.map(item => {
         const time = format(new Date(item.created_at), "dd MMMM yyyy 'at' HH:mm aa")
         return <View key={item.id} className="mx-2">
                   <InvoiceItem 
@@ -70,7 +70,7 @@ const InvoiceArchive = () => {
                           link={() => navigation.navigate('SingleInvoice', {item})}
                           />
                </View>
-      })}
+      }) : <Text className="text-center my-2">No invoices</Text>}
     </ScrollView>
       <View className="absolute bottom-40 h-32 w-full z-32">
         <MenuButtons />
