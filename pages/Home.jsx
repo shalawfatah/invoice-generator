@@ -3,7 +3,6 @@ import { View, Text, Alert, TouchableOpacity, ScrollView } from 'react-native'
 import { supabase } from '../lib/supabase'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
-import InvoiceBtn from '../components/general/Button';
 import Checking from '../components/account/Checking';
 import { Divider } from 'react-native-paper';
 import { ActivityIndicator, MD2Colors, Surface } from 'react-native-paper';
@@ -128,20 +127,23 @@ const Home = () => {
         </View>
       </View>
       <TouchableOpacity onPress={edit_user} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
-          <Text className="mx-2 font-bold text-black">Edit Profile</Text>
+          <Text className="mx-2 font-bold text-black">Update Profile</Text>
           <Ionicons name="create-outline" color={"black"} size={20} />
         </TouchableOpacity>
+        <Divider className="w-full my-2 bg-gray-400" />   
         <TouchableOpacity onPress={delete_user} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
-          <Text className="mx-2 font-bold text-white">Delete Profile</Text>
+          <Text className="mx-2 font-bold text-white">Delete Subscription</Text>
           <Ionicons name="trash-outline" color={"white"} size={20} />
         </TouchableOpacity>
         <TouchableOpacity onPress={subscription_trigger} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
-          <Text className="mx-2 font-bold text-white">Stop Subscription</Text>
+          <Text className="mx-2 font-bold text-white">Cancel Subscription</Text>
           <Ionicons name="pause" color={"white"} size={20} />
         </TouchableOpacity>
     </View>
         )}
         </View> )}
+        <Divider className="w-full mb-2 bg-gray-400" />   
+
         <View className="px-2">
       <TouchableOpacity onPress={signout} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2">
           <Text className="mx-2 font-bold text-black">Sign Out</Text>
