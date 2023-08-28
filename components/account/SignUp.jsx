@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, Alert } from 'react-native'
+import { View, Text, Alert } from 'react-native'
 import { supabase } from '../../lib/supabase'
-import { TextInput } from 'react-native-paper';
+import { Divider, TextInput } from 'react-native-paper';
 import InvoiceBtn from '../general/Button';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import * as ImagePicker from 'expo-image-picker';
-
 
 const SignUp = ({handleSignin}) => {
     const [email, setEmail] = useState('');
@@ -15,40 +12,6 @@ const SignUp = ({handleSignin}) => {
     const [imgName, setImgName] = useState('');
     const [photo, setPhoto] = useState(null);
     const [photoURL, setPhotoURL] = useState('');
-
-    // const pickImage = async () => {
-    //   // No permissions request is necessary for launching the image library
-    //   let result = await ImagePicker.launchImageLibraryAsync({
-    //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-    //     allowsEditing: true,
-    //     aspect: [4, 3],
-    //     quality: 1,
-    //   });    
-    //   if (!result.canceled) {
-    //     setImage(result.assets[0].uri);
-    //     const body = new FormData();
-    //     const regex = /ImagePicker\/(.*)/;
-    //     const res = result.assets[0].uri.match(regex)[1];
-    //     const newName = Date.now() + res;
-    //     const namer = newName.toString().replace(/\s/g, '')
-        
-    //     setImgName(newName)
-    //     console.log(newName)
-    //     body.append('upload', {
-    //       uri: result.assets[0].uri,
-    //       name: namer,
-    //       type: result.assets[0].type,
-    //     });
-    //     setPhoto(body)
-    //     const {data, error} = await supabase.storage.from('avatars')
-    //     .upload(imgName, photo)
-    //     const url = 'https://bkcsaqsiloxvfsnhymgk.supabase.co/storage/v1/object/public/avatars/' + newName;
-    //     await setPhotoURL(url)
-    //     if(error) {
-    //       console.log(error)
-    //     }
-    //   }
-    // };
 
     async function signUpWithEmail() {
         setLoading(true)
@@ -112,6 +75,8 @@ const SignUp = ({handleSignin}) => {
             duty={() => signUpWithEmail()} 
             />
       </View>
+        <Divider className="my-1" />
+        <Text className="my-2 text-center font-bold text-gray-700">If you have an account, sign in</Text>
       <View >
         <InvoiceBtn icon="log-in-outline" classes="my-2" text="Sign In" duty={handleSignin} />
       </View>

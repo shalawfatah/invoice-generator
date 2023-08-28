@@ -1,20 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
-import InvoiceInput from './InvoiceInput';
 import { useNavigation } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SessionContext } from '../general/SessionContext';
 import { supabase } from '../../lib/supabase';
 import InvoiceBtn from '../general/Button';
+import { TextInput } from 'react-native-paper';
+
 
 const CompanyForm = () => {
   const session = useContext(SessionContext)
   const navigation = useNavigation()
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [name, setName] = useState('')
+  const [address, setAddress] = useState('')
   
   const get_profile = async() => {
-    const {data, error} = await supabase.from('profile').select().eq('user_id', session.id).single()
+    const {data, error} = await supabase.from('profile').select().eq('user_id', session?.id).single()
     if(error) {
       console.log(error)
       return;
@@ -25,38 +28,95 @@ const CompanyForm = () => {
 
   useEffect(() => { get_profile() }, [])
 
-  const updateProfile = async() => {
+  const updated = {
+    name,
+    address,
+    avatar: photoURL
+  }
 
+  const updateProfile = async() => {
+    setLoading(true)
+    const {data, error} = await supabase.from('profile').update(updated).eq('user_id', session?.id)
+    if(error) {
+      console.log(error)
+      setLoading(false)
+    } else {
+      setLoading(false)
+    }
   }
   
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState(profile?.avatar)
   const [imgName, setImgName] = useState('')
   const [photo, setPhoto] = useState(null)
   const [photoURL, setPhotoURL] = useState('')
   
-  const pickImage = () => {
-    
+  const pickImage = async () => {
+    setLoading(true)
+  // No permissions request is necessary for launching the image library
+  let result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.All,
+    allowsEditing: true,
+    aspect: [4, 3],
+    quality: 1,
+  });    
+  if (!result.canceled) {
+        setImage(result.assets[0].uri);
+        const body = new FormData();
+        const regex = /ImagePicker\/(.*)/;
+        const res = result.assets[0].uri.match(regex)[1];
+        let newName = Date.now() + res;
+        setImgName(newName)
+        console.log('nnn ', newName)
+        body.append('upload', {
+          uri: result.assets[0].uri,
+          name: newName,
+          type: result.assets[0].type,
+        });
+        setPhoto(body)
+        const { data, error } = await supabase
+        .storage
+        .from('avatars')
+        .upload(newName, decode('base64FileData'), {
+          contentType: 'image/*'
+        })
+        const url = 'https://bkcsaqsiloxvfsnhymgk.supabase.co/storage/v1/object/public/avatars/' + newName;
+        setPhotoURL(url)
+        if(error) {
+          console.log(error)
+        } else {
+          setLoading(false)
+        }
   }
+};
 
   return (
     <View className="flex justify-center items-center w-screen p-4">
-        <InvoiceInput 
-            mode="outlined" 
-            label={profile.name}
-            placeholder="Write your company's name..." 
-            />
-        <InvoiceInput 
-            mode="outlined" 
-            label={profile.address}
-            placeholder="Write your company's address..." 
-            />
+        <TextInput 
+          mode={"outlined"}
+          label={profile?.name}
+          placeholder={"Write your company's name..."}
+          value={name}
+          onChange={(name) => setName(name)}
+          className="w-full bg-white"
+          outlineColor="#81F3FA"
+          theme={{ colors: { onSurfaceVariant: '#D3D3D3'} }} 
+        />
+        <TextInput 
+          mode={"outlined"}
+          label={profile?.address}
+          placeholder={"Write your company's address..."}
+          value={address}
+          onChange={(address) => setAddress(address)}
+          className="w-full bg-white"
+          outlineColor="#81F3FA"
+          theme={{ colors: { onSurfaceVariant: '#D3D3D3'} }} 
+        />
         <View className="my-8 w-full">
           <Text className="text-xs text-gray-400">Tap to upload logo to be printed on invoices/estimates</Text>
             <TouchableOpacity className="my-2 py-2 border-[2px] border-gray-700 rounded-lg bg-gray-100" onPress={pickImage}>
                 <Ionicons style={{textAlign: 'center'}}  name="image" size={48} color={"#2b3252"} />
             </TouchableOpacity>
               {image && <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />}
-        </View>
         <InvoiceBtn 
           disabled={loading} 
           buttonColor='#312e81' 
@@ -67,6 +127,7 @@ const CompanyForm = () => {
           text="Update Profile" 
           duty={updateProfile} 
         />
+        </View>
     </View>
   )
 }

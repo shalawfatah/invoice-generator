@@ -32,7 +32,7 @@ const ClientArchive = () => {
 
   useEffect(() => {
     client_fetcher()
-  }, [companies])
+  }, [companies, user])
 
   return (
     <View className="bg-white">

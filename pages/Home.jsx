@@ -49,10 +49,9 @@ const Home = () => {
       };
 
       const delete_user = async () => {
-        const { data, error } = await supabase.auth.admin.deleteUser(user.id);
-        if (error) {
-          console.log(error);
-        }
+        const response = await fetch(`${API_URL}/delete-subscription`);
+        if (!response.ok) return Alert.alert(response);
+        const result = await response.json();
       };
 
       const subscription_trigger = () => {
