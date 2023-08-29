@@ -84,6 +84,27 @@ const Home = () => {
         setLoading(false)
       }
 
+      const reactivate_subscription = async() => {
+        setLoading(true)
+        const response = await fetch(`${API_URL}/reactivate-subscription`, {
+            method: 'post',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id: profile.stripe_customer_id
+            }),
+        })
+        const result = await response.json()
+        if(error) {
+          console.log(error)
+          return;
+        } else {
+          console.log(result)
+        }
+        setLoading(false)
+      }
+
       const delete_all = async() => {
         await delete_user()
         await supabase.from('profile').delete().eq('user_id', user?.id)
@@ -143,6 +164,10 @@ const Home = () => {
           <Text className="text-white font-bold">{profile?.subscription_status}</Text>
         </View>
       </View>
+{status !== 'active' ? <TouchableOpacity onPress={reactivate_subscription} className=" bg-[#09A144] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
+          <Text className="mx-2 font-bold text-white">Activate Subscription</Text>
+          <Ionicons name="create-outline" color={"white"} size={20} />
+        </TouchableOpacity> : null}
       <TouchableOpacity onPress={edit_user} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 font-bold text-black">Update Profile</Text>
           <Ionicons name="create-outline" color={"black"} size={20} />
