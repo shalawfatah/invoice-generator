@@ -84,6 +84,31 @@ const Home = () => {
         setLoading(false)
       }
 
+      const delete_all = async() => {
+        await delete_user()
+        await supabase.from('invoices').delete().eq('user_id', user?.id)
+          .then((e) => {
+           supabase.from('companies').delete().eq('user_id', user?.id).then((e) => {
+             supabase.from('tasks').delete().eq('user_id', user?.id).then((e) => {
+               supabase.from('profile').delete().eq('user_id', user?.id).then((e) => {
+                supabase.auth.admin.deleteUser(user?.id)
+               }).catch(error => console.log(error))
+             }).catch(error => console.log(error))
+           }).catch(error => console.log(error))
+          }).catch(error => console.log(error))
+        }
+
+        const delete_everything = () => {
+          Alert.alert('Delete Everything?', 'This will remove your subscription, account, invoices, estimates, everything else!', [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {text: 'OK', onPress: () => delete_all()},
+          ]);
+        }
+
   return (
     <View className="bg-white min-h-screen relative">
       <ScrollView>
@@ -131,13 +156,13 @@ const Home = () => {
           <Ionicons name="create-outline" color={"black"} size={20} />
         </TouchableOpacity>
         <Divider className="w-full my-2 bg-gray-400" />   
-        <TouchableOpacity onPress={delete_user} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
-          <Text className="mx-2 font-bold text-white">Delete Subscription</Text>
-          <Ionicons name="trash-outline" color={"white"} size={20} />
-        </TouchableOpacity>
         <TouchableOpacity onPress={subscription_trigger} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 font-bold text-white">Cancel Subscription</Text>
           <Ionicons name="pause" color={"white"} size={20} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={delete_everything} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
+          <Text className="mx-2 font-bold text-white">Delete Everything</Text>
+          <Ionicons name="trash-bin-outline" color={"white"} size={20} />
         </TouchableOpacity>
     </View>
         )}

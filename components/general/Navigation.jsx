@@ -56,7 +56,7 @@ const Navigation = () => {
                       options={{
                         title: "Estimates",
                         tabBarIcon: ({ color, size }) => (
-                          <Ionicons name="receipt-sharp" color={color} size={20} />
+                          <Ionicons name="folder-open-sharp" color={color} size={20} />
                         ),
                         tabBarStyle: {}
                     }}
@@ -124,7 +124,7 @@ const Navigation = () => {
                         options={{
                             title: "Reports",
                             tabBarIcon: ({ color, size }) => (
-                            <Ionicons name="stats-chart-sharp" color={color} size={20} />
+                            <Ionicons name="bar-chart-sharp" color={color} size={20} />
                             ),
                             tabBarStyle: {}
                         }}
