@@ -8,6 +8,7 @@ import { Divider } from 'react-native-paper';
 import { ActivityIndicator, MD2Colors, Surface } from 'react-native-paper';
 import MenuButtons from '../components/general/MenuButtons';
 import { SessionContext } from '../components/general/SessionContext';
+import { signOutFunc } from '../util_functions/signOutFunc';
 
 const Home = () => {
       const user = useContext(SessionContext);
@@ -51,6 +52,7 @@ const Home = () => {
         const response = await fetch(`${API_URL}/delete-subscription`);
         if (!response.ok) return Alert.alert(response);
         const result = await response.json();
+        await signOutFunc()
       };
 
       const subscription_trigger = () => {
@@ -77,11 +79,12 @@ const Home = () => {
         const result = await response.json()
         if(error) {
           console.log(error)
+          setLoading(false)
           return;
         } else {
-          console.log(result)
+          await signOutFunc()
+          setLoading(false)
         }
-        setLoading(false)
       }
 
       const reactivate_subscription = async() => {
@@ -109,6 +112,7 @@ const Home = () => {
         await delete_user()
         await supabase.from('profile').delete().eq('user_id', user?.id)
         await supabase.auth.admin.deleteUser(user?.id)
+        await signOutFunc()
         }
 
         const delete_everything = () => {
