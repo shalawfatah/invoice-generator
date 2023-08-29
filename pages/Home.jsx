@@ -86,16 +86,8 @@ const Home = () => {
 
       const delete_all = async() => {
         await delete_user()
-        await supabase.from('invoices').delete().eq('user_id', user?.id)
-          .then((e) => {
-           supabase.from('companies').delete().eq('user_id', user?.id).then((e) => {
-             supabase.from('tasks').delete().eq('user_id', user?.id).then((e) => {
-               supabase.from('profile').delete().eq('user_id', user?.id).then((e) => {
-                supabase.auth.admin.deleteUser(user?.id)
-               }).catch(error => console.log(error))
-             }).catch(error => console.log(error))
-           }).catch(error => console.log(error))
-          }).catch(error => console.log(error))
+        await supabase.from('profile').delete().eq('user_id', user?.id)
+        await supabase.auth.admin.deleteUser(user?.id)
         }
 
         const delete_everything = () => {

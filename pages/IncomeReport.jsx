@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import MenuButtons from '../components/general/MenuButtons';
 import { SessionContext } from '../components/general/SessionContext';
+import IncomePerMonth from '../components/reports/IncomePerMonth';
 
 const IncomeReport = () => {
   const user = useContext(SessionContext);
