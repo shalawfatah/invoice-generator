@@ -21,6 +21,7 @@ import SubscribePackages from '../launch/SubscribePackages';
 import PaySubscription from '../launch/PaySubscription';
 import EstimateArchive from '../../pages/EstimateArchive';
 import Account from '../account/Account';
+import CompanyLogo from '../company/CompanyLogo';
 
 const Tab = createBottomTabNavigator();
 
@@ -122,11 +123,10 @@ const Navigation = () => {
                         name={"Report"} 
                         component={IncomeReport}
                         options={{
-                            title: "Reports",
-                            tabBarIcon: ({ color, size }) => (
-                            <Ionicons name="bar-chart-sharp" color={color} size={20} />
-                            ),
-                            tabBarStyle: {}
+                          title: "Choose Templates",
+                          tabBarIcon: ({ focused, color, size }) => null,
+                          tabBarLabel: ({ focused, color, position, children }) => null,
+                          tabBarButton: (props) => null // use a custom component to replace the default tab button
                         }}
                 />
           <Tab.Screen 
@@ -223,6 +223,16 @@ const Navigation = () => {
             name={"Client Update"} 
             component={ClientUpdate}
             options={{
+              tabBarIcon: ({ focused, color, size }) => null,
+              tabBarLabel: ({ focused, color, position, children }) => null,
+              tabBarButton: (props) => null // use a custom component to replace the default tab button
+            }}
+          />
+          <Tab.Screen 
+            name={"Logo"} 
+            component={CompanyLogo}
+            options={{
+              title: "Company Logo",
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,
               tabBarButton: (props) => null // use a custom component to replace the default tab button

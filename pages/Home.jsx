@@ -33,7 +33,7 @@ const Home = () => {
 
       useEffect(() => {
         checkUser();
-      }, [user]);
+      }, [user, profile]);
 
       const status = profile?.subscription_status;
       const stripeId = profile?.stripe_customer_id;
@@ -140,6 +140,11 @@ const Home = () => {
           <Text className="font-bold">Templates</Text>
         </Surface>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Report')}>
+        <Surface elevation={4} className="h-24 w-24 flex flex-row justify-center items-center rounded-md">
+          <Text className="font-bold">Reports</Text>
+        </Surface>
+        </TouchableOpacity>
       </View>
     <Divider />
     {isLoading ? (
@@ -152,7 +157,7 @@ const Home = () => {
     <View>
       {stripeId === null || stripeId === 'undefined' ? (<Checking />) :  (
     <View className="flex w-screen items-center bg-white p-2">
-      <Text className="text-lg font-bold bg-indigo-100 w-full text-center py-1">Company Profile</Text>
+      <Text className="text-lg font-bold  w-full text-center py-1">Company Profile</Text>
       <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
         <Text className="text-md font-bold p-1">Company Name:</Text>
         <Text className="text-md font-bold p-1">{profile?.name}</Text>
@@ -168,6 +173,7 @@ const Home = () => {
           <Text className="text-white font-bold">{profile?.subscription_status}</Text>
         </View>
       </View>
+        <Divider className="w-full my-2 bg-gray-400" />   
 {status !== 'active' ? <TouchableOpacity onPress={reactivate_subscription} className=" bg-[#09A144] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 font-bold text-white">Activate Subscription</Text>
           <Ionicons name="create-outline" color={"white"} size={20} />
@@ -176,7 +182,6 @@ const Home = () => {
           <Text className="mx-2 font-bold text-black">Update Profile</Text>
           <Ionicons name="create-outline" color={"black"} size={20} />
         </TouchableOpacity>
-        <Divider className="w-full my-2 bg-gray-400" />   
         <TouchableOpacity onPress={subscription_trigger} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 font-bold text-white">Cancel Subscription</Text>
           <Ionicons name="pause" color={"white"} size={20} />
@@ -188,8 +193,6 @@ const Home = () => {
     </View>
         )}
         </View> )}
-        <Divider className="w-full mb-2 bg-gray-400" />   
-
         <View className="px-2">
       <TouchableOpacity onPress={signout} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2">
           <Text className="mx-2 font-bold text-black">Sign Out</Text>

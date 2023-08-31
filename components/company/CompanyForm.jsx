@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SessionContext } from '../general/SessionContext';
 import { supabase } from '../../lib/supabase';
 import InvoiceBtn from '../general/Button';
 import { TextInput } from 'react-native-paper';
-
+import * as ImagePicker from 'expo-image-picker';
+import { decode } from 'base64-arraybuffer';
 
 const CompanyForm = () => {
   const session = useContext(SessionContext)
@@ -42,6 +43,7 @@ const CompanyForm = () => {
       setLoading(false)
     } else {
       setLoading(false)
+      navigation.navigate('Account')
     }
   }
   
@@ -83,6 +85,7 @@ const CompanyForm = () => {
         setPhotoURL(url)
         if(error) {
           console.log(error)
+          setLoading(false)
         } else {
           setLoading(false)
         }
@@ -96,7 +99,7 @@ const CompanyForm = () => {
           label={profile?.name}
           placeholder={"Write your company's name..."}
           value={name}
-          onChange={(name) => setName(name)}
+          onChangeText={(name) => setName(name)}
           className="w-full bg-white"
           outlineColor="#81F3FA"
           theme={{ colors: { onSurfaceVariant: '#D3D3D3'} }} 
@@ -106,7 +109,7 @@ const CompanyForm = () => {
           label={profile?.address}
           placeholder={"Write your company's address..."}
           value={address}
-          onChange={(address) => setAddress(address)}
+          onChangeText={(address) => setAddress(address)}
           className="w-full bg-white"
           outlineColor="#81F3FA"
           theme={{ colors: { onSurfaceVariant: '#D3D3D3'} }} 

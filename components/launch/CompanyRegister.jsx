@@ -7,7 +7,7 @@ import { SessionContext } from "../general/SessionContext";
 import * as ImagePicker from 'expo-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { supabase } from "../../lib/supabase";
-import { decode } from 'base64-arraybuffer'
+import { decode } from 'base64-arraybuffer';
 
 const CompanyRegister = () => {
   const session = useContext(SessionContext)

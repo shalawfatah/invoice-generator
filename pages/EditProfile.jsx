@@ -8,8 +8,8 @@ import { SessionContext } from '../components/general/SessionContext';
 
 const EditProfile = ({route}) => {
   const {user} = route.params;
-  const [company, setCompany] = useState(user.user_metadata.company);
-  const [address, setAddress] = useState(user.user_metadata.address);
+  const [company, setCompany] = useState('');
+  const [address, setAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const session = useContext(SessionContext)
