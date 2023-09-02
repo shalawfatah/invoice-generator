@@ -21,7 +21,7 @@
       "buildNumber": "20" 
     },
     "android": {
-      "buildNumber": "20",
+      "versionCode": "20",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
