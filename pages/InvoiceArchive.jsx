@@ -60,13 +60,13 @@ const InvoiceArchive = () => {
       {status !== 'active' ? (<Checking />) :  (
     <View className="h-screen">
     <ScrollView className="bg-white py-1">
-      {invoice.length > 0 ? invoice.map(item => {
+      {invoice.length > 0 ? invoice?.map(item => {
         const time = format(new Date(item.created_at), "dd MMMM yyyy 'at' HH:mm aa")
         return <View key={item.id} className="mx-2">
                   <InvoiceItem 
-                          company={item.companies.company_name} 
+                          company={item?.companies?.company_name} 
                           date={time} 
-                          total={item.total}
+                          total={item?.total}
                           link={() => navigation.navigate('SingleInvoice', {item})}
                           />
                </View>

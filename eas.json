@@ -25,7 +25,7 @@
   "submit": {
     "production": {
       "android": {
-        "serviceAccountKeyPath": "~/Users/user/Documents/pc-api-7163861791138918547-797-76f2d4d64dd6.json"
+        "serviceAccountKeyPath": "/Users/user/Documents/pc-api-7163861791138918547-797-b43a882d1b83.json"
       }
     }
   }
