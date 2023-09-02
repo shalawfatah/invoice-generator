@@ -27,7 +27,7 @@ const SignIn = ({handleSignup}) => {
     async function resetEmail() {
       setResLoading(true)
       const {data, error} = await supabase.auth.resetPasswordForEmail(reset, {
-        redirectTo: 'http://example.com/account/update-password',
+        redirectTo: 'https://ray-mobile-backend.onrender.com/reset-password',
       }) 
       if(error) {
         console.log(error)
