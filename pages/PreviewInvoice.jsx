@@ -20,18 +20,18 @@ const PreviewInvoice = ({route}) => {
   const isSharingAvilable = () => Sharing.isAvailableAsync().then((res) => setSharing(res)).catch(e => console.log(e))
 
   useEffect(() => {
-    isSharingAvilable()
-  }, [])
+    const fetchData = async () => {
+      try {
+        // Check if Sharing is available
+        const sharingAvailable = await Sharing.isAvailableAsync();
+        setSharing(sharingAvailable);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  const dox = "Invoice"
-
-  const [temp, setTemp] = useState(null)
-
-  useEffect(() => { 
-    if(tasks !== undefined) {
-      setTemp(template_choice(profile, client, tasks, subtotal, tax, total, note, dox, profile.template))
-    }
-  }, [])
+    fetchData();
+  }, []);
 
   const generatePDF = async () => {
     // SAVE THE DATA FIRST

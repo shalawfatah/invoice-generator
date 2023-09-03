@@ -31,9 +31,6 @@ const AddInvoice = () => {
     }
   }
 
-  useEffect(() => {
-    invoiceNum()
-  }, [])
   const checkUser = async() => {
     const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
     if(error) {
@@ -44,10 +41,6 @@ const AddInvoice = () => {
     }
     setIsLoading(false);
   }
-
-  useEffect(() => {
-    checkUser()
-  }, [user])
 
   const [text, setText] = useState('')
   const navigation = useNavigation()
@@ -69,8 +62,19 @@ const AddInvoice = () => {
     setCompanies(all_companies)
   }
 
+  const fetchData = async () => {
+    try {
+      await checkUser();
+      await fetch_companies();
+      await invoiceNum(); // You may want to execute this as well, assuming it doesn't depend on the result of checkUser or fetch_companies.
+      // Add any other logic that depends on the results of checkUser and fetch_companies here.
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    fetch_companies()
+    fetchData()
   }, [])
 
   const filtered_companies = companies?.filter(item => item.company_name.includes(text));

@@ -33,7 +33,7 @@ const Home = () => {
 
       useEffect(() => {
         checkUser();
-      }, [user, profile]);
+      }, [user]);
 
       const status = profile?.subscription_status;
       const stripeId = profile?.stripe_customer_id;

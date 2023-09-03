@@ -21,24 +21,29 @@ const PreviewEstimate = ({route}) => {
   const [sharing, setSharing] = useState(false);
   const isSharingAvilable = () => Sharing.isAvailableAsync().then((res) => setSharing(res)).catch(e => console.log(e))
 
-  useEffect(() => {
-    isSharingAvilable()
-  }, [])
   const dox = "Estimate";
   
   useEffect(() => {
-    async function checkAvailability() {
-      const isMailAvailable = await MailComposer.isAvailableAsync();
-      setIsAvailable(isMailAvailable);
-    }
-    checkAvailability()
-  })
+    async function fetchData() {
+      try {
+        // Check if Sharing is available
+        const sharingAvailable = await Sharing.isAvailableAsync();
+        setSharing(sharingAvailable);
 
-  useEffect(() => { 
-    if(tasks !== undefined) {
-      setTemp(template_choice(profile, client, tasks, subtotal, tax, total, note, dox, profile.template))
+        // Check if MailComposer is available
+        const mailAvailable = await MailComposer.isAvailableAsync();
+        setIsAvailable(mailAvailable);
+
+        if (tasks !== undefined) {
+          setTemp(template_choice(profile, client, tasks, subtotal, tax, total, note, dox, profile.template));
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }, [])
+
+    fetchData();
+  }, []);
 
     const generatePDF = async () => {
       // SAVE THE DATA FIRST

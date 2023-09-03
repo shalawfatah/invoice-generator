@@ -28,10 +28,7 @@ const EstimateArchive = () => {
       }
   }
 
-  useEffect(() => {
-    fetch_invoices()
-  }, [invoice])
-
+  
   const checkUser = async() => {
     const {data, error} = await supabase.from('profile').select().eq('user_id', id).single();
     if(error) {
@@ -41,9 +38,18 @@ const EstimateArchive = () => {
     }
     setIsLoading(false);
   }
+  
+  const fetchData = async () => {
+    try {
+      await checkUser();
+      await fetch_invoices();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    checkUser()
+    fetchData()
   }, [id])
   
   return (

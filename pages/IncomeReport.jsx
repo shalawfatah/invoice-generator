@@ -24,7 +24,7 @@ const IncomeReport = () => {
 
   useEffect(() => {
     checkUser()
-  }, [status, user])
+  }, [user])
   return (
     <View className="h-screen relative">
     <ScrollView className="bg-white">

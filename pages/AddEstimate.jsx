@@ -43,9 +43,6 @@ const invoiceNum = async() => {
     setIsLoading(false);
   }
 
-  useEffect(() => {
-    checkUser()
-  }, [status])
   const [text, setText] = useState('')
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
@@ -63,9 +60,22 @@ const invoiceNum = async() => {
     setChosen(all_companies[0])
     setCompanies(all_companies)
   }
+
+  const fetchData = async () => {
+    try {
+      await checkUser();
+      await fetch_companies();
+      await invoiceNum(); // You may want to execute this as well, assuming it doesn't depend on the result of checkUser or fetch_companies.
+      // Add any other logic that depends on the results of checkUser and fetch_companies here.
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    fetch_companies()
-  }, [])
+    fetchData()
+  }, [user])
+  
   const filtered_companies = companies?.filter(item => item.company_name.includes(text));
   const [chosen, setChosen] = useState(null)
   // END COMPANIES
