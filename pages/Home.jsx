@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, Alert, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Alert, TouchableOpacity, ScrollView, Platform, Linking } from 'react-native'
 import { supabase } from '../lib/supabase'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
@@ -16,6 +16,17 @@ const Home = () => {
       const [isLoading, setIsLoading] = useState(true);
       const API_URL = "https://ray-mobile-backend.onrender.com";
       const [loading, setLoading] = useState(false);
+      
+      const [isIos, setIsIos] = useState(false);
+
+      useEffect(() => {
+        // Check if the platform is iOS
+        if (Platform.OS === 'ios') {
+          setIsIos(true);
+        } else {
+          setIsIos(false);
+        }
+      }, []);
 
       const checkUser = async () => {
         const { data, error } = await supabase
@@ -47,7 +58,6 @@ const Home = () => {
       const edit_user = () => {
         navigation.navigate('EditProfile', { user });
       };
-
       const delete_user = async () => {
         const response = await fetch(`${API_URL}/delete-subscription`);
         if (!response.ok) return Alert.alert(response);
@@ -126,6 +136,10 @@ const Home = () => {
           ]);
         }
 
+        const manage_account = () => {
+          Linking.openURL(`https://manage-invoice-generator.netlify.app?stripeId=${profile.stripe_customer_id}`)
+        }
+
   return (
     <View className="bg-white min-h-screen relative">
       <ScrollView>
@@ -166,37 +180,37 @@ const Home = () => {
         <Text className="text-md font-bold p-1">Company Email:</Text>
         <Text className="text-md font-bold p-1">{profile?.email}</Text>
       </View>
-      <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
+      {isIos === false ? <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
         <Text className="text-md font-bold p-1">Subscription Status:</Text>
-        <View className={`flex flex-row gap-x-2 items-center p-1 px-1 pr-4  ${status === 'active' ? 'bg-[#09A144]' : 'bg-[#D30000]'}`}>
-          {status === 'active' ? <Ionicons name="play-circle-outline" size={20} color={"white"}/> : <Ionicons name="stop-circle-outline" size={20} color={"white"}/>}
+        <View className={`flex flex-row gap-x-2 items-center p-1 px-1 pr-4  ${status === 'active' ? 'bg-[#09A144]' : 'bg-[#D30000]'}`}>}
+          {stripeId !== null ? <Ionicons name="play-circle-outline" size={20} color={"white"}/> : <Ionicons name="stop-circle-outline" size={20} color={"white"}/>}
           <Text className="text-white font-bold">{profile?.subscription_status}</Text>
         </View>
-      </View>
+      </View> : <TouchableOpacity onPress={manage_account}><Text className="font-bold text-indigo-700 underline">Manage your sharing</Text></TouchableOpacity>}
         <Divider className="w-full my-2 bg-gray-400" />   
-{status !== 'active' ? <TouchableOpacity onPress={reactivate_subscription} className=" bg-[#09A144] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
+{(status !== 'active' && isIos === false) ? <TouchableOpacity onPress={reactivate_subscription} className=" bg-[#09A144] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 font-bold text-white">Activate Subscription</Text>
           <Ionicons name="create-outline" color={"white"} size={20} />
         </TouchableOpacity> : null}
       <TouchableOpacity onPress={edit_user} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
-          <Text className="mx-2 font-bold text-black">Update Profile</Text>
-          <Ionicons name="create-outline" color={"black"} size={20} />
+          <Text className="mx-2 text-lg font-bold text-black">Update Profile</Text>
+          <Ionicons name="create-outline" color={"black"} size={24} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={subscription_trigger} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
-          <Text className="mx-2 font-bold text-white">Cancel Subscription</Text>
-          <Ionicons name="pause" color={"white"} size={20} />
-        </TouchableOpacity>
+        {isIos === false ? <TouchableOpacity onPress={subscription_trigger} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
+          <Text className="mx-2 text-lg font-bold text-white">Cancel Subscription</Text>
+          <Ionicons name="pause" color={"white"} size={24} />
+        </TouchableOpacity> : null}
         <TouchableOpacity onPress={delete_everything} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
-          <Text className="mx-2 font-bold text-white">Delete Everything</Text>
-          <Ionicons name="trash-bin-outline" color={"white"} size={20} />
+          <Text className="mx-2 text-lg font-bold text-white">Delete Everything</Text>
+          <Ionicons name="trash-bin-outline" color={"white"} size={24} />
         </TouchableOpacity>
     </View>
         )}
         </View> )}
         <View className="px-2">
       <TouchableOpacity onPress={signout} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2">
-          <Text className="mx-2 font-bold text-black">Sign Out</Text>
-          <Ionicons name="log-out-outline" color={"black"} size={20} />
+          <Text className="mx-2 text-lg font-bold text-black">Sign Out</Text>
+          <Ionicons name="log-out-outline" color={"black"} size={24} />
         </TouchableOpacity>
         </View>
         </ScrollView>

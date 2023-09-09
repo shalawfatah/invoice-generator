@@ -156,7 +156,7 @@ const Navigation = () => {
               title: "Add Clients",
               tabBarIcon: ({ focused, color, size }) => null,
               tabBarLabel: ({ focused, color, position, children }) => null,
-              tabBarButton: (props) => null // use a custom component to replace the default tab button
+              tabBarButton: (props) => null,
             }}
           />
           <Tab.Screen 

@@ -68,7 +68,6 @@ const CompanyForm = () => {
         const res = result.assets[0].uri.match(regex)[1];
         let newName = Date.now() + res;
         setImgName(newName)
-        console.log('nnn ', newName)
         body.append('upload', {
           uri: result.assets[0].uri,
           name: newName,

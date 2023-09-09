@@ -45,7 +45,7 @@ const CompanyRegister = () => {
       await setCustomerId(result.customer.id);
       const customer = await result.customer.id;
       setLoading(false);
-      await navigation.navigate('Subscribe Packages', { customer });
+      await navigation.navigate('Add Invoice');
     } catch (error) {
       console.error('Error fetching session:', error);
       setLoading(false);

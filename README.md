@@ -26,3 +26,5 @@ The next invoice is one click, you already have your company, template, the othe
               tabBarButton: (props) => null // use a custom component to replace the default tab button
             }}
           /> */}
+Bring this conditionally to share invoice page
+await navigation.navigate('Subscribe Packages', { customer });

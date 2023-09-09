@@ -36,7 +36,7 @@ const AddInvoice = () => {
     if(error) {
       console.log(error)
     } else {
-      setStatus(data.subscription_status)
+      setStatus(data.stripe_customer_id)
       setProfile(data)
     }
     setIsLoading(false);
@@ -119,7 +119,7 @@ const AddInvoice = () => {
             />
       ) : (
     <View>
-      {status !== 'active' ? (<Checking />) :  (
+      {status === null ? (<Checking />) :  (
     <ScrollView className="p-2 bg-white">
       <View className="relative">
       <TextInput

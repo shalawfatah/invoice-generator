@@ -7,8 +7,8 @@ const InvoiceBtn = ({loading = false, duty, icon, iconColor, text, textColor = "
   return (
     <View>
       <TouchableOpacity onPress={duty} className={`${classes} bg-[${bg}] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]`}>
-          <Text className={`mx-2 font-bold ${textColor}`}>{text}</Text>
-          <Ionicons name={icon} color={iconColor} size={20} />
+          <Text className={`mx-2 text-lg font-bold ${textColor}`}>{text}</Text>
+          <Ionicons name={icon} color={iconColor} size={24} />
           <View>
           {loading && <ActivityIndicator 
             animating={true} 

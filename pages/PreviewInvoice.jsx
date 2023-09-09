@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, Alert , Text, Platform} from 'react-native'
+import { View, ScrollView, Alert , Platform, Linking} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { supabase } from '../lib/supabase'
 import * as Print from 'expo-print';
@@ -18,6 +18,13 @@ const PreviewInvoice = ({route}) => {
   const [loading, setLoading] = useState(false)
   const [sharing, setSharing] = useState(false);
   const isSharingAvilable = () => Sharing.isAvailableAsync().then((res) => setSharing(res)).catch(e => console.log(e))
+  const dox = "Invoice";
+  const API_URL = "https://manage-invoice-generator.netlify.app";
+
+  const dataToSend = { stripeId: profile.stripe_customer_id };
+  const queryString = Object.keys(dataToSend)
+    .map((key) => key + '=' + dataToSend[key])
+    .join('&');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,12 +36,18 @@ const PreviewInvoice = ({route}) => {
         console.error(error);
       }
     };
-
     fetchData();
   }, []);
 
   const generatePDF = async () => {
-    // SAVE THE DATA FIRST
+    if(user.subscription_status !== 'active') {
+      if (Platform.OS === 'ios') {
+        await Linking.openURL(`${API_URL}?${queryString}`)
+      } else {
+        const customer = profile.stripe_customer_id;
+        await navigation.navigate('Subscribe Packages', { customer });
+      }
+    } else {
       const { data, error } = await supabase
       .from('invoices')
       .insert([
@@ -46,7 +59,7 @@ const PreviewInvoice = ({route}) => {
           subtotal: subtotal,
           tax_amount: tax,
           tasks: tasks,
-          type: 'invoice'
+          type: 'estimate'
         },
       ])
       .select()
@@ -61,19 +74,13 @@ const PreviewInvoice = ({route}) => {
         base64:false,
     })
     const contentUri = await FileSystem.getContentUriAsync(file.uri);
-    if(sharing) {
-      if(Platform.OS === 'android') {
-        const tempUri = await FileSystem.cacheDirectory + file.uri;
-        await Sharing.shareAsync(tempUri)
-
-        console.log('hi')
-      } else {
-        await Sharing.shareAsync(contentUri)
-      }
-    } else {
-      Alert.alert('Sharing is not available')
-    }
+  if(sharing) {
+    Sharing.shareAsync(contentUri)
+  } else {
+    Alert.alert('Sharing is not available')
+  }
   setLoading(false)
+    }
   };
     
 

@@ -35,7 +35,7 @@ const InvoiceArchive = () => {
     if(error) {
       console.log(error)
     } else {
-      setStatus(data.subscription_status)
+      setStatus(data.stripe_customer_id)
     }
     setIsLoading(false);
   }
@@ -63,7 +63,7 @@ const InvoiceArchive = () => {
             />
       ) : (
     <View>
-      {status !== 'active' ? (<Checking />) :  (
+      {status === null ? (<Checking />) :  (
     <View className="h-screen">
     <ScrollView className="bg-white py-1">
       {invoice.length > 0 ? invoice?.map(item => {

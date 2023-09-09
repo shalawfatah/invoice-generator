@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, Text, Alert } from 'react-native'
+import { View, ScrollView, Platform, Alert, Linking } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { supabase } from '../lib/supabase'
 import * as Print from 'expo-print';
@@ -20,7 +20,12 @@ const PreviewEstimate = ({route}) => {
   const [temp, setTemp] = useState(null)
   const [sharing, setSharing] = useState(false);
   const isSharingAvilable = () => Sharing.isAvailableAsync().then((res) => setSharing(res)).catch(e => console.log(e))
+  const API_URL = "https://manage-invoice-generator.netlify.app";
 
+  const dataToSend = { stripeId: profile.stripe_customer_id };
+  const queryString = Object.keys(dataToSend)
+    .map((key) => key + '=' + dataToSend[key])
+    .join('&');
   const dox = "Estimate";
   
   useEffect(() => {
@@ -46,7 +51,14 @@ const PreviewEstimate = ({route}) => {
   }, []);
 
     const generatePDF = async () => {
-      // SAVE THE DATA FIRST
+      if(user.subscription_status !== 'active') {
+        if (Platform.OS === 'ios') {
+          await Linking.openURL(`${API_URL}?${queryString}`)
+        } else {
+          const customer = profile.stripe_customer_id;
+          await navigation.navigate('Subscribe Packages', { customer });
+        }
+      } else {
         const { data, error } = await supabase
         .from('invoices')
         .insert([
@@ -79,6 +91,7 @@ const PreviewEstimate = ({route}) => {
       Alert.alert('Sharing is not available')
     }
     setLoading(false)
+      }
     };
     
 

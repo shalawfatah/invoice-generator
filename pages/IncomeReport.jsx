@@ -5,7 +5,6 @@ import { supabase } from '../lib/supabase';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import MenuButtons from '../components/general/MenuButtons';
 import { SessionContext } from '../components/general/SessionContext';
-import IncomePerMonth from '../components/reports/IncomePerMonth';
 
 const IncomeReport = () => {
   const user = useContext(SessionContext);
@@ -17,7 +16,7 @@ const IncomeReport = () => {
     if(error) {
       console.log(error)
     } else {
-      setStatus(data.subscription_status)
+      setStatus(data.stripe_customer_id)
     }
     setIsLoading(false);
   }
@@ -36,7 +35,7 @@ const IncomeReport = () => {
             />
       ) : (
     <View>
-      {status !== 'active' ? (<Checking />) :  (
+      {status === null ? (<Checking />) :  (
         <ScrollView>
           <View className="p-2">
             <Text className="text-center text-md my-2">Reports and Charts will be available about your income soon</Text>

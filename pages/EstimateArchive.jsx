@@ -34,7 +34,7 @@ const EstimateArchive = () => {
     if(error) {
       console.log(error)
     } else {
-      setStatus(data.subscription_status)
+      setStatus(data.stripe_customer_id)
     }
     setIsLoading(false);
   }
@@ -62,7 +62,7 @@ const EstimateArchive = () => {
             />
       ) : (
     <View>
-      {status !== 'active' ? (<Checking />) :  (
+      {status === null ? (<Checking />) :  (
     <View className="h-screen relative">
     <ScrollView className="bg-white py-1">
       {invoice.map(item => {
