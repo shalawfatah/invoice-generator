@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Platform } from 'react-native'
 import Checking from '../components/account/Checking';
 import { supabase } from '../lib/supabase';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
@@ -10,6 +10,12 @@ const IncomeReport = () => {
   const user = useContext(SessionContext);
   const [status, setStatus] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
+  
+  const [isIos, setIsIos] = useState(false);
+
+  useEffect(() => {
+    setIsIos(Platform.OS === 'ios');
+  }, []);
 
   const checkUser = async() => {
     const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
@@ -43,7 +49,7 @@ const IncomeReport = () => {
         </ScrollView>
       )}</View>)}
       </ScrollView>
-      <View className="absolute bottom-40 h-32 w-full z-32">
+      <View className={`absolute ${isIos ? 'bottom-40' : 'bottom-28'} h-32 w-full z-3`}>
         <MenuButtons />
       </View>
     </View>

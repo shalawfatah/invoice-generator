@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, ScrollView } from 'react-native'
+import { View, ScrollView, Platform } from 'react-native'
 import { supabase } from '../lib/supabase';
 import InvoiceItem from '../components/invoice/InvoiceItem';
 import { useNavigation } from '@react-navigation/native';
@@ -28,6 +28,11 @@ const EstimateArchive = () => {
       }
   }
 
+  const [isIos, setIsIos] = useState(false);
+
+  useEffect(() => {
+    setIsIos(Platform.OS === 'ios');
+  }, []);
   
   const checkUser = async() => {
     const {data, error} = await supabase.from('profile').select().eq('user_id', id).single();
@@ -77,7 +82,7 @@ const EstimateArchive = () => {
                </View>
       })}
     </ScrollView>
-      <View className="absolute bottom-40 h-32 w-full z-32">
+      <View className={`absolute ${isIos ? 'bottom-40' : 'bottom-28'} h-32 w-full z-3`}>
         <MenuButtons />
       </View>
     </View>

@@ -20,12 +20,7 @@ const Home = () => {
       const [isIos, setIsIos] = useState(false);
 
       useEffect(() => {
-        // Check if the platform is iOS
-        if (Platform.OS === 'ios') {
-          setIsIos(true);
-        } else {
-          setIsIos(false);
-        }
+        setIsIos(Platform.OS === 'ios');
       }, []);
 
       const checkUser = async () => {
@@ -142,7 +137,6 @@ const Home = () => {
 
   return (
     <View className="bg-white min-h-screen relative">
-      <ScrollView>
       <View className="p-2 flex flex-row justify-around py-6">
         <TouchableOpacity onPress={() => navigation.navigate('Client Archive')}>
         <Surface elevation={4} className="h-24 w-24 flex flex-row justify-center items-center rounded-md">
@@ -182,16 +176,16 @@ const Home = () => {
       </View>
       {isIos === false ? <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
         <Text className="text-md font-bold p-1">Subscription Status:</Text>
-        <View className={`flex flex-row gap-x-2 items-center p-1 px-1 pr-4  ${status === 'active' ? 'bg-[#09A144]' : 'bg-[#D30000]'}`}>}
-          {stripeId !== null ? <Ionicons name="play-circle-outline" size={20} color={"white"}/> : <Ionicons name="stop-circle-outline" size={20} color={"white"}/>}
+        <View className={`flex flex-row gap-x-2 items-center p-1 px-1 pr-4  ${status === 'active' ? 'bg-[#09A144]' : 'bg-[#D30000]'}`}>
+          {stripeId !== null ? <Ionicons name="play-circle-outline" size={24} color={"white"}/> : <Ionicons name="stop-circle-outline" size={24} color={"white"}/>}
           <Text className="text-white font-bold">{profile?.subscription_status}</Text>
         </View>
       </View> : <TouchableOpacity onPress={manage_account}><Text className="font-bold text-indigo-700 underline">Manage your sharing</Text></TouchableOpacity>}
         <Divider className="w-full my-2 bg-gray-400" />   
 {(status !== 'active' && isIos === false) ? <TouchableOpacity onPress={reactivate_subscription} className=" bg-[#09A144] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 font-bold text-white">Activate Subscription</Text>
-          <Ionicons name="create-outline" color={"white"} size={20} />
-        </TouchableOpacity> : null}
+          <Ionicons name="create-outline" color={"white"} size={24} />
+        </TouchableOpacity> : <Text></Text>}
       <TouchableOpacity onPress={edit_user} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 text-lg font-bold text-black">Update Profile</Text>
           <Ionicons name="create-outline" color={"black"} size={24} />
@@ -199,7 +193,7 @@ const Home = () => {
         {isIos === false ? <TouchableOpacity onPress={subscription_trigger} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 text-lg font-bold text-white">Cancel Subscription</Text>
           <Ionicons name="pause" color={"white"} size={24} />
-        </TouchableOpacity> : null}
+        </TouchableOpacity> : <Text></Text>}
         <TouchableOpacity onPress={delete_everything} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 text-lg font-bold text-white">Delete Everything</Text>
           <Ionicons name="trash-bin-outline" color={"white"} size={24} />
@@ -207,14 +201,13 @@ const Home = () => {
     </View>
         )}
         </View> )}
-        <View className="px-2">
-      <TouchableOpacity onPress={signout} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2">
+        <View className="px-2 ">
+        <TouchableOpacity onPress={signout} className=" bg-indigo-100 rounded-[12px] flex flex-row items-center justify-center w-full p-2">
           <Text className="mx-2 text-lg font-bold text-black">Sign Out</Text>
           <Ionicons name="log-out-outline" color={"black"} size={24} />
         </TouchableOpacity>
         </View>
-        </ScrollView>
-        <View className="absolute bottom-40 h-32 w-full z-32 bg-white">
+        <View className={`absolute ${isIos ? 'bottom-40' : 'bottom-28'} h-32 w-full z-3`}>
           <MenuButtons />
         </View>
     </View>

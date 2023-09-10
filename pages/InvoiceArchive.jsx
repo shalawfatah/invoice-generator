@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, ScrollView, Text } from 'react-native'
+import { View, ScrollView, Text, Platform } from 'react-native'
 import { supabase } from '../lib/supabase';
 import InvoiceItem from '../components/invoice/InvoiceItem';
 import { useNavigation } from '@react-navigation/native';
@@ -15,6 +15,12 @@ const InvoiceArchive = () => {
   const navigation = useNavigation()
   const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState(null)
+
+  const [isIos, setIsIos] = useState(false);
+
+  useEffect(() => {
+    setIsIos(Platform.OS === 'ios');
+  }, []);
 
   const fetch_invoices = async() => {
       let { data: invoices, error } = await supabase
@@ -78,7 +84,7 @@ const InvoiceArchive = () => {
                </View>
       }) : <Text className="text-center my-2">No invoices</Text>}
     </ScrollView>
-      <View className="absolute bottom-40 h-32 w-full z-32">
+      <View className={`absolute ${isIos ? 'bottom-40' : 'bottom-28'} h-32 w-full z-3`}>
         <MenuButtons />
       </View>
     </View>
