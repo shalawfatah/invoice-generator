@@ -8,6 +8,7 @@ import * as FileSystem from 'expo-file-system';
 import TemplateRenderer from '../components/templates/TemplateRenderer.jsx'
 import { template_choice } from '../components/templates/template_choice.js'
 import * as Sharing from 'expo-sharing';
+import * as MailComposer from 'expo-mail-composer';
 
 const PreviewInvoice = ({route}) => {
   const {tasks, tax, subtotal, total, choice, note, user, profile, number} = route.params;
@@ -47,8 +48,8 @@ const PreviewInvoice = ({route}) => {
     setCustomer(profile.stripe_customer_id)
   }, [profile])
 
-  console.log('active ', active)
   const generatePDF = async () => {
+    setLoading(true)
     if(active !== 'active') {
       if (Platform.OS === 'ios') {
         await Linking.openURL(`${API_URL}?${queryString}`)
@@ -67,23 +68,48 @@ const PreviewInvoice = ({route}) => {
           subtotal: subtotal,
           tax_amount: tax,
           tasks: tasks,
-          type: 'estimate'
+          type: 'invoice'
         },
       ])
       .select()
       if(error) {
-        console.log(error)
+        Alert.alert(error.message)
+        setLoading(false)
       } else {
         console.log(data)
       }
-    const name = profile.name
     const file = await Print.printToFileAsync({
       html: temp,
         base64:false,
     })
     const contentUri = await FileSystem.getContentUriAsync(file.uri);
+    const parts = contentUri.split('/')
+    let assetName = parts[parts.length - 1];
+    const contentUriAndroid = `${FileSystem.documentDirectory}/${assetName}`;
+    await FileSystem.copyAsync({
+      from: file.uri,
+      to: contentUriAndroid,
+    });
+
   if(sharing) {
-    Sharing.shareAsync(contentUri)
+    if(Platform.OS === 'android') {
+      const options = {
+        subject: `Invoice from ${profile.name}`,
+        body: `Invoice from ${profile.name} to ${client.company_name} where total is ${total}`,
+        receipents: [company_email, profile.email],
+        attachments: [contentUriAndroid]
+      }
+      MailComposer.composeAsync(options).catch(error => Alert.alert(error))
+      // Sharing.shareAsync(contentUriAndroid, {
+      //   mimeType: 'application/pdf',
+      //   UTI: 'pdf'
+      // }).then((e) => console.log(e)).catch((error) => console.log(error.message))
+    } else {
+      Sharing.shareAsync(contentUri, {
+        mimeType: 'application/pdf',
+        UTI: 'pdf'
+      }).then((e) => console.log(e)).catch((error) => console.log(error.message))
+    }
   } else {
     Alert.alert('Sharing is not available')
   }

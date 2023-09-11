@@ -57,7 +57,7 @@ const InvoiceArchive = () => {
   
   useEffect(() => {
     fetchData()
-  }, [user])
+  }, [user, invoice])
 
   return (
     <View>

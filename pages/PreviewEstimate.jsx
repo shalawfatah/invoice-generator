@@ -13,13 +13,11 @@ import * as Sharing from 'expo-sharing';
 const PreviewEstimate = ({route}) => {
   const {tasks, tax, subtotal, total, choice, note, user, profile, number} = route.params;
   const navigation = useNavigation();
-  const [pdf, setPdf] = useState(null);
   const [client, setClient] = useState(choice)
   const [isAvailable, setIsAvailable] = useState(false)
   const [loading, setLoading] = useState(false)
   const [temp, setTemp] = useState(null)
   const [sharing, setSharing] = useState(false);
-  const isSharingAvilable = () => Sharing.isAvailableAsync().then((res) => setSharing(res)).catch(e => console.log(e))
   const API_URL = "https://manage-invoice-generator.netlify.app";
 
   const dataToSend = { stripeId: profile.stripe_customer_id };
@@ -50,12 +48,19 @@ const PreviewEstimate = ({route}) => {
     fetchData();
   }, []);
 
+  const [active, setActive] = useState(null);
+  const [customer, setCustomer] = useState(null)
+  useEffect(() => {
+    setActive(profile.subscription_status)
+    setCustomer(profile.stripe_customer_id)
+  }, [profile])
+
     const generatePDF = async () => {
-      if(user.subscription_status !== 'active') {
+      setLoading(true)
+      if(active !== 'active') {
         if (Platform.OS === 'ios') {
           await Linking.openURL(`${API_URL}?${queryString}`)
         } else {
-          const customer = profile.stripe_customer_id;
           await navigation.navigate('Subscribe Packages', { customer });
         }
       } else {
@@ -79,14 +84,39 @@ const PreviewEstimate = ({route}) => {
         } else {
           console.log(data)
         }
-      const name = profile.name
-      const file = await Print.printToFileAsync({
+
+        const file = await Print.printToFileAsync({
         html: temp,
           base64:false,
       })
       const contentUri = await FileSystem.getContentUriAsync(file.uri);
+      const parts = contentUri.split('/')
+      let assetName = parts[parts.length - 1];
+      const contentUriAndroid = `${FileSystem.documentDirectory}/${assetName}`;
+      await FileSystem.copyAsync({
+        from: file.uri,
+        to: contentUriAndroid,
+      });
+
     if(sharing) {
-      Sharing.shareAsync(contentUri)
+    if(Platform.OS === 'android') {
+      const options = {
+        subject: `Invoice from ${profile.name}`,
+        body: `Invoice from ${profile.name} to ${client.company_name} where total is ${total}`,
+        receipents: [company_email, profile.email],
+        attachments: [contentUriAndroid]
+      }
+      MailComposer.composeAsync(options).catch(error => Alert.alert(error))
+      // Sharing.shareAsync(contentUriAndroid, {
+      //   mimeType: 'application/pdf',
+      //   UTI: 'pdf'
+      // }).then((e) => console.log(e)).catch((error) => console.log(error.message))
+    } else {
+      Sharing.shareAsync(contentUri, {
+        mimeType: 'application/pdf',
+        UTI: 'pdf'
+      }).then((e) => console.log(e)).catch((error) => Alert.alert(error.message))
+    }
     } else {
       Alert.alert('Sharing is not available')
     }

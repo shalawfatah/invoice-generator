@@ -55,7 +55,7 @@ const EstimateArchive = () => {
 
   useEffect(() => {
     fetchData()
-  }, [id])
+  }, [id, invoice])
   
   return (
     <View>
