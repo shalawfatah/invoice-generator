@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, ScrollView, Platform } from 'react-native'
+import { View, ScrollView, Platform, Text } from 'react-native'
 import { supabase } from '../lib/supabase';
 import InvoiceItem from '../components/invoice/InvoiceItem';
 import { useNavigation } from '@react-navigation/native';
@@ -70,17 +70,17 @@ const EstimateArchive = () => {
       {status === null ? (<Checking />) :  (
     <View className="h-screen relative">
     <ScrollView className="bg-white py-1">
-      {invoice.map(item => {
-        const time = format(new Date(item.created_at), "dd MMMM yyyy 'at' HH:mm aa")
-        return <View key={item.id} className="mx-2">
+      {invoice.length > 0 ? invoice.map(item => {
+        const time = format(new Date(item?.created_at), "dd MMMM yyyy 'at' HH:mm aa")
+        return <View key={item?.id} className="mx-2">
                   <InvoiceItem 
-                          company={item.companies.company_name} 
+                          company={item.companies?.company_name} 
                           date={time} 
-                          total={item.total}
+                          total={item?.total}
                           link={() => navigation.navigate('SingleInvoice', {item})}
                           />
                </View>
-      })}
+      }) : <Text className="text-center my-2">No estimates</Text>}
     </ScrollView>
       <View className={`absolute ${isIos ? 'bottom-40' : 'bottom-28'} h-32 w-full z-3`}>
         <MenuButtons />

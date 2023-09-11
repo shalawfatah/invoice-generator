@@ -96,7 +96,7 @@ const PreviewInvoice = ({route}) => {
       const options = {
         subject: `Invoice from ${profile.name}`,
         body: `Invoice from ${profile.name} to ${client.company_name} where total is ${total}`,
-        receipents: [company_email, profile.email],
+        receipents: [client.company_email, profile.email],
         attachments: [contentUriAndroid]
       }
       MailComposer.composeAsync(options).catch(error => Alert.alert(error))

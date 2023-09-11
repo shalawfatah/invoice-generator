@@ -26,9 +26,11 @@ const invoiceNum = async() => {
     console.log(error)
     return;
   } else {
-    const numeric = Number(data[data.length - 1].document_number) + 1;
-    const stringed = numeric.toString()
-    setNumber(stringed)
+    if(data.length > 0) {
+      const numeric = Number(data[data.length - 1].document_number) + 1;
+      const stringed = numeric.toString()
+      setNumber(stringed)
+    }
   }
 }
 
