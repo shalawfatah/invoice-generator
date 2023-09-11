@@ -12,12 +12,10 @@ import * as Sharing from 'expo-sharing';
 const PreviewInvoice = ({route}) => {
   const {tasks, tax, subtotal, total, choice, note, user, profile, number} = route.params;
   const navigation = useNavigation();
-  const [pdf, setPdf] = useState(null);
   const [client, setClient] = useState(choice)
-  const [isAvailable, setIsAvailable] = useState(false)
   const [loading, setLoading] = useState(false)
   const [sharing, setSharing] = useState(false);
-  const isSharingAvilable = () => Sharing.isAvailableAsync().then((res) => setSharing(res)).catch(e => console.log(e))
+  const [temp, setTemp] = useState(null)
   const dox = "Invoice";
   const API_URL = "https://manage-invoice-generator.netlify.app";
 
@@ -32,6 +30,9 @@ const PreviewInvoice = ({route}) => {
         // Check if Sharing is available
         const sharingAvailable = await Sharing.isAvailableAsync();
         setSharing(sharingAvailable);
+        if (tasks !== undefined) {
+          setTemp(template_choice(profile, client, tasks, subtotal, tax, total, note, dox, profile.template));
+        }
       } catch (error) {
         console.error(error);
       }
@@ -39,12 +40,19 @@ const PreviewInvoice = ({route}) => {
     fetchData();
   }, []);
 
+  const [active, setActive] = useState(null);
+  const [customer, setCustomer] = useState(null)
+  useEffect(() => {
+    setActive(profile.subscription_status)
+    setCustomer(profile.stripe_customer_id)
+  }, [profile])
+
+  console.log('active ', active)
   const generatePDF = async () => {
-    if(user.subscription_status !== 'active') {
+    if(active !== 'active') {
       if (Platform.OS === 'ios') {
         await Linking.openURL(`${API_URL}?${queryString}`)
       } else {
-        const customer = profile.stripe_customer_id;
         await navigation.navigate('Subscribe Packages', { customer });
       }
     } else {
