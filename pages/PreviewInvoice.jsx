@@ -50,9 +50,6 @@ const PreviewInvoice = ({route}) => {
 
   const generatePDF = async () => {
     setLoading(true)
-    if(active !== 'active') {
-        await navigation.navigate('Subscribe Packages', { customer });
-    } else {
       const { data, error } = await supabase
       .from('invoices')
       .insert([
@@ -106,7 +103,6 @@ const PreviewInvoice = ({route}) => {
     Alert.alert('Sharing is not available')
   }
   setLoading(false)
-    }
   };
     
 
@@ -127,21 +123,24 @@ const PreviewInvoice = ({route}) => {
         />}
     </ScrollView>
     <View className="m-2">
-      <InvoiceBtn 
-        text="Edit Invoice" 
-        icon="pencil-outline"
-        classes="my-2" 
-        duty={() => navigation.navigate('Add Invoice')} 
-        />
-      <InvoiceBtn 
-        text="Share Invoice" 
+    {active === 'active' ? 
+    <InvoiceBtn 
+        text="Share Estimate" 
         icon="rocket"
         classes="my-2 " 
         buttonColor='#dc143c' 
         textColor='#FFF'
-        loading={loading}
         duty={generatePDF}
+        /> :
+      <InvoiceBtn 
+        text="Subscribe" 
+        icon="rocket"
+        classes="my-2 " 
+        buttonColor='#dc143c' 
+        textColor='#FFF'
+        duty={() => navigation.navigate('Subscribe Packages', { customer })}
         />
+        }
     </View>
     </View>
   )

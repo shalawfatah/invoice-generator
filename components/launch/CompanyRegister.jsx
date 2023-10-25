@@ -41,9 +41,9 @@ const CompanyRegister = () => {
        Alert.alert(`Network response was not ok. Status: ${response.status}`);
       }
   
-      await response.json().then(() => {
-        navigation.navigate('Archive')
-      })
+      const result = await response.json()
+      const customer = result.customer.id;
+      await navigation.navigate('Subscribe Packages', {customer})
     } catch (error) {
       Alert.alert('Error fetching session:', error.message);
       setLoading(false);

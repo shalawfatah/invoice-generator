@@ -78,7 +78,7 @@ const AddInvoice = () => {
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [companies])
 
   const filtered_companies = companies?.filter(item => item.company_name.includes(text));
 

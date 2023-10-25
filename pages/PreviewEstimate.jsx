@@ -57,9 +57,6 @@ const PreviewEstimate = ({route}) => {
 
     const generatePDF = async () => {
       setLoading(true)
-      if(active !== 'active') {
-          await navigation.navigate('Subscribe Packages', { customer });
-      } else {
         const { data, error } = await supabase
         .from('invoices')
         .insert([
@@ -113,7 +110,6 @@ const PreviewEstimate = ({route}) => {
       Alert.alert('Sharing is not available')
     }
     setLoading(false)
-      }
     };
     
 
@@ -140,6 +136,7 @@ const PreviewEstimate = ({route}) => {
         classes="my-2" 
         duty={() => navigation.navigate('Add Estimate')} 
         />
+    {active === 'active' ? 
     <InvoiceBtn 
         text="Share Estimate" 
         icon="rocket"
@@ -147,7 +144,16 @@ const PreviewEstimate = ({route}) => {
         buttonColor='#dc143c' 
         textColor='#FFF'
         duty={generatePDF}
+        /> :
+      <InvoiceBtn 
+        text="Subscribe" 
+        icon="rocket"
+        classes="my-2 " 
+        buttonColor='#dc143c' 
+        textColor='#FFF'
+        duty={() => navigation.navigate('Subscribe Packages', { customer })}
         />
+        }
     </View>
     </View>
   )
