@@ -10,13 +10,13 @@ import { supabase } from "../../lib/supabase";
 import { decode } from 'base64-arraybuffer';
 
 const CompanyRegister = () => {
+  
   const session = useContext(SessionContext)
   const API_URL = "https://ray-mobile-backend.onrender.com";
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [loading, setLoading] = useState('');
-  const [customerId, setCustomerId] = useState(null);
   const navigation = useNavigation();
   
   useEffect(() => {setEmail(session?.email)}, [session])
@@ -41,15 +41,12 @@ const CompanyRegister = () => {
        Alert.alert(`Network response was not ok. Status: ${response.status}`);
       }
   
-      const result = await response.json();
-      await setCustomerId(result.customer.id);
-      const customer = await result.customer.id;
-      setLoading(false);
-      await navigation.navigate('Add Invoice');
+      await response.json().then(() => {
+        navigation.navigate('Archive')
+      })
     } catch (error) {
-      console.error('Error fetching session:', error);
+      Alert.alert('Error fetching session:', error.message);
       setLoading(false);
-      // Handle the error here, e.g., show an error message to the user
     }
   };
   

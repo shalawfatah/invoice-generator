@@ -51,11 +51,7 @@ const PreviewInvoice = ({route}) => {
   const generatePDF = async () => {
     setLoading(true)
     if(active !== 'active') {
-      if (Platform.OS === 'ios') {
-        await Linking.openURL(`${API_URL}?${queryString}`)
-      } else {
         await navigation.navigate('Subscribe Packages', { customer });
-      }
     } else {
       const { data, error } = await supabase
       .from('invoices')
@@ -96,14 +92,10 @@ const PreviewInvoice = ({route}) => {
       const options = {
         subject: `Invoice from ${profile.name}`,
         body: `Invoice from ${profile.name} to ${client.company_name} where total is ${total}`,
-        receipents: [client.company_email, profile.email],
+        receipents: [`${choice.company_email}`],
         attachments: [contentUriAndroid]
       }
       MailComposer.composeAsync(options).catch(error => Alert.alert(error))
-      // Sharing.shareAsync(contentUriAndroid, {
-      //   mimeType: 'application/pdf',
-      //   UTI: 'pdf'
-      // }).then((e) => console.log(e)).catch((error) => console.log(error.message))
     } else {
       Sharing.shareAsync(contentUri, {
         mimeType: 'application/pdf',

@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, Alert } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import InvoiceBtn from '../components/general/Button'
@@ -15,7 +15,6 @@ const AddCompany = () => {
     const [loading, setLoading] = useState(false)
       
     const navigation = useNavigation()
-
     const add_company = async() => {
             setLoading(true)
             const { data, error } = await supabase
@@ -29,9 +28,11 @@ const AddCompany = () => {
             .select()
             if(error) {
                 console.log(error)
+                Alert.alert(error.details)
+                setLoading(false)
             } else {
                 setLoading(false)
-                navigation.navigate('Add Invoice')
+                navigation.navigate('Client Archive')
             }
 
     }

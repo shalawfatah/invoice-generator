@@ -29,6 +29,8 @@ const AddInvoice = () => {
         const numeric = Number(data[data.length - 1].document_number) || 0 + 1;
         const stringed = numeric.toString()
         setNumber(stringed)
+      } else {
+        setNumber("1")
       }
     }
   }
@@ -68,8 +70,7 @@ const AddInvoice = () => {
     try {
       await checkUser();
       await fetch_companies();
-      await invoiceNum(); // You may want to execute this as well, assuming it doesn't depend on the result of checkUser or fetch_companies.
-      // Add any other logic that depends on the results of checkUser and fetch_companies here.
+      await invoiceNum();
     } catch (error) {
       console.error(error);
     }

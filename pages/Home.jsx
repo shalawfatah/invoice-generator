@@ -131,9 +131,9 @@ const Home = () => {
           ]);
         }
 
-        const manage_account = () => {
-          Linking.openURL(`https://manage-invoice-generator.netlify.app?stripeId=${profile.stripe_customer_id}`)
-        }
+        // const manage_account = () => {
+        //   Linking.openURL(`https://manage-invoice-generator.netlify.app?stripeId=${profile.stripe_customer_id}`)
+        // }
 
   return (
     <View className="bg-white min-h-screen relative">
@@ -174,15 +174,15 @@ const Home = () => {
         <Text className="text-md font-bold p-1">Company Email:</Text>
         <Text className="text-md font-bold p-1">{profile?.email}</Text>
       </View>
-      {isIos === false ? <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
+      <View className="flex flex-row items-center justify-between my-1 border-gray-200 w-full">
         <Text className="text-md font-bold p-1">Subscription Status:</Text>
         <View className={`flex flex-row gap-x-2 items-center p-1 px-1 pr-4  ${status === 'active' ? 'bg-[#09A144]' : 'bg-[#D30000]'}`}>
-          {stripeId !== null ? <Ionicons name="play-circle-outline" size={24} color={"white"}/> : <Ionicons name="stop-circle-outline" size={24} color={"white"}/>}
-          <Text className="text-white font-bold">{profile?.subscription_status}</Text>
+          {status !== null ? <Ionicons name="play-circle-outline" size={24} color={"white"}/> : <Ionicons name="stop-circle-outline" size={24} color={"white"}/>}
+          {status !== null ? <Text className="text-white font-bold">{profile?.subscription_status}</Text> : <Text className="text-white font-bold">Inactive</Text>}
         </View>
-      </View> : <TouchableOpacity onPress={manage_account}><Text className="font-bold text-indigo-700 underline">Manage your sharing</Text></TouchableOpacity>}
+      </View>
         <Divider className="w-full my-2 bg-gray-400" />   
-{(status !== 'active' && isIos === false) ? <TouchableOpacity onPress={reactivate_subscription} className=" bg-[#09A144] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
+{(status === 'canceled') ? <TouchableOpacity onPress={reactivate_subscription} className=" bg-[#09A144] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 font-bold text-white">Activate Subscription</Text>
           <Ionicons name="create-outline" color={"white"} size={24} />
         </TouchableOpacity> : <Text></Text>}
@@ -190,7 +190,7 @@ const Home = () => {
           <Text className="mx-2 text-lg font-bold text-black">Update Profile</Text>
           <Ionicons name="create-outline" color={"black"} size={24} />
         </TouchableOpacity>
-        {isIos === false ? <TouchableOpacity onPress={subscription_trigger} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
+{status === 'active' ?        <TouchableOpacity onPress={subscription_trigger} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 my-[2px]">
           <Text className="mx-2 text-lg font-bold text-white">Cancel Subscription</Text>
           <Ionicons name="pause" color={"white"} size={24} />
         </TouchableOpacity> : <Text></Text>}
