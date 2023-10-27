@@ -11,7 +11,6 @@ import PreviewInvoice from '../../pages/PreviewInvoice';
 import ConfirmSent from '../../pages/ConfirmSent';
 import IncomeReport from '../../pages/IncomeReport';
 import SingleInvoice from '../../pages/SingleInvoice';
-import EditProfile from '../../pages/EditProfile';
 import AddEstimate from '../../pages/AddEstimate';
 import PreviewEstimate from '../../pages/PreviewEstimate';
 import ClientArchive from '../../pages/ClientArchive';
@@ -22,6 +21,10 @@ import PaySubscription from '../launch/PaySubscription';
 import EstimateArchive from '../../pages/EstimateArchive';
 import Account from '../account/Account';
 import CompanyLogo from '../company/CompanyLogo';
+import { Platform } from 'react-native';
+import Purchases from 'react-native-purchases';
+import { useContext, useEffect } from 'react';
+import { SessionContext } from './SessionContext';
 
 const Tab = createBottomTabNavigator();
 
@@ -32,6 +35,22 @@ originalWarn(message, ...args)
 }
 
 const Navigation = () => {
+  const session = useContext(SessionContext)
+  const id = session.id;
+
+  const checkRevCat = async() => {
+    if(Platform.OS === 'ios') {
+      await Purchases.configure({ apiKey: process.env.EXPO_PUBLIC_REVCAT_IOS_API_KEY, appUserID: id })
+    }
+    if(Platform.OS === 'android') {
+      await Purchases.configure({ apiKey: process.env.EXPO_PUBLIC_REVCAT_ANDROID_API_KEY, appUserID: id })
+    }
+  }
+
+  useEffect(() => {
+    checkRevCat()
+  }, [])
+  
     return (
         <NavigationContainer>
           <Tab.Navigator

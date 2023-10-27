@@ -60,15 +60,7 @@ const CompanyLogo = () => {
       const {data, error} = await supabase.from('assets').insert({url: photoURL})
       if(error) {
         console.log(error)
-      } else {
-        console.log(data)
       }
-      // if(error) {
-      //   Alert.alert('Issue with uploading')
-      // } else {
-      //   await supabase.from('profile').update({ avatar: data.url }).eq('user_id', session?.id)
-      //   setLoading(false)
-      // }
     }
   return (
     <View className="mx-4">

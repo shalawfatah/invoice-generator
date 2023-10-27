@@ -4,8 +4,8 @@ import { supabase } from './lib/supabase'
 import Auth from './components/account/Auth'
 import { Session } from '@supabase/supabase-js'
 import Navigation from './components/general/Navigation'
-import { StripeProvider } from '@stripe/stripe-react-native'
 import { SessionContext } from './components/general/SessionContext'
+
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null)
@@ -35,13 +35,10 @@ export default function App() {
       }
     });
   }, []);
-  
 
   return (
-    <StripeProvider publishableKey='pk_test_51HhPuUK1omnuMJYrNMXx9TZgm4MhtRewC2QU8WTBBcHUTBUFshVHc3HCI7xXoPwjUC8asvr03tz9hLOWBRUXasSy00uLZxpufi'>
       <SessionContext.Provider value={user}>
         {isSessionSet && session && session.user ? <Navigation /> : <Auth />}
       </SessionContext.Provider>
-    </StripeProvider>
   )
 }

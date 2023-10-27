@@ -18,12 +18,7 @@ const PreviewEstimate = ({route}) => {
   const [loading, setLoading] = useState(false)
   const [temp, setTemp] = useState(null)
   const [sharing, setSharing] = useState(false);
-  const API_URL = "https://manage-invoice-generator.netlify.app";
 
-  const dataToSend = { stripeId: profile.stripe_customer_id };
-  const queryString = Object.keys(dataToSend)
-    .map((key) => key + '=' + dataToSend[key])
-    .join('&');
   const dox = "Estimate";
   
   useEffect(() => {
@@ -48,12 +43,19 @@ const PreviewEstimate = ({route}) => {
     fetchData();
   }, []);
 
-  const [active, setActive] = useState(null);
-  const [customer, setCustomer] = useState(null)
+  const [active, setActive] = useState([]);
+  const check_subscription = async() => {
+    try {
+      const customerInfo = await Purchases.getCustomerInfo();
+      setActive(customerInfo.activeSubscriptions)
+    } catch (e) {
+     console.log(e)
+    }
+  }
+
   useEffect(() => {
-    setActive(profile.subscription_status)
-    setCustomer(profile.stripe_customer_id)
-  }, [profile])
+    check_subscription()
+  }, [])
 
     const generatePDF = async () => {
       setLoading(true)
@@ -136,7 +138,7 @@ const PreviewEstimate = ({route}) => {
         classes="my-2" 
         duty={() => navigation.navigate('Add Estimate')} 
         />
-    {active === 'active' ? 
+    {active.length !== 0 ? 
     <InvoiceBtn 
         text="Share Estimate" 
         icon="rocket"
@@ -151,7 +153,7 @@ const PreviewEstimate = ({route}) => {
         classes="my-2 " 
         buttonColor='#dc143c' 
         textColor='#FFF'
-        duty={() => navigation.navigate('Subscribe Packages', { customer })}
+        duty={() => navigation.navigate('Subscribe Packages')}
         />
         }
     </View>

@@ -12,7 +12,6 @@ import { decode } from 'base64-arraybuffer';
 const CompanyRegister = () => {
   
   const session = useContext(SessionContext)
-  const API_URL = "https://ray-mobile-backend.onrender.com";
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
@@ -23,31 +22,13 @@ const CompanyRegister = () => {
 
   const fetchSession = async () => {
     setLoading(true);
-    try {
-      const response = await fetch(`${API_URL}/create-customer`, {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          name: name,
-          address: address,
-          avatar: photoURL,
-        }),
-      });
-  
-      if (!response.ok) {
-       Alert.alert(`Network response was not ok. Status: ${response.status}`);
-      }
-  
-      const result = await response.json()
-      const customer = result.customer.id;
-      await navigation.navigate('Subscribe Packages', {customer})
-    } catch (error) {
-      Alert.alert('Error fetching session:', error.message);
-      setLoading(false);
-    }
+    const {data, error} = await supabase.from('profile').update({name, email, address, avatar: photoURL}).eq('email', email)
+    if(error) {
+      setLoading(false)
+      Alert.alert(error.detail)
+    } 
+    setLoading(false)
+    navigation.navigate('Subscribe Packages')
   };
   
 
@@ -73,7 +54,6 @@ const CompanyRegister = () => {
             const res = result.assets[0].uri.match(regex)[1];
             let newName = Date.now() + res;
             setImgName(newName)
-            console.log('nnn ', newName)
             body.append('upload', {
               uri: result.assets[0].uri,
               name: newName,

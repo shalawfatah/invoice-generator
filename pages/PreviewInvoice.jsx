@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, Alert , Platform, Linking} from 'react-native'
+import { View, ScrollView, Alert , Platform, Text} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { supabase } from '../lib/supabase'
 import * as Print from 'expo-print';
@@ -9,6 +9,7 @@ import TemplateRenderer from '../components/templates/TemplateRenderer.jsx'
 import { template_choice } from '../components/templates/template_choice.js'
 import * as Sharing from 'expo-sharing';
 import * as MailComposer from 'expo-mail-composer';
+import Purchases from 'react-native-purchases';
 
 const PreviewInvoice = ({route}) => {
   const {tasks, tax, subtotal, total, choice, note, user, profile, number} = route.params;
@@ -17,13 +18,8 @@ const PreviewInvoice = ({route}) => {
   const [loading, setLoading] = useState(false)
   const [sharing, setSharing] = useState(false);
   const [temp, setTemp] = useState(null)
-  const dox = "Invoice";
-  const API_URL = "https://manage-invoice-generator.netlify.app";
 
-  const dataToSend = { stripeId: profile.stripe_customer_id };
-  const queryString = Object.keys(dataToSend)
-    .map((key) => key + '=' + dataToSend[key])
-    .join('&');
+  const dox = "Invoice";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,12 +37,19 @@ const PreviewInvoice = ({route}) => {
     fetchData();
   }, []);
 
-  const [active, setActive] = useState(null);
-  const [customer, setCustomer] = useState(null)
+  const [active, setActive] = useState([]);
+  const check_subscription = async() => {
+    try {
+      const customerInfo = await Purchases.getCustomerInfo();
+      setActive(customerInfo.activeSubscriptions)
+    } catch (e) {
+     console.log(e)
+    }
+  }
+
   useEffect(() => {
-    setActive(profile.subscription_status)
-    setCustomer(profile.stripe_customer_id)
-  }, [profile])
+    check_subscription()
+  }, [])
 
   const generatePDF = async () => {
     setLoading(true)
@@ -123,7 +126,7 @@ const PreviewInvoice = ({route}) => {
         />}
     </ScrollView>
     <View className="m-2">
-    {active === 'active' ? 
+    {active.length !== 0 ? 
     <InvoiceBtn 
         text="Share Estimate" 
         icon="rocket"
@@ -132,6 +135,8 @@ const PreviewInvoice = ({route}) => {
         textColor='#FFF'
         duty={generatePDF}
         /> :
+        <View>
+          <Text className="text-center font-bold my-4">To share your document, please subscribe</Text>
       <InvoiceBtn 
         text="Subscribe" 
         icon="rocket"
@@ -140,6 +145,7 @@ const PreviewInvoice = ({route}) => {
         textColor='#FFF'
         duty={() => navigation.navigate('Subscribe Packages', { customer })}
         />
+        </View>
         }
     </View>
     </View>

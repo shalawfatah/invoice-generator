@@ -1979,6 +1979,11 @@
   dependencies:
     nanoid "^3.1.23"
 
+"@revenuecat/purchases-typescript-internal@7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@revenuecat/purchases-typescript-internal/-/purchases-typescript-internal-7.1.0.tgz#daf5394154374d46ffbcec7d47b8f6d8089c3c36"
+  integrity sha512-926dlZkWBejPDStcIx8T9KO6gyy+CK8xuDynhsUyroZCLTcaxMTcz73CzdG4vSYyLfgav24Ky8ofWnNfjcWEjg==
+
 "@segment/loosely-validate-event@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@segment/loosely-validate-event/-/loosely-validate-event-2.0.0.tgz#87dfc979e5b4e7b82c5f1d8b722dfd5d77644681"
@@ -2022,11 +2027,6 @@
   integrity sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==
   dependencies:
     "@sinonjs/commons" "^3.0.0"
-
-"@stripe/stripe-react-native@^0.30.0":
-  version "0.30.0"
-  resolved "https://registry.yarnpkg.com/@stripe/stripe-react-native/-/stripe-react-native-0.30.0.tgz#75fd976ee6cf153569523ba1ccc221ddd160d99f"
-  integrity sha512-uh8XKUA7jmvr/10vf9eCTaLJ3xQ/3IFPpW+oQz2OEi1hUF2gOAEyZU6IDjMu23FX7aYlubBzgtN+iZfP5zuHEQ==
 
 "@supabase/functions-js@^2.1.0":
   version "2.1.2"
@@ -3539,6 +3539,39 @@ expo-constants@~14.4.2:
   dependencies:
     "@expo/config" "~8.1.0"
     uuid "^3.3.2"
+
+expo-dev-client@~2.4.11:
+  version "2.4.11"
+  resolved "https://registry.yarnpkg.com/expo-dev-client/-/expo-dev-client-2.4.11.tgz#23b2e9b6c5c5ad62d11d196f82cc4d4c1c09e340"
+  integrity sha512-A7aKQZeEYG0YJ51GnjOFkMNe118jD1cbU+v5iM3E+H1Co5aVtnlGZWcv8Dtw3uGuWxRgbWGds5TGNbcDmJ1hDg==
+  dependencies:
+    expo-dev-launcher "2.4.13"
+    expo-dev-menu "3.2.1"
+    expo-dev-menu-interface "1.3.0"
+    expo-manifests "~0.7.0"
+    expo-updates-interface "~0.10.0"
+
+expo-dev-launcher@2.4.13:
+  version "2.4.13"
+  resolved "https://registry.yarnpkg.com/expo-dev-launcher/-/expo-dev-launcher-2.4.13.tgz#bcae48e16521c05c6d831094adffea13fe64ea99"
+  integrity sha512-afszaREyGnhWJMmcOuDGs83r0UWeRvZrOHlKQxxst/UhAeFQqlDmkEjwtDWfTUy7BoXuuw2CuQtUFH+vTyjEGA==
+  dependencies:
+    expo-dev-menu "3.2.1"
+    resolve-from "^5.0.0"
+    semver "^7.5.3"
+
+expo-dev-menu-interface@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/expo-dev-menu-interface/-/expo-dev-menu-interface-1.3.0.tgz#51b6be8c6e0ce73e414ac7a545998dfad0dfdb80"
+  integrity sha512-WtRP7trQ2lizJJTTFXUSGGn1deIeHaYej0sUynvu/uC69VrSP4EeSnYOxbmEO29kuT/MsQBMGu0P/AkMQOqCOg==
+
+expo-dev-menu@3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/expo-dev-menu/-/expo-dev-menu-3.2.1.tgz#ada145afca3f0c9638ca42f05a2f79a1f45d9ad5"
+  integrity sha512-SxH/ZUIYZliMBjJTpiECVSDkP7e81mbGNLH8ZD69iCAfLeH7P1OPXFycEdcvN33I7tVqzFgARGLK/W/8JV+U9w==
+  dependencies:
+    expo-dev-menu-interface "1.3.0"
+    semver "^7.5.3"
 
 expo-eas-client@~0.6.0:
   version "0.6.0"
@@ -6093,6 +6126,13 @@ react-native-paper@^5.10.0:
     "@callstack/react-theme-provider" "^3.0.9"
     color "^3.1.2"
     use-latest-callback "^0.1.5"
+
+react-native-purchases@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-7.1.0.tgz#83dfa9c5156377e8b57f99120abf1d66208e4d77"
+  integrity sha512-keTXZr1SwqFM6xfd3RmVD0KTiYyWXx703wfErrvtT7MYjogEV72VlhIPYCJwp4B3hvglNAlerWuSKFw0PFiJPg==
+  dependencies:
+    "@revenuecat/purchases-typescript-internal" "7.1.0"
 
 react-native-ratings@8.0.4:
   version "8.0.4"

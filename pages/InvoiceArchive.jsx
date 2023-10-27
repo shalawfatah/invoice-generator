@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
 import MenuButtons from '../components/general/MenuButtons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
-import Checking from '../components/account/Checking';
 import { SessionContext } from '../components/general/SessionContext';
 
 const InvoiceArchive = () => {
@@ -14,7 +13,6 @@ const InvoiceArchive = () => {
   const [invoice, setInvoice] = useState([])
   const navigation = useNavigation()
   const [isLoading, setIsLoading] = useState(true);
-  const [status, setStatus] = useState(null)
 
   const [isIos, setIsIos] = useState(false);
 
@@ -35,25 +33,14 @@ const InvoiceArchive = () => {
     setIsLoading(false);
   }
 
-
-  const checkUser = async() => {
-    const {data, error} = await supabase.from('profile').select().eq('user_id', user?.id).single();
-    if(error) {
-      console.log(error)
-    } else {
-      setStatus(data.stripe_customer_id)
-    }
-    setIsLoading(false);
-  }
-
   const fetchData = async () => {
     try {
-      await checkUser();
       await fetch_invoices();
     } catch (error) {
       console.error(error);
     }
   };
+
   
   useEffect(() => {
     fetchData()
@@ -69,7 +56,6 @@ const InvoiceArchive = () => {
             />
       ) : (
     <View>
-      {status === null ? (<Checking />) :  (
     <View className="h-screen">
     <ScrollView className="bg-white py-1">
       {invoice.length > 0 ? invoice?.map(item => {
@@ -88,7 +74,6 @@ const InvoiceArchive = () => {
         <MenuButtons />
       </View>
     </View>
-        )}
         </View>)}
         </View>
   )

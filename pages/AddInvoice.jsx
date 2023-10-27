@@ -8,13 +8,11 @@ import { calc_amount } from '../util_functions/calc_amount';
 import Border from '../components/general/Border';
 import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Checking from '../components/account/Checking';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { SessionContext } from '../components/general/SessionContext';
 
 const AddInvoice = () => {
   const user = useContext(SessionContext)
-  const [status, setStatus] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState(null);
   const [number, setNumber] = useState('')
@@ -40,7 +38,6 @@ const AddInvoice = () => {
     if(error) {
       console.log(error)
     } else {
-      setStatus(data.stripe_customer_id)
       setProfile(data)
     }
     setIsLoading(false);
@@ -122,7 +119,6 @@ const AddInvoice = () => {
             />
       ) : (
     <View>
-      {status === null ? (<Checking />) :  (
     <ScrollView className="p-2 bg-white">
       <View className="relative">
       <TextInput
@@ -245,7 +241,6 @@ const AddInvoice = () => {
           text="Save" /> 
           <View className="my-12"></View>
     </ScrollView>
-    )}
     </View>)}
     </View>
   )

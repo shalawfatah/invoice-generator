@@ -6,25 +6,26 @@ import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
 import MenuButtons from '../components/general/MenuButtons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
-import Checking from '../components/account/Checking';
 import { SessionContext } from '../components/general/SessionContext';
 
 const EstimateArchive = () => {
-  const {id} = useContext(SessionContext);
+  const user = useContext(SessionContext);
   const [invoice, setInvoice] = useState([])
   const navigation = useNavigation()
   const [isLoading, setIsLoading] = useState(true);
-  const [status, setStatus] = useState(null)
 
   const fetch_invoices = async() => {
+      setIsLoading(true)
       let { data: invoices, error } = await supabase
       .from('invoices')
       .select('*, companies("*")')
-      .eq('user_id', id).eq('type', 'estimate')
+      .eq('user_id', user?.id).eq('type', 'estimate')
       if(error) {
         console.log(error)
+        setIsLoading(false)
       } else {
         setInvoice(invoices)
+        setIsLoading(false)
       }
   }
 
@@ -34,28 +35,10 @@ const EstimateArchive = () => {
     setIsIos(Platform.OS === 'ios');
   }, []);
   
-  const checkUser = async() => {
-    const {data, error} = await supabase.from('profile').select().eq('user_id', id).single();
-    if(error) {
-      console.log(error)
-    } else {
-      setStatus(data.stripe_customer_id)
-    }
-    setIsLoading(false);
-  }
-  
-  const fetchData = async () => {
-    try {
-      await checkUser();
-      await fetch_invoices();
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   useEffect(() => {
-    fetchData()
-  }, [id, invoice])
+    fetch_invoices()
+  }, [])
   
   return (
     <View>
@@ -67,7 +50,6 @@ const EstimateArchive = () => {
             />
       ) : (
     <View>
-      {status === null ? (<Checking />) :  (
     <View className="h-screen relative">
     <ScrollView className="bg-white py-1">
       {invoice.length > 0 ? invoice.map(item => {
@@ -86,7 +68,6 @@ const EstimateArchive = () => {
         <MenuButtons />
       </View>
     </View>
-            )}
             </View>)}
             </View>
   )

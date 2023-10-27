@@ -21,9 +21,6 @@ const SignUp = ({handleSignin}) => {
           options: {
               data: {
                 avatar: photoURL,
-                subscription_status: null,
-                price: null,
-                stripe_customer_id: null
               },
             },
         })
