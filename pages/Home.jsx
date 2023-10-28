@@ -141,7 +141,7 @@ const Home = () => {
           <Ionicons name="create-outline" color={"black"} size={24} />
         </TouchableOpacity>
         <Divider className="w-full my-2 mt-6 bg-gray-400" />
-        <Text className="text-[#DC143C]"> ... Danger Zone ...</Text>
+        <Text className="text-[#DC143C] font-bold"> ... Danger Zone ...</Text>
         <Divider className="w-full my-2 bg-gray-400" />
         <TouchableOpacity onPress={delete_everything} className=" bg-[#DC143C] rounded-[12px] flex flex-row items-center justify-center w-full p-2 ">
           <Text className="mx-2 text-lg font-bold text-white">Delete Everything</Text>
