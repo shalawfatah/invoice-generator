@@ -15,7 +15,9 @@ const ProductCard = ({name, price, currency, subscribe}) => {
 }
 
 const SubscribePackages = () => {
+
   const [packages, setPackages] = useState([]);
+  const navigation = useNavigation();
 
   const fetch_prices = async() => {
     const result = await Purchases.getOfferings()
@@ -23,8 +25,17 @@ const SubscribePackages = () => {
   }
 
   const subscribe = async(item) => {
-    const {purchaserInfo} = await Purchases.purchasePackage(item)
-    
+    try {
+      const {purchaserInfo} = await Purchases.purchasePackage(item)
+      console.log('purchase info: ', purchaserInfo)
+      const purchase = await Purchases.getCustomerInfo()
+      console.log('purchase: ', purchase)
+      if(typeof purchase.entitlements.active['pro'] !== 'undefined') {
+        await navigation.navigate('Account')
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
@@ -33,23 +44,15 @@ const SubscribePackages = () => {
   
   return (
     <View>
-      {packages?.all?.Monthly?.availablePackages?.map((item, index) => {
-        return <View key={index}>
-           <ProductCard 
-              name={item.offeringIdentifier} 
-              price={item.product.priceString}
-              currency={item.product.currencyCode}
-              subscribe={() => subscribe(item)} />
-        </View>
-      })}
-        {packages?.all?.Annual?.availablePackages?.map((item, index) => {
-        return <View key={index}>
-           <ProductCard 
-              name={item.offeringIdentifier} 
-              price={item.product.priceString}
-              currency={item.product.currencyCode}
-              subscribe={() => subscribe(item)} />
-        </View>
+      {packages.current?.availablePackages?.map((item) => {
+        return <View key={item.identifier}>
+                  <ProductCard 
+                      name={item.packageType} 
+                      price={item.product.priceString}
+                      currency={item.product.currencyCode}
+                      subscribe={() => subscribe(item)} 
+                  />
+              </View>
       })}
     </View>
   )
