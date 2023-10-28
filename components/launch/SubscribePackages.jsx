@@ -27,7 +27,6 @@ const SubscribePackages = () => {
   const subscribe = async(item) => {
     try {
       const {purchaserInfo} = await Purchases.purchasePackage(item)
-      console.log('purchase info: ', purchaserInfo)
       const purchase = await Purchases.getCustomerInfo()
       console.log('purchase: ', purchase)
       if(typeof purchase.entitlements.active['pro'] !== 'undefined') {
