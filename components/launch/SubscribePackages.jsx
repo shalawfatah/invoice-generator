@@ -21,7 +21,7 @@ const SubscribePackages = () => {
 
   const fetch_prices = async() => {
     const result = await Purchases.getOfferings()
-    setPackages(result)
+    setPackages(result.current.availablePackages)
   }
 
   const subscribe = async(item) => {
@@ -43,7 +43,7 @@ const SubscribePackages = () => {
   
   return (
     <View>
-      {packages.current?.availablePackages?.map((item) => {
+      {packages.length > 0 ? packages.map((item) => {
         return <View key={item.identifier}>
                   <ProductCard 
                       name={item.packageType} 
@@ -52,7 +52,7 @@ const SubscribePackages = () => {
                       subscribe={() => subscribe(item)} 
                   />
               </View>
-      })}
+      }) : <Text className="p-2 flex text-center font-bold text-gray-700">Data not loaded</Text>}
     </View>
   )
 }
