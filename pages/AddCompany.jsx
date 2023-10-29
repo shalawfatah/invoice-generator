@@ -5,11 +5,10 @@ import InvoiceBtn from '../components/general/Button'
 import { TextInput } from 'react-native-paper';
 import { supabase } from '../lib/supabase'
 import { useAtom } from 'jotai';
-import { sessionAtom } from '../lib/store';
+import { sessionAtom, userAtom } from '../lib/store';
 
 const AddCompany = () => {
-    const [session] = useAtom(sessionAtom);
-    const id = session.id;
+    const [user] = useAtom(userAtom)
     const [company, setCompany] = useState('')
     const [address, setAddress] = useState('')
     const [email, setEmail] = useState('')
@@ -24,7 +23,7 @@ const AddCompany = () => {
                 company_name: company,
                 company_email:email,
                 company_address:address,
-                user_id: id
+                user_id: user.id
             }])
             .select()
             if(error) {

@@ -8,10 +8,11 @@ import { TextInput } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { decode } from 'base64-arraybuffer';
 import { useAtom } from 'jotai';
-import { sessionAtom } from '../../lib/store';
+import { sessionAtom, userAtom } from '../../lib/store';
 
 const CompanyForm = () => {
   const [session] = useAtom(sessionAtom);
+  const [user] = useAtom(userAtom)
   const navigation = useNavigation()
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -19,7 +20,7 @@ const CompanyForm = () => {
   const [address, setAddress] = useState('')
   
   const get_profile = async() => {
-    const {data, error} = await supabase.from('profile').select().eq('user_id', session?.id).single()
+    const {data, error} = await supabase.from('profile').select().eq('user_id', user.id).single()
     if(error) {
       console.log(error)
       return;
@@ -38,7 +39,7 @@ const CompanyForm = () => {
 
   const updateProfile = async() => {
     setLoading(true)
-    const {data, error} = await supabase.from('profile').update(updated).eq('user_id', session?.id)
+    const {data, error} = await supabase.from('profile').update(updated).eq('user_id', user.id)
     if(error) {
       console.log(error)
       setLoading(false)

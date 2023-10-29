@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
 import { TextInput } from 'react-native-paper';
 import InvoiceBtn from "../general/Button";
@@ -8,22 +8,19 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { supabase } from "../../lib/supabase";
 import { decode } from 'base64-arraybuffer';
 import { useAtom } from "jotai";
-import { sessionAtom } from "../../lib/store";
+import { userAtom } from "../../lib/store";
 
 const CompanyRegister = () => {
   
-  const [session] = useAtom(sessionAtom);
+  const [user] = useAtom(userAtom)
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [loading, setLoading] = useState('');
   const navigation = useNavigation();
   
-  useEffect(() => {setEmail(session?.email)}, [])
-
   const fetchSession = async () => {
     setLoading(true);
-    const {data, error} = await supabase.from('profile').update({name, email, address, avatar: photoURL}).eq('email', email)
+    const {data, error} = await supabase.from('profile').update({name, email, address, avatar: photoURL}).eq('email', user.email)
     if(error) {
       setLoading(false)
       Alert.alert(error.detail)
