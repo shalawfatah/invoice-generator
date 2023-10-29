@@ -10,30 +10,32 @@ import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { useAtom } from 'jotai';
-import { sessionAtom } from '../lib/store';
+import { sessionAtom, userAtom } from '../lib/store';
 
 const AddEstimate = () => {
   const [session] = useAtom(sessionAtom);
+  const [user] = useAtom(userAtom)
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState(null)
 
   const [number, setNumber] = useState('')
   
-const invoiceNum = async() => {
-  const {data, error} = await supabase.from('invoices').select().eq('user_id', user.id).eq('type', 'estimate')
-  if(error) {
-    console.log(error)
-    return;
-  } else {
-    if(data.length > 0) {
-      const numeric = Number(data[data.length - 1].document_number) + 1;
-      const stringed = numeric.toString()
-      setNumber(stringed)
+  const invoice_number = async() => {
+    const { data, error } = await supabase.rpc('get_last_invoice_for_user', {
+      p_user_id: user.id,
+      p_type: "estimate"
+    })    
+    if(error) {
+      console.log(error)
+    };
+    const stringed = data[0].document_number + 1;
+    const strified = stringed.toString()
+    if(data !== null) {
+      setNumber(strified)
     } else {
       setNumber("1")
     }
   }
-}
 
   const checkUser = async() => {
     const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
@@ -67,7 +69,7 @@ const invoiceNum = async() => {
     try {
       await checkUser();
       await fetch_companies();
-      await invoiceNum();
+      await invoice_number();
     } catch (error) {
       console.error(error);
     }

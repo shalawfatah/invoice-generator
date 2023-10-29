@@ -42,7 +42,7 @@ const IncomeReport = () => {
         </ScrollView>
       </View>)}
       </ScrollView>
-      <View className={`absolute ${isIos ? 'bottom-40' : 'bottom-28'} h-32 w-full z-3`}>
+      <View className={`absolute ${isIos ? 'bottom-48' : 'bottom-28'} h-32 w-full z-3`}>
         <MenuButtons />
       </View>
     </View>

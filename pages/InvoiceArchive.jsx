@@ -10,7 +10,7 @@ import { userAtom } from '../lib/store';
 import { useAtom } from 'jotai';
 
 const InvoiceArchive = () => {
-  const user = useAtom(userAtom);
+  const [user] = useAtom(userAtom);
   const [invoice, setInvoice] = useState([])
   const navigation = useNavigation()
   const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +25,7 @@ const InvoiceArchive = () => {
       let { data: invoices, error } = await supabase
       .from('invoices')
       .select('*, companies("*")')
-      .eq('user_id', user?.id).eq('type', 'invoice')
+      .eq('user_id', user.id).eq('type', 'invoice')
       if(error) {
         console.log(error)
       } else {
@@ -34,17 +34,8 @@ const InvoiceArchive = () => {
     setIsLoading(false);
   }
 
-  const fetchData = async () => {
-    try {
-      await fetch_invoices();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  
   useEffect(() => {
-    fetchData()
+    fetch_invoices()
   }, [])
 
   return (
@@ -71,7 +62,7 @@ const InvoiceArchive = () => {
                </View>
       }) : <Text className="text-center my-2">No invoices</Text>}
     </ScrollView>
-      <View className={`absolute ${isIos ? 'bottom-40' : 'bottom-28'} h-32 w-full z-3`}>
+      <View className={`absolute ${isIos ? 'bottom-48' : 'bottom-28'} h-32 w-full z-3`}>
         <MenuButtons />
       </View>
     </View>

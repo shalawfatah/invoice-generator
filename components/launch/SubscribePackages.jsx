@@ -32,7 +32,6 @@ const SubscribePackages = () => {
     try {
       const {purchaserInfo} = await Purchases.purchasePackage(item)
       const purchase = await Purchases.getCustomerInfo()
-      console.log('purchase: ', purchase)
       if(typeof purchase.entitlements.active['pro'] !== 'undefined') {
         await navigation.navigate('Account')
       }
@@ -47,6 +46,9 @@ const SubscribePackages = () => {
   
   return (
     <View>
+      <Text className="mx-4 mt-4 font-medium text-gray-700 text-center">
+        With subscription, you can share your invoices, estimates, PTOs, and check reports about your income when available
+        </Text>
       {packages.length > 0 ? packages.map((item) => {
         return <View key={item.identifier}>
                   <ProductCard 

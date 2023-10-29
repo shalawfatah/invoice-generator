@@ -17,21 +17,22 @@ const AddInvoice = () => {
   const [user] = useAtom(userAtom)
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState(null);
-  const [number, setNumber] = useState('')
-  
-  const invoiceNum = async() => {
-    const {data, error} = await supabase.from('invoices').select().eq('user_id', user.id).eq('type', 'invoice')
+  const [number, setNumber] = useState(0)
+
+  const invoice_number = async() => {
+    const { data, error } = await supabase.rpc('get_last_invoice_for_user', {
+      p_user_id: user.id,
+      p_type: "invoice"
+    })    
     if(error) {
       console.log(error)
-      return;
+    };
+    const stringed = data[0].document_number + 1;
+    const strified = stringed.toString()
+    if(data !== null) {
+      setNumber(strified)
     } else {
-      if(data.length > 0) {
-        const numeric = Number(data[data.length - 1].document_number) || 0 + 1;
-        const stringed = numeric.toString()
-        setNumber(stringed)
-      } else {
-        setNumber("1")
-      }
+      setNumber("1")
     }
   }
 
@@ -69,7 +70,7 @@ const AddInvoice = () => {
     try {
       await checkUser();
       await fetch_companies();
-      await invoiceNum();
+      invoice_number()
     } catch (error) {
       console.error(error);
     }
