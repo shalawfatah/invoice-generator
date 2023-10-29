@@ -1,15 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, Alert, TouchableOpacity, Platform, ScrollView } from 'react-native'
 import { supabase } from '../lib/supabase'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { Divider } from 'react-native-paper';
 import { ActivityIndicator, MD2Colors, Surface } from 'react-native-paper';
-import { SessionContext } from '../components/general/SessionContext';
 import Purchases from 'react-native-purchases';
+import { useAtom } from 'jotai';
+import { sessionAtom, userAtom } from '../lib/store';
 
 const Home = () => {
-      const user = useContext(SessionContext);
+      const [session] = useAtom(sessionAtom);
+      const [user] = useAtom(userAtom);
       const [profile, setProfile] = useState(null);
       const [isLoading, setIsLoading] = useState(true);
       const [loading, setLoading] = useState(false);
@@ -31,7 +33,7 @@ const Home = () => {
 
       useEffect(() => {
         checkUser();
-      }, [user]);
+      }, []);
 
       const navigation = useNavigation();
 

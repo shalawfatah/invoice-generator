@@ -1,16 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { SessionContext } from '../general/SessionContext';
 import { supabase } from '../../lib/supabase';
 import InvoiceBtn from '../general/Button';
 import { TextInput } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { decode } from 'base64-arraybuffer';
+import { useAtom } from 'jotai';
+import { sessionAtom } from '../../lib/store';
 
 const CompanyForm = () => {
-  const session = useContext(SessionContext)
+  const [session] = useAtom(sessionAtom);
   const navigation = useNavigation()
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(false)

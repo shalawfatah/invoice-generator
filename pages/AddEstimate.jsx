@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, ScrollView, TouchableOpacity, Switch } from 'react-native'
 import {Picker} from '@react-native-picker/picker'
 import { TextInput } from 'react-native-paper';
@@ -9,10 +9,11 @@ import Border from '../components/general/Border';
 import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
-import { SessionContext } from '../components/general/SessionContext';
+import { useAtom } from 'jotai';
+import { sessionAtom } from '../lib/store';
 
 const AddEstimate = () => {
-  const user = useContext(SessionContext)
+  const [session] = useAtom(sessionAtom);
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState(null)
 
@@ -74,7 +75,7 @@ const invoiceNum = async() => {
 
   useEffect(() => {
     fetchData()
-  }, [user])
+  }, [])
   
   const filtered_companies = companies?.filter(item => item.company_name.includes(text));
   const [chosen, setChosen] = useState(null)

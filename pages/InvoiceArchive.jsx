@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, ScrollView, Text, Platform } from 'react-native'
 import { supabase } from '../lib/supabase';
 import InvoiceItem from '../components/invoice/InvoiceItem';
@@ -6,10 +6,11 @@ import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
 import MenuButtons from '../components/general/MenuButtons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
-import { SessionContext } from '../components/general/SessionContext';
+import { userAtom } from '../lib/store';
+import { useAtom } from 'jotai';
 
 const InvoiceArchive = () => {
-  const user = useContext(SessionContext);
+  const user = useAtom(userAtom);
   const [invoice, setInvoice] = useState([])
   const navigation = useNavigation()
   const [isLoading, setIsLoading] = useState(true);
@@ -44,7 +45,7 @@ const InvoiceArchive = () => {
   
   useEffect(() => {
     fetchData()
-  }, [user, invoice])
+  }, [])
 
   return (
     <View>

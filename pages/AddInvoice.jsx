@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, Switch } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Picker} from '@react-native-picker/picker'
 import { TextInput } from 'react-native-paper';
 import InvoiceBtn from '../components/general/Button';
@@ -9,10 +9,12 @@ import Border from '../components/general/Border';
 import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
-import { SessionContext } from '../components/general/SessionContext';
+import { useAtom } from 'jotai';
+import { sessionAtom, userAtom } from '../lib/store';
 
 const AddInvoice = () => {
-  const user = useContext(SessionContext)
+  const [session] = useAtom(sessionAtom);
+  const [user] = useAtom(userAtom)
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState(null);
   const [number, setNumber] = useState('')
@@ -75,7 +77,7 @@ const AddInvoice = () => {
 
   useEffect(() => {
     fetchData()
-  }, [companies])
+  }, [])
 
   const filtered_companies = companies?.filter(item => item.company_name.includes(text));
 

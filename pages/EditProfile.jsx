@@ -1,18 +1,19 @@
-import React, { useContext, useState } from 'react'
-import { View, Text } from 'react-native'
+import React, { useState } from 'react'
+import { View } from 'react-native'
 import { TextInput } from 'react-native-paper';
 import InvoiceBtn from '../components/general/Button';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../lib/supabase';
-import { SessionContext } from '../components/general/SessionContext';
+import { useAtom } from 'jotai';
+import { sessionAtom } from '../lib/store';
 
 const EditProfile = ({route}) => {
+  const [session] = useAtom(sessionAtom);
   const {user} = route.params;
   const [company, setCompany] = useState('');
   const [address, setAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
-  const session = useContext(SessionContext)
 
   const updateUser = async() => {
     if(session !== null) {

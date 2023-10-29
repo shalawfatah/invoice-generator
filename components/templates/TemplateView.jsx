@@ -1,16 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import {WebView} from 'react-native-webview'
 import InvoiceBtn from '../general/Button';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../lib/supabase';
-import { SessionContext } from '../general/SessionContext';
+import { useAtom } from 'jotai';
+import { sessionAtom } from '../../lib/store';
 
 const TemplateView = ({route}) => {
+    const [session] = useAtom(sessionAtom);
     const {item} = route.params;
-    const session = useContext(SessionContext)
     const [email, setEmail] = useState(null)
-    useEffect(() => { setEmail(session?.email)}, [session])
+    useEffect(() => { setEmail(session?.email)}, [])
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
     const chooseTemplate = async() => {

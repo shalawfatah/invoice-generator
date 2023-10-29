@@ -1,14 +1,15 @@
 import { View, Text, Alert } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import InvoiceBtn from '../components/general/Button'
 import { TextInput } from 'react-native-paper';
 import { supabase } from '../lib/supabase'
-import { SessionContext } from '../components/general/SessionContext';
+import { useAtom } from 'jotai';
+import { sessionAtom } from '../lib/store';
 
 const AddCompany = () => {
-    const session = useContext(SessionContext);
-    const id = session?.id;
+    const [session] = useAtom(sessionAtom);
+    const id = session.id;
     const [company, setCompany] = useState('')
     const [address, setAddress] = useState('')
     const [email, setEmail] = useState('')

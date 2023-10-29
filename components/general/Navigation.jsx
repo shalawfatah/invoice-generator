@@ -23,8 +23,7 @@ import Account from '../account/Account';
 import CompanyLogo from '../company/CompanyLogo';
 import { Platform } from 'react-native';
 import Purchases from 'react-native-purchases';
-import { useContext, useEffect } from 'react';
-import { SessionContext } from './SessionContext';
+import { useEffect } from 'react';
 
 const Tab = createBottomTabNavigator();
 
@@ -35,15 +34,14 @@ originalWarn(message, ...args)
 }
 
 const Navigation = () => {
-  const session = useContext(SessionContext)
-  const id = session.id;
 
   const checkRevCat = async() => {
+    await Purchases.setLogLevel(Purchases.LOG_LEVEL.DEBUG);
     if(Platform.OS === 'ios') {
-      await Purchases.configure({ apiKey: process.env.EXPO_PUBLIC_REVCAT_IOS_API_KEY, appUserID: id })
+      await Purchases.configure({ apiKey: process.env.EXPO_PUBLIC_REVCAT_IOS_API_KEY })
     }
     if(Platform.OS === 'android') {
-      await Purchases.configure({ apiKey: process.env.EXPO_PUBLIC_REVCAT_ANDROID_API_KEY, appUserID: id })
+      await Purchases.configure({ apiKey: process.env.EXPO_PUBLIC_REVCAT_ANDROID_API_KEY })
     }
   }
 

@@ -3,12 +3,12 @@ import { View, Text, TouchableOpacity, Image, Alert } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
 import { supabase } from '../../lib/supabase';
-import { SessionContext } from '../general/SessionContext';
 import { decode } from 'base64-arraybuffer'
+import { useAtom } from 'jotai';
+import { sessionAtom } from '../../lib/store';
 
 const CompanyLogo = () => {
-
-  const session = useContext(SessionContext)
+  const [session] = useAtom(sessionAtom);
   const [image, setImage] = useState(null)
   const [imgName, setImgName] = useState('')
   const [photo, setPhoto] = useState(null)

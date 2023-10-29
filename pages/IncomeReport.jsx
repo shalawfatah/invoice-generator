@@ -1,12 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, ScrollView, Platform } from 'react-native'
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import MenuButtons from '../components/general/MenuButtons';
-import { SessionContext } from '../components/general/SessionContext';
+import { useAtom } from 'jotai';
+import { sessionAtom, userAtom } from '../lib/store';
 
 const IncomeReport = () => {
 
-  const user = useContext(SessionContext);
+  const [session] = useAtom(sessionAtom);
+  const [user] = useAtom(userAtom)
   const [isLoading, setIsLoading] = useState(true);
   
   const [isIos, setIsIos] = useState(false);

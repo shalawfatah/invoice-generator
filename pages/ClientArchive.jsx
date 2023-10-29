@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { ScrollView, TouchableOpacity, View, Text } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { ScrollView, View } from 'react-native'
 import { supabase } from '../lib/supabase'
 import SingleCompany from '../components/company/SingleCompany'
 import { useNavigation } from '@react-navigation/native'
-import { SessionContext } from '../components/general/SessionContext'
-import { Surface } from 'react-native-paper'
 import InvoiceBtn from '../components/general/Button'
+import { sessionAtom, userAtom } from '../lib/store'
+import { useAtom } from 'jotai'
 
 const ClientArchive = () => {
-
+  const [session] = useAtom(sessionAtom);
+  const [user] = useAtom(userAtom)
   const [companies, setCompanies] = useState([])
-  const user = useContext(SessionContext);
   const navigation = useNavigation()
 
   const client_fetcher = async() => {
@@ -32,7 +32,7 @@ const ClientArchive = () => {
 
   useEffect(() => {
     client_fetcher()
-  }, [companies])
+  }, [])
 
   return (
     <View className="bg-white">
