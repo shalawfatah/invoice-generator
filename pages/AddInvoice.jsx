@@ -27,9 +27,9 @@ const AddInvoice = () => {
     if(error) {
       console.log(error)
     };
-    const stringed = data[0].document_number + 1;
-    const strified = stringed.toString()
-    if(data !== null) {
+    if(data.length > 0) {
+      const stringed = data[0]?.document_number + 1;
+      const strified = stringed.toString()
       setNumber(strified)
     } else {
       setNumber("1")

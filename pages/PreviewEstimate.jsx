@@ -18,6 +18,7 @@ const PreviewEstimate = ({route}) => {
   const [loading, setLoading] = useState(false)
   const [temp, setTemp] = useState(null)
   const [sharing, setSharing] = useState(false);
+  const parsed_number = parseInt(number)
 
   const dox = "Estimate";
   
@@ -70,7 +71,8 @@ const PreviewEstimate = ({route}) => {
             subtotal: subtotal,
             tax_amount: tax,
             tasks: tasks,
-            type: 'estimate'
+            type: 'estimate',
+            document_number: parsed_number
           },
         ])
         .select()

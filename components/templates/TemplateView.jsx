@@ -5,18 +5,18 @@ import InvoiceBtn from '../general/Button';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../lib/supabase';
 import { useAtom } from 'jotai';
-import { sessionAtom } from '../../lib/store';
+import { sessionAtom, userAtom } from '../../lib/store';
 
 const TemplateView = ({route}) => {
     const [session] = useAtom(sessionAtom);
+    const [user] = useAtom(userAtom)
     const {item} = route.params;
-    const [email, setEmail] = useState(null)
-    useEffect(() => { setEmail(session?.email)}, [])
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
+
     const chooseTemplate = async() => {
       setLoading(true)
-      const {data, error} = await supabase.from('profile').update({'template': item.id}).eq('email', email)
+      const {data, error} = await supabase.from('profile').update({'template': item.id}).eq('email', user.email)
       if(error) {
         console.log(error)
       } else {

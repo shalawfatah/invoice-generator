@@ -18,6 +18,7 @@ const PreviewInvoice = ({route}) => {
   const [loading, setLoading] = useState(false)
   const [sharing, setSharing] = useState(false);
   const [temp, setTemp] = useState(null)
+  const parsed_number = parseInt(number)
 
   const dox = "Invoice";
 
@@ -64,7 +65,8 @@ const PreviewInvoice = ({route}) => {
           subtotal: subtotal,
           tax_amount: tax,
           tasks: tasks,
-          type: 'invoice'
+          type: 'invoice',
+          document_number: parsed_number
         },
       ])
       .select()
