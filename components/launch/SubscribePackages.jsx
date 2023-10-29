@@ -20,8 +20,12 @@ const SubscribePackages = () => {
   const navigation = useNavigation();
 
   const fetch_prices = async() => {
-    const result = await Purchases.getOfferings()
-    setPackages(result.current.availablePackages)
+    try {
+      const result = await Purchases.getOfferings()
+      setPackages(result.current.availablePackages)
+    } catch (error) {
+      console.log('revcat fetch ', error)
+    }
   }
 
   const subscribe = async(item) => {

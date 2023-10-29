@@ -24,6 +24,8 @@ import CompanyLogo from '../company/CompanyLogo';
 import { Platform } from 'react-native';
 import Purchases from 'react-native-purchases';
 import { useEffect } from 'react';
+import { useAtom } from 'jotai';
+import { userAtom } from '../../lib/store';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,14 +36,14 @@ originalWarn(message, ...args)
 }
 
 const Navigation = () => {
-
+  const [user] = useAtom(userAtom)
   const checkRevCat = async() => {
     await Purchases.setLogLevel(Purchases.LOG_LEVEL.DEBUG);
     if(Platform.OS === 'ios') {
-      await Purchases.configure({ apiKey: process.env.EXPO_PUBLIC_REVCAT_IOS_API_KEY })
+      await Purchases.configure({ apiKey: "appl_lQsnGUgpmTQJDilRGOYqpxnmODy", appUserID: user.id })
     }
     if(Platform.OS === 'android') {
-      await Purchases.configure({ apiKey: process.env.EXPO_PUBLIC_REVCAT_ANDROID_API_KEY })
+      await Purchases.configure({ apiKey: "goog_KfjJwQmrLPgfhyuXuVOjcxPlQig", appUserID: user.id })
     }
   }
 
