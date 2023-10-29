@@ -1,23 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text } from 'react-native'
-import InvoiceBtn from '../general/Button'
 import { useNavigation } from '@react-navigation/native'
 import Purchases from 'react-native-purchases'
+import ProductCard from '../general/ProductCard'
 
-const ProductCard = ({name, price, currency, subscribe}) => {
-  return (
-    <View className="bg-white p-4 m-4 shadow-sm">
-      <Text className="font-bold text-lg my-2">{name}</Text>
-      <Text className="text-md my-2">Price: {price} {currency}</Text>
-      <InvoiceBtn icon={"log-in-outline"} text="Subscribe" duty={subscribe} classes="my-2" />
-    </View>
-  )
-}
+
 
 const SubscribePackages = () => {
 
   const [packages, setPackages] = useState([]);
-  const navigation = useNavigation();
 
   const fetch_prices = async() => {
     try {
@@ -25,18 +16,6 @@ const SubscribePackages = () => {
       setPackages(result.current.availablePackages)
     } catch (error) {
       console.log('revcat fetch ', error)
-    }
-  }
-
-  const subscribe = async(item) => {
-    try {
-      const {purchaserInfo} = await Purchases.purchasePackage(item)
-      const purchase = await Purchases.getCustomerInfo()
-      if(typeof purchase.entitlements.active['pro'] !== 'undefined') {
-        await navigation.navigate('Account')
-      }
-    } catch (error) {
-      console.log(error)
     }
   }
 
@@ -49,16 +28,16 @@ const SubscribePackages = () => {
       <Text className="mx-4 mt-4 font-medium text-gray-700 text-center">
         With subscription, you can share your invoices, estimates, PTOs, and check reports about your income when available
         </Text>
-      {packages.length > 0 ? packages.map((item) => {
+      {packages.map((item) => {
         return <View key={item.identifier}>
                   <ProductCard 
                       name={item.packageType} 
                       price={item.product.priceString}
                       currency={item.product.currencyCode}
-                      subscribe={() => subscribe(item)} 
+                      item={item}
                   />
               </View>
-      }) : <Text className="p-2 flex text-center font-bold text-gray-700">Data not loaded</Text>}
+      })}
     </View>
   )
 }
