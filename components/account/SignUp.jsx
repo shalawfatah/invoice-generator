@@ -75,7 +75,12 @@ const SignUp = ({handleSignin}) => {
         <Divider className="my-1" />
         <Text className="my-2 text-center font-bold text-gray-700">If you have an account, sign in</Text>
       <View >
-        <InvoiceBtn icon="log-in-outline" classes="my-2" text="Sign In" duty={handleSignin} />
+        <InvoiceBtn 
+            icon="log-in-outline" 
+            classes="my-2" 
+            text="Sign In" 
+            duty={handleSignin} 
+            />
       </View>
     </View>
     </View>

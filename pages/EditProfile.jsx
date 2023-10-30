@@ -14,15 +14,19 @@ const EditProfile = ({route}) => {
   const [address, setAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const [reload, setReload] = useState(false)
 
   const updateUser = async() => {
+    setReload(true)
     if(session !== null) {
       const { data, error } = await supabase.auth.updateUser({
         data: { company, address }
       })
       if(error) {
         console.log(error)
+        setReload(false)
       } else {
+        setReload(false)
         navigation.navigate('Account')
       }
     }
@@ -57,7 +61,14 @@ const EditProfile = ({route}) => {
           />
       </View>
       <View>
-        <InvoiceBtn  textColor='#FFF' icon="person-circle-outline" classes="my-2" text="Sign Up" duty={updateUser} />
+        <InvoiceBtn  
+            textColor='#FFF' 
+            icon="person-circle-outline" 
+            classes="my-2" 
+            text="Sign Up" 
+            duty={updateUser}
+            loading={reload}
+          />
       </View>
       <View >
     </View>

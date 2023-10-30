@@ -5,7 +5,7 @@ import InvoiceBtn from '../components/general/Button'
 import { TextInput } from 'react-native-paper';
 import { supabase } from '../lib/supabase'
 import { useAtom } from 'jotai';
-import { sessionAtom, userAtom } from '../lib/store';
+import { userAtom } from '../lib/store';
 
 const AddCompany = () => {
     const [user] = useAtom(userAtom)
@@ -75,10 +75,19 @@ const AddCompany = () => {
             />
             
           <View className=" w-full">
-            <InvoiceBtn text="Register" icon="business-outline" duty={add_company}/>
+            <InvoiceBtn 
+                text="Register" 
+                icon="business-outline" 
+                duty={add_company}
+            />
           </View>
           <View className=" w-full">
-            <InvoiceBtn text="List of clients" icon="pricetag-outline" mode="contained" duty={() => navigation.navigate('Client Archive')}/>
+            <InvoiceBtn 
+                text="List of clients" 
+                icon="pricetag-outline" 
+                mode="contained" 
+                duty={() => navigation.navigate('Client Archive')}
+            />
           </View>
       </View>
     )

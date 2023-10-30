@@ -29,10 +29,21 @@ const TemplateView = ({route}) => {
       <WebView source={{ uri: item.url }} />
       <View className="m-2">
         <View className="my-2">
-          <InvoiceBtn loading={loading}  icon="document-outline" text="Choose this template" mode="contained" duty={chooseTemplate} />
+          <InvoiceBtn 
+              loading={loading}  
+              icon="document-outline" 
+              text="Choose this template" 
+              mode="contained" 
+              duty={chooseTemplate} 
+          />
         </View>
         <View className="my-2">
-          <InvoiceBtn icon="newspaper-outline" text="Back to temlpates" mode="contained" duty={() => navigation.navigate('Templates')} />
+          <InvoiceBtn 
+              icon="newspaper-outline" 
+              text="Back to temlpates" 
+              mode="contained" 
+              duty={() => navigation.navigate('Templates')} 
+          />
         </View>
       </View>
     </View>

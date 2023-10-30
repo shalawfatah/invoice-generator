@@ -130,22 +130,22 @@ const PreviewInvoice = ({route}) => {
     <View className="m-2">
     {active.length !== 0 ? 
     <InvoiceBtn 
-        text="Share Estimate" 
-        icon="rocket"
-        classes="my-2 " 
-        buttonColor='#dc143c' 
-        textColor='#FFF'
-        duty={generatePDF}
+          text="Share Estimate" 
+          icon="rocket"
+          classes="my-2 " 
+          buttonColor='#dc143c' 
+          textColor='#FFF'
+          duty={generatePDF}
         /> :
         <View>
           <Text className="text-center font-bold my-4">To share your document, please subscribe</Text>
       <InvoiceBtn 
-        text="Subscribe" 
-        icon="rocket"
-        classes="my-2 " 
-        buttonColor='#dc143c' 
-        textColor='#FFF'
-        duty={() => navigation.navigate('Subscribe Packages', { customer })}
+          text="Subscribe" 
+          icon="rocket"
+          classes="my-2 " 
+          buttonColor='#dc143c' 
+          textColor='#FFF'
+          duty={() => navigation.navigate('Subscribe Packages', { customer })}
         />
         </View>
         }

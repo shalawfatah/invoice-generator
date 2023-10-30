@@ -78,8 +78,10 @@ const PreviewEstimate = ({route}) => {
         .select()
         if(error) {
           console.log(error)
+          setLoading(false)
         } else {
           console.log(data)
+          setLoading(false)
         }
 
         const file = await Print.printToFileAsync({
@@ -135,27 +137,27 @@ const PreviewEstimate = ({route}) => {
     </ScrollView>
     <View className="m-2">
       <InvoiceBtn 
-        text="Edit Estimate" 
-        icon="pencil-outline"
-        classes="my-2" 
-        duty={() => navigation.navigate('Add Estimate')} 
+          text="Edit Estimate" 
+          icon="pencil-outline"
+          classes="my-2" 
+          duty={() => navigation.navigate('Add Estimate')} 
         />
     {active.length !== 0 ? 
     <InvoiceBtn 
-        text="Share Estimate" 
-        icon="rocket"
-        classes="my-2 " 
-        buttonColor='#dc143c' 
-        textColor='#FFF'
-        duty={generatePDF}
+          text="Share Estimate" 
+          icon="rocket"
+          classes="my-2 " 
+          buttonColor='#dc143c' 
+          textColor='#FFF'
+          duty={generatePDF}
         /> :
       <InvoiceBtn 
-        text="Subscribe" 
-        icon="rocket"
-        classes="my-2 " 
-        buttonColor='#dc143c' 
-        textColor='#FFF'
-        duty={() => navigation.navigate('Subscribe Packages')}
+          text="Subscribe" 
+          icon="rocket"
+          classes="my-2 " 
+          buttonColor='#dc143c' 
+          textColor='#FFF'
+          duty={() => navigation.navigate('Subscribe Packages')}
         />
         }
     </View>

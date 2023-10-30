@@ -64,7 +64,7 @@ const Home = () => {
       }, [])
 
       const delete_all = async() => {
-        await supabase.from('profile').delete().eq('user_id', user?.id)
+        await supabase.from('profile').delete().eq('user_id', user.id)
         await supabase.auth.admin.deleteUser(user?.id)
         await signout()
         }

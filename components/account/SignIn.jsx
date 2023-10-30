@@ -1,9 +1,8 @@
-import { View, Text, Alert, TouchableOpacity } from 'react-native'
+import { View, Text, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { Divider, TextInput } from 'react-native-paper';
 import InvoiceBtn from '../general/Button';
 import { supabase } from '../../lib/supabase';
-import { useNavigation } from '@react-navigation/native';
 
 const SignIn = ({handleSignup}) => {
     const [email, setEmail] = useState('');
@@ -85,7 +84,12 @@ const SignIn = ({handleSignup}) => {
       <Text className="my-2 text-center font-bold text-gray-700">If you don't have an account, create one</Text>
 
       <View >
-        <InvoiceBtn icon="person-circle-outline" classes="my-2" text="Sign Up" duty={handleSignup} />
+        <InvoiceBtn 
+          icon="person-circle-outline" 
+          classes="my-2" 
+          text="Sign Up" 
+          duty={handleSignup}
+          />
       </View>
       <Divider className="my-1" />
       <Text className="my-2 text-center font-bold text-gray-700">If you have forgotten your password:</Text>

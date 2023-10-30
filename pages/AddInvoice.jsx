@@ -201,7 +201,11 @@ const AddInvoice = () => {
         ))}
       </View>
       <View className="my-2">
-        <InvoiceBtn icon="add-circle-outline" text={tasks.length > 0 ? 'Add another task' : 'Add a task'} duty={addTask} />
+        <InvoiceBtn 
+            icon="add-circle-outline" 
+            text={tasks.length > 0 ? 'Add another task' : 'Add a task'} 
+            duty={addTask} 
+          />
       </View>
     </View>
     <View>
@@ -238,10 +242,11 @@ const AddInvoice = () => {
           <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 font-bold min-w-[150px] text-center">{isNaN(total) ? null : `$${total}`}</Text>
         </View>
         <InvoiceBtn 
-          duty={prevInvoice} 
-          icon="bookmark-outline" 
-          mode="contained" 
-          text="Save" /> 
+            duty={prevInvoice} 
+            icon="bookmark-outline" 
+            mode="contained" 
+            text="Save" 
+          /> 
           <View className="my-12"></View>
     </ScrollView>
     </View>)}

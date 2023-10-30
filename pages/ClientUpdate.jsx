@@ -12,8 +12,10 @@ const ClientUpdate = ({route}) => {
     const [address, setAdress] = useState(item.item.company_address);
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
+    const [reload, setReload] = useState(false)
 
     const updat_company = async() => {
+        setReload(true)
         setLoading(true)
         const { error } = await supabase
             .from('companies')
@@ -21,7 +23,11 @@ const ClientUpdate = ({route}) => {
             .eq('id', item.item.id)
         if(error) {
             console.log(error)
+            setLoading(false)
+            setReload(false)
         } else {
+            setLoading(false)
+            setReload(false)
             navigation.navigate('Client Archive')
         }
     }
@@ -64,10 +70,19 @@ const ClientUpdate = ({route}) => {
         />
         
       <View className=" w-full">
-        <InvoiceBtn text="Update" icon="folder-open-outline" duty={updat_company}/>
+        <InvoiceBtn 
+            text="Update" 
+            icon="folder-open-outline" 
+            duty={updat_company}
+            loading={reload}
+          />
       </View>
       <View className=" w-full">
-        <InvoiceBtn text="List of clients" icon="pricetag-outline" duty={() => navigation.navigate('Client Archive')}/>
+        <InvoiceBtn 
+            text="List of clients" 
+            icon="pricetag-outline" 
+            duty={() => navigation.navigate('Client Archive')}
+          />
       </View>
   </View>
   )

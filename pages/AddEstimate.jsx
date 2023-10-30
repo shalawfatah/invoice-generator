@@ -200,7 +200,12 @@ const AddEstimate = () => {
         ))}
       </View>
       <View className="my-2">
-        <InvoiceBtn icon="add-circle-outline" mode="contained" text={tasks.length > 0 ? 'Add another task' : 'Add a task'} duty={addTask} />
+        <InvoiceBtn 
+            icon="add-circle-outline" 
+            mode="contained" 
+            text={tasks.length > 0 ? 'Add another task' : 'Add a task'} 
+            duty={addTask} 
+          />
       </View>
     </View>
     <View>
@@ -237,9 +242,10 @@ const AddEstimate = () => {
           <Text className="bg-[#81F3FA] text-[#4847A0] px-4 py-2 font-bold min-w-[150px] text-center">{isNaN(total) ? null : `$${total}`}</Text>
         </View>
         <InvoiceBtn 
-          duty={prevEstimate} 
-          icon="add-circle-outline" 
-          text="Save" /> 
+            duty={prevEstimate} 
+            icon="add-circle-outline" 
+            text="Save" 
+          /> 
           <View className="my-12"></View>
     </ScrollView></View>)}
     </View>

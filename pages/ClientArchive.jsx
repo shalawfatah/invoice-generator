@@ -37,7 +37,11 @@ const ClientArchive = () => {
   return (
     <View className="bg-white">
       <View className="my-2 mx-4">
-        <InvoiceBtn duty={() => navigation.navigate('AddCompany')} text="Add Client" icon="add-outline" />
+        <InvoiceBtn 
+            duty={() => navigation.navigate('AddCompany')} 
+            text="Add Client" 
+            icon="add-outline" 
+          />
       </View>
     <ScrollView className="bg-[#fbfbfb] p-1">
       {companies?.map(item => {

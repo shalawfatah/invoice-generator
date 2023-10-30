@@ -122,14 +122,14 @@ const CompanyForm = () => {
             </TouchableOpacity>
               {image && <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />}
         <InvoiceBtn 
-          disabled={loading} 
-          buttonColor='#312e81' 
-          textColor='#FFF' 
-          icon="business-outline" 
-          classes="my-2"
-          loading={loading} 
-          text="Update Profile" 
-          duty={updateProfile} 
+            disabled={loading} 
+            buttonColor='#312e81' 
+            textColor='#FFF' 
+            icon="business-outline" 
+            classes="my-2"
+            loading={loading} 
+            text="Update Profile" 
+            duty={updateProfile} 
         />
         </View>
     </View>
