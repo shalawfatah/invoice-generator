@@ -33,7 +33,7 @@ const Home = () => {
 
       useEffect(() => {
         checkUser();
-      }, []);
+      }, [profile]);
 
       const navigation = useNavigation();
 

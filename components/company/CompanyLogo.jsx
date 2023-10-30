@@ -1,14 +1,13 @@
-import React, { useContext, useState } from 'react'
-import { View, Text, TouchableOpacity, Image, Alert } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import * as ImagePicker from 'expo-image-picker';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { supabase } from '../../lib/supabase';
-import { decode } from 'base64-arraybuffer'
 import { useAtom } from 'jotai';
-import { sessionAtom } from '../../lib/store';
+import * as ImagePicker from 'expo-image-picker';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { decode } from 'base64-arraybuffer';
 
 const CompanyLogo = () => {
-  const [session] = useAtom(sessionAtom);
+
   const [image, setImage] = useState(null)
   const [imgName, setImgName] = useState('')
   const [photo, setPhoto] = useState(null)
@@ -17,12 +16,11 @@ const CompanyLogo = () => {
 
   const pickImage = async () => {
     setLoading(true)
-  // No permissions request is necessary for launching the image library
-  let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
+    let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
       });    
       if (!result.canceled) {
             setImage(result.assets[0].uri);
@@ -60,6 +58,8 @@ const CompanyLogo = () => {
       const {data, error} = await supabase.from('assets').insert({url: photoURL})
       if(error) {
         console.log(error)
+      } else {
+        console.log('d ', data)
       }
     }
   return (
