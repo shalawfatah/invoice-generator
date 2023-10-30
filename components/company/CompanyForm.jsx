@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { supabase } from '../../lib/supabase';
@@ -21,6 +21,7 @@ const CompanyForm = () => {
   const [photoURL, setPhotoURL] = useState('')
   const [status, setStatus] = useState('')
   const [reload, setReload] = useState(false)
+  const url = 'https://bkcsaqsiloxvfsnhymgk.supabase.co/storage/v1/object/public/avatars/'
   
   const get_profile = async() => {
     const {data, error} = await supabase.from('profile').select().eq('user_id', user.id).single()
@@ -72,7 +73,6 @@ const CompanyForm = () => {
     const base64 = await FileSystem.readAsStringAsync(image.uri, { encoding: 'base64' })
     const filePath = `${user.id}/${new Date().getTime()}.${extension}`
     const contentType = `image/${extension}`
-    const url = 'https://bkcsaqsiloxvfsnhymgk.supabase.co/storage/v1/object/public/avatars/'
 
     const { data, error } = await supabase
         .storage
@@ -91,8 +91,42 @@ const CompanyForm = () => {
     console.log('error')
   }
 };
+const [imgs, setImgs] = useState([])
+const fetch_images = async() => {
+  const { data, error } = await supabase
+  .storage
+  .from('avatars')
+  .list(`${user.id}`, {
+    limit: 100,
+    offset: 0,
+    sortBy: { column: 'name', order: 'asc' },
+  })
+  if(error) {
+    console.log(error)
+  }
+  setImgs(data)
+}
+
+useEffect(() => {
+  fetch_images()
+}, [imgs])
+
+const filtered_imgs = imgs.filter(item => {
+  return item.name.includes('.jpg') || item.name.includes('.jpeg') || item.name.includes('.png')
+})
+
+const removeImg = async(item) => {
+  const { data, error } = await supabase
+  .storage
+  .from('avatars')
+  .remove([`${user.id}/${item.name}`])
+  if(error) {
+    console.log(error)
+  }
+}
 
   return (
+    <View>
     <View className="flex justify-center items-center w-screen p-4">
         <TextInput 
           mode={"outlined"}
@@ -124,7 +158,6 @@ const CompanyForm = () => {
               color={MD2Colors.white}
               className="m-2"
               />}
-              {photoURL && <Image source={{ uri: photoURL }} style={{ width: 100, height: 100 }} />}
         <InvoiceBtn 
             disabled={loading} 
             buttonColor='#312e81' 
@@ -136,7 +169,21 @@ const CompanyForm = () => {
             duty={updateProfile} 
         />
         </View>
-        <Text>{status === 'Done' ? 'Profile Updated' : ''}</Text>
+          <Text>{status === 'Done' ? 'Profile Updated' : ''}</Text>
+    </View>
+        <ScrollView className="p-4">
+        <View className="flex flex-col items-start gap-2">
+        {filtered_imgs.map(item => {
+          const itemName = url + user.id + '/' + item.name;
+            return <View className="flex flex-row m-2 items-center justify-between w-full">
+                      <Image source={{ uri: itemName }} style={{ width: 70, height: 70 }} />
+                      <TouchableOpacity onPress={() => removeImg(item)} className="bg-indigo-600 text-white rounded-md p-3 m-4">
+                        <Ionicons className=" " name="trash-outline" color={"white"} size={28} />
+                      </TouchableOpacity>
+                  </View>   
+        })}
+        </View>
+        </ScrollView>
     </View>
   )
 }

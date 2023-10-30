@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { View } from 'react-native'
 import {WebView} from 'react-native-webview'
 import InvoiceBtn from '../general/Button';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../lib/supabase';
 import { useAtom } from 'jotai';
-import { sessionAtom, userAtom } from '../../lib/store';
+import { userAtom } from '../../lib/store';
 
 const TemplateView = ({route}) => {
-    const [session] = useAtom(sessionAtom);
     const [user] = useAtom(userAtom)
     const {item} = route.params;
     const [loading, setLoading] = useState(false);
