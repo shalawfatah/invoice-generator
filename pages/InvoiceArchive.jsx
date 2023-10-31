@@ -34,8 +34,12 @@ const InvoiceArchive = () => {
     setIsLoading(false);
   }
 
+  const [fetching, setFetching] = useState(false)
   useEffect(() => {
     fetch_invoices()
+    return () => {
+      setFetching(true)
+    }
   }, [])
 
   return (

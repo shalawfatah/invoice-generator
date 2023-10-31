@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { supabase } from '../../lib/supabase';
 import InvoiceBtn from '../general/Button';
@@ -13,7 +12,6 @@ import * as FileSystem from 'expo-file-system'
 
 const CompanyForm = () => {
   const [user] = useAtom(userAtom)
-  const navigation = useNavigation()
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(false)
   const [name, setName] = useState('')
@@ -21,7 +19,9 @@ const CompanyForm = () => {
   const [photoURL, setPhotoURL] = useState('')
   const [status, setStatus] = useState('')
   const [reload, setReload] = useState(false)
-  const url = 'https://bkcsaqsiloxvfsnhymgk.supabase.co/storage/v1/object/public/avatars/'
+  const url = 'https://bkcsaqsiloxvfsnhymgk.supabase.co/storage/v1/object/public/avatars/';
+  const [fetching, setFetching] = useState(false)
+  const [imgs, setImgs] = useState([])
   
   const get_profile = async() => {
     const {data, error} = await supabase.from('profile').select().eq('user_id', user.id).single()
@@ -33,7 +33,9 @@ const CompanyForm = () => {
     }
   }
 
-  useEffect(() => { get_profile() }, [])
+  useEffect(() => { 
+    get_profile() 
+  }, [])
 
   const updated = {
     name,
@@ -52,7 +54,7 @@ const CompanyForm = () => {
       setStatus('Done')
     }
   }
-
+  
   
   const pickImage = async () => {
     setReload(true)
@@ -91,7 +93,6 @@ const CompanyForm = () => {
     console.log('error')
   }
 };
-const [imgs, setImgs] = useState([])
 const fetch_images = async() => {
   const { data, error } = await supabase
   .storage
@@ -109,10 +110,16 @@ const fetch_images = async() => {
 
 useEffect(() => {
   fetch_images()
-}, [imgs])
+  setFetching(true)
+  return () => {
+    setFetching(false)
+  }
+}, [])
 
 const filtered_imgs = imgs.filter(item => {
-  return item.name.includes('.jpg') || item.name.includes('.jpeg') || item.name.includes('.png')
+  return item.name.toLowerCase().includes('.jpg') 
+          || item.name.toLowerCase().includes('.jpeg') 
+          || item.name.toLowerCase().includes('.png')
 })
 
 const removeImg = async(item) => {
@@ -171,13 +178,13 @@ const removeImg = async(item) => {
         </View>
           <Text>{status === 'Done' ? 'Profile Updated' : ''}</Text>
     </View>
-        <ScrollView className="p-4">
-        <View className="flex flex-col items-start gap-2">
+        <ScrollView className="px-4 py-1">
+        <View className="flex flex-col items-start ">
         {filtered_imgs.map(item => {
           const itemName = url + user.id + '/' + item.name;
-            return <View className="flex flex-row m-2 items-center justify-between w-full">
+            return <View key={item.id} className="flex flex-row items-center justify-between w-full">
                       <Image source={{ uri: itemName }} style={{ width: 70, height: 70 }} />
-                      <TouchableOpacity onPress={() => removeImg(item)} className="bg-indigo-600 text-white rounded-md p-3 m-4">
+                      <TouchableOpacity onPress={() => removeImg(item)} className="bg-indigo-600 text-white p-3 rounded-full">
                         <Ionicons className=" " name="trash-outline" color={"white"} size={28} />
                       </TouchableOpacity>
                   </View>   

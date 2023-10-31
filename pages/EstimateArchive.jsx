@@ -21,7 +21,7 @@ const EstimateArchive = () => {
       let { data: invoices, error } = await supabase
       .from('invoices')
       .select('*, companies("*")')
-      .eq('user_id', user?.id).eq('type', 'estimate')
+      .eq('user_id', user.id).eq('type', 'estimate')
       if(error) {
         console.log(error)
         setIsLoading(false)
@@ -37,9 +37,12 @@ const EstimateArchive = () => {
     setIsIos(Platform.OS === 'ios');
   }, []);
   
-
+  const [fetching, setFetching] = useState(false)
   useEffect(() => {
     fetch_invoices()
+    return () => {
+      setFetching(true)
+    }
   }, [])
   
   return (
@@ -56,11 +59,11 @@ const EstimateArchive = () => {
     <ScrollView className="bg-white py-1">
       {invoice.length > 0 ? invoice.map(item => {
         const time = format(new Date(item?.created_at), "dd MMMM yyyy 'at' HH:mm aa")
-        return <View key={item?.id} className="mx-2">
+        return <View key={item.id} className="mx-2">
                   <InvoiceItem 
                           company={item.companies?.company_name} 
                           date={time} 
-                          total={item?.total}
+                          total={item.total}
                           link={() => navigation.navigate('SingleInvoice', {item})}
                           />
                </View>
