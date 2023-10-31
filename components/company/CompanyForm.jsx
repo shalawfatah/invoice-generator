@@ -7,12 +7,12 @@ import { ActivityIndicator, TextInput, MD2Colors } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { decode } from 'base64-arraybuffer';
 import { useAtom } from 'jotai';
-import { userAtom } from '../../lib/store';
+import { profileAtom, userAtom } from '../../lib/store';
 import * as FileSystem from 'expo-file-system'
 
 const CompanyForm = () => {
   const [user] = useAtom(userAtom)
-  const [profile, setProfile] = useState(null)
+  const [profile, setProfile] = useAtom(profileAtom)
   const [loading, setLoading] = useState(false)
   const [name, setName] = useState('')
   const [address, setAddress] = useState('')
@@ -20,16 +20,17 @@ const CompanyForm = () => {
   const [status, setStatus] = useState('')
   const [reload, setReload] = useState(false)
   const url = 'https://bkcsaqsiloxvfsnhymgk.supabase.co/storage/v1/object/public/avatars/';
-  const [fetching, setFetching] = useState(false)
   const [imgs, setImgs] = useState([])
   
   const get_profile = async() => {
-    const {data, error} = await supabase.from('profile').select().eq('user_id', user.id).single()
-    if(error) {
-      console.log(error)
-      return;
-    } else {
-      setProfile(data)
+    if(profile === null) {
+      const {data, error} = await supabase.from('profile').select().eq('user_id', user.id).single()
+      if(error) {
+        console.log(error)
+        return;
+      } else {
+        setProfile(data)
+      }
     }
   }
 
@@ -110,10 +111,6 @@ const fetch_images = async() => {
 
 useEffect(() => {
   fetch_images()
-  setFetching(true)
-  return () => {
-    setFetching(false)
-  }
 }, [])
 
 const filtered_imgs = imgs.filter(item => {

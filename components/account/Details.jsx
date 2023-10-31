@@ -10,6 +10,7 @@ const Details = () => {
     const [profile, setProfile] = useAtom(profileAtom)
     
     const checkUser = async () => {
+      if(profile === null) {
         const { data, error } = await supabase
           .from('profile')
           .select()
@@ -20,6 +21,7 @@ const Details = () => {
         } else {
           setProfile(data);
         }
+      }
       };
 
       useEffect(() => {

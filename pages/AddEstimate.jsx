@@ -10,13 +10,13 @@ import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { useAtom } from 'jotai';
-import { sessionAtom, userAtom } from '../lib/store';
+import { profileAtom, sessionAtom, userAtom } from '../lib/store';
 
 const AddEstimate = () => {
   const [session] = useAtom(sessionAtom);
   const [user] = useAtom(userAtom)
   const [isLoading, setIsLoading] = useState(true);
-  const [profile, setProfile] = useState(null)
+  const [profile, setProfile] = useAtom(profileAtom)
 
   const [number, setNumber] = useState('')
   
@@ -38,13 +38,15 @@ const AddEstimate = () => {
   }
 
   const checkUser = async() => {
-    const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
-    if(error) {
-      console.log(error)
-    } else {
-      setProfile(data)
+    if(profile === null) {
+      const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
+      if(error) {
+        console.log(error)
+      } else {
+        setProfile(data)
+      }
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   const [text, setText] = useState('')
