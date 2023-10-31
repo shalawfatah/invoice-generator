@@ -34,7 +34,7 @@ const TemplateArchive = ({route}) => {
     <ScrollView>
         <View className="flex flex-row flex-wrap gap-2 justify-center items-center my-2">
         {thumbnails.map(item => {
-            return <TouchableOpacity key={item.id} className="w-40 h-auto flex justify-center" onPress={() => navigation.navigate('TemplateView', {item})}>
+            return <TouchableOpacity key={item.id} className=" w-40 h-auto flex justify-center" onPress={() => navigation.navigate('TemplateView', {item})}>
                 <Text className="font-bold text-center py-2">{item.title}</Text>
                 <Card.Cover source={{ uri: item.thumbnail }} />
             </TouchableOpacity>

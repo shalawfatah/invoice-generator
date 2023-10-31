@@ -93,9 +93,9 @@ const Home = () => {
         <View className="w-full">
           <InvoiceBtn text="Update Profile" icon="create-outline" duty={edit_user}  />
         </View>
-        <Divider className="w-full my-2 mt-6 bg-gray-400" />
-        <Text className="text-[#E0115F] font-bold"> ... Danger Zone ...</Text>
-        <Divider className="w-full my-2 bg-gray-400" />
+          <Divider className="w-full my-2 bg-gray-400" />
+          <Text className="text-[#E0115F] font-bold"> ... Danger Zone ...</Text>
+          <Divider className="w-full my-2 bg-gray-400" />
         <View className="w-full">
           <InvoiceBtn text="Delete Everything" icon="trash-bin-outline" duty={delete_everything} textColor={"text-white"} iconColor={"white"} classes={"bg-[#E0115F]"}  />
         </View>    
