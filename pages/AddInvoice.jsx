@@ -13,11 +13,10 @@ import { useAtom } from 'jotai';
 import { profileAtom, sessionAtom, userAtom } from '../lib/store';
 
 const AddInvoice = () => {
-  const [session] = useAtom(sessionAtom);
   const [user] = useAtom(userAtom)
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useAtom(profileAtom)
-  const [number, setNumber] = useState(0)
+  const [number, setNumber] = useState("1")
 
   const invoice_number = async() => {
     const { data, error } = await supabase.rpc('get_last_invoice_for_user', {
@@ -37,7 +36,6 @@ const AddInvoice = () => {
   }
 
   const checkUser = async() => {
-    if(profile === null) {
       const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
       if(error) {
         console.log(error)
@@ -45,7 +43,6 @@ const AddInvoice = () => {
         setProfile(data)
       }
       setIsLoading(false);
-    }
   }
 
   const [text, setText] = useState('')
