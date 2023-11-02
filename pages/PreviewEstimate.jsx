@@ -9,6 +9,8 @@ import * as FileSystem from 'expo-file-system';
 import TemplateRenderer from '../components/templates/TemplateRenderer.jsx'
 import { template_choice } from '../components/templates/template_choice.js'
 import * as Sharing from 'expo-sharing';
+import { useAtom } from 'jotai';
+import { estimateTriggerAtom } from '../lib/store';
 
 const PreviewEstimate = ({route}) => {
   const {tasks, tax, subtotal, total, choice, note, user, profile, number} = route.params;
@@ -19,6 +21,7 @@ const PreviewEstimate = ({route}) => {
   const [temp, setTemp] = useState(null)
   const [sharing, setSharing] = useState(false);
   const parsed_number = parseInt(number)
+  const [estimateTrigger, setEstimateTrigger] = useAtom(estimateTriggerAtom)
 
   const dox = "Estimate";
   
@@ -80,7 +83,7 @@ const PreviewEstimate = ({route}) => {
           console.log(error)
           setLoading(false)
         } else {
-          console.log(data)
+          setEstimateTrigger(prev => !prev)
           setLoading(false)
         }
 

@@ -7,7 +7,7 @@ import { ActivityIndicator, TextInput, MD2Colors } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { decode } from 'base64-arraybuffer';
 import { useAtom } from 'jotai';
-import { profileAtom, userAtom } from '../../lib/store';
+import { profileAtom, profileTriggerAtom, userAtom } from '../../lib/store';
 import * as FileSystem from 'expo-file-system'
 
 const CompanyForm = () => {
@@ -21,6 +21,7 @@ const CompanyForm = () => {
   const [reload, setReload] = useState(false)
   const url = 'https://bkcsaqsiloxvfsnhymgk.supabase.co/storage/v1/object/public/avatars/';
   const [imgs, setImgs] = useState([])
+  const [profileTrigger, setProfileTrigger] = useAtom(profileTriggerAtom)
   
   const get_profile = async() => {
     if(profile === null) {
@@ -52,6 +53,7 @@ const CompanyForm = () => {
       console.log(error)
     } else {
       setLoading(false)
+      setProfileTrigger(prev => !prev)
       setStatus('Done')
     }
   }

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Switch } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Switch, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import {Picker} from '@react-native-picker/picker'
 import { TextInput } from 'react-native-paper';
@@ -10,7 +10,7 @@ import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { useAtom } from 'jotai';
-import { profileAtom, sessionAtom, userAtom } from '../lib/store';
+import { companiesAtom, profileAtom, userAtom } from '../lib/store';
 
 const AddInvoice = () => {
   const [user] = useAtom(userAtom)
@@ -55,7 +55,7 @@ const AddInvoice = () => {
   const [chosen, setChosen] = useState(null)
   
   // COMPANIES
-  const [companies, setCompanies] = useState([])
+  const [companies, setCompanies] = useAtom(companiesAtom)
 
   const fetch_companies = async() => {
     let { data: all_companies, error } = await supabase
@@ -64,7 +64,6 @@ const AddInvoice = () => {
     setChosen(all_companies[0])
     setCompanies(all_companies)
   }
-
   const fetchData = async () => {
     try {
       await checkUser();
@@ -105,8 +104,14 @@ const AddInvoice = () => {
   const subtotal = amount.subtotal;
   const tax = amount.taxAmount.toFixed(2);
   const total = amount.total.toFixed(2);
-
+console.log('cc ', chosen, typeof chosen)
   const prevInvoice = async() => {
+    if(typeof chosen === 'undefined' || chosen === null) {
+      Alert.alert('Please add or select a client')
+    }
+    if(tasks.length === 0) {
+      Alert.alert('Please add at least one task')
+    }
     const choice = typeof chosen !== 'object' ? await JSON.parse(chosen) : chosen;
     await navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, choice, note, user, profile, number})
   }

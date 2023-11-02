@@ -4,14 +4,14 @@ import { supabase } from '../lib/supabase'
 import SingleCompany from '../components/company/SingleCompany'
 import { useNavigation } from '@react-navigation/native'
 import InvoiceBtn from '../components/general/Button'
-import { sessionAtom, userAtom } from '../lib/store'
+import { companiesAtom, triggerAtom, userAtom } from '../lib/store'
 import { useAtom } from 'jotai'
 
 const ClientArchive = () => {
-  const [session] = useAtom(sessionAtom);
   const [user] = useAtom(userAtom)
-  const [companies, setCompanies] = useState([])
+  const [companies, setCompanies] = useAtom(companiesAtom)
   const navigation = useNavigation()
+  const [trigger, setTrigger] = useAtom(triggerAtom)
 
   const client_fetcher = async() => {
     const {data, error} = await supabase.from('companies').select('*').eq('user_id', user.id)
@@ -26,13 +26,13 @@ const ClientArchive = () => {
     if(error) {
       console.log(error)
     } else {
-      navigation.navigate('Client Archive')
+      setTrigger(prev => !prev)
     }
   }
 
   useEffect(() => {
     client_fetcher()
-  }, [])
+  }, [trigger])
 
   return (
     <View className="bg-white">

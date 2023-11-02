@@ -4,15 +4,18 @@ import { TextInput } from 'react-native-paper';
 import InvoiceBtn from '../components/general/Button';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../lib/supabase';
+import { useAtom } from 'jotai';
+import { triggerAtom } from '../lib/store';
 
 const ClientUpdate = ({route}) => {
     const item = route.params;
     const [company, setCompany] = useState(item.item.company_name);
     const [email, setEmail] = useState(item.item.company_email);
-    const [address, setAdress] = useState(item.item.company_address);
+    const [address, setAddress] = useState(item.item.company_address);
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
     const [reload, setReload] = useState(false)
+    const [trigger, setTrigger] = useAtom(triggerAtom)
 
     const updat_company = async() => {
         setReload(true)
@@ -28,6 +31,7 @@ const ClientUpdate = ({route}) => {
         } else {
             setLoading(false)
             setReload(false)
+            setTrigger(prev => !prev)
             navigation.navigate('Client Archive')
         }
     }

@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
 import MenuButtons from '../components/general/MenuButtons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
-import { userAtom } from '../lib/store';
+import { invoiceTriggerAtom, userAtom } from '../lib/store';
 import { useAtom } from 'jotai';
 
 const InvoiceArchive = () => {
@@ -14,6 +14,7 @@ const InvoiceArchive = () => {
   const [invoice, setInvoice] = useState([])
   const navigation = useNavigation()
   const [isLoading, setIsLoading] = useState(true);
+  const [invoiceTrigger, setInvoiceTrigger] = useAtom(invoiceTriggerAtom)
 
   const [isIos, setIsIos] = useState(false);
 
@@ -34,13 +35,9 @@ const InvoiceArchive = () => {
     setIsLoading(false);
   }
 
-  const [fetching, setFetching] = useState(false)
   useEffect(() => {
     fetch_invoices()
-    return () => {
-      setFetching(true)
-    }
-  }, [])
+  }, [invoiceTrigger])
 
   return (
     <View>

@@ -1,16 +1,16 @@
 import { View, Text } from 'react-native'
 import React, { useEffect } from 'react'
 import { useAtom } from 'jotai'
-import { profileAtom, userAtom } from '../../lib/store'
+import { profileAtom, profileTriggerAtom, userAtom } from '../../lib/store'
 import { supabase } from '../../lib/supabase'
 
 const Details = () => {
 
     const [user] = useAtom(userAtom)
     const [profile, setProfile] = useAtom(profileAtom)
+    const [profileTrigger, setProfileTrigger] = useAtom(profileTriggerAtom)
     
     const checkUser = async () => {
-      if(profile === null) {
         const { data, error } = await supabase
           .from('profile')
           .select()
@@ -21,12 +21,11 @@ const Details = () => {
         } else {
           setProfile(data);
         }
-      }
       };
 
       useEffect(() => {
         checkUser();
-      }, []);
+      }, [profileTrigger]);
 
   return (
     <>

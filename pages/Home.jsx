@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Divider } from 'react-native-paper';
 import Purchases from 'react-native-purchases';
 import { useAtom } from 'jotai';
-import { userAtom } from '../lib/store';
+import { profileTriggerAtom, userAtom } from '../lib/store';
 import Details from '../components/account/Details';
 import PageIcon from '../components/account/PageIcon';
 import InvoiceBtn from '../components/general/Button';
@@ -14,6 +14,7 @@ import InvoiceBtn from '../components/general/Button';
 const Home = () => {
       const [user] = useAtom(userAtom);
       const [active, setActive] = useState([])
+      const [profileTrigger, setProfileTrigger] = useAtom(profileTriggerAtom)
 
       const navigation = useNavigation();
 

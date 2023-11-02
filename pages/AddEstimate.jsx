@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, ScrollView, TouchableOpacity, Switch } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Switch, Alert } from 'react-native'
 import {Picker} from '@react-native-picker/picker'
 import { TextInput } from 'react-native-paper';
 import InvoiceBtn from '../components/general/Button';
@@ -10,7 +10,7 @@ import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { useAtom } from 'jotai';
-import { profileAtom, userAtom } from '../lib/store';
+import { companiesAtom, profileAtom, userAtom } from '../lib/store';
 
 const AddEstimate = () => {
   const [user] = useAtom(userAtom)
@@ -55,7 +55,7 @@ const AddEstimate = () => {
   const [note, setNote] = useState('');
   
   // COMPANIES
-  const [companies, setCompanies] = useState([])
+  const [companies, setCompanies] = useAtom(companiesAtom)
   const fetch_companies = async() => {
     let { data: all_companies, error } = await supabase
     .from('companies')
@@ -107,6 +107,12 @@ const AddEstimate = () => {
   const total = amount.total.toFixed(2);
 
   const prevEstimate = async() => {
+    if(typeof chosen === 'undefined' || chosen === null) {
+      Alert.alert('Please add or select a client')
+    }
+    if(tasks.length === 0) {
+      Alert.alert('Please add at least one task')
+    }
     const choice = typeof chosen !== 'object' ? await JSON.parse(chosen) : chosen;
     await navigation.navigate('PreviewEstimate', {tasks, subtotal, tax, total, choice, note, user, profile, number})
   }

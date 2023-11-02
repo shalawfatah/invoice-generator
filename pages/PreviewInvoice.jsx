@@ -10,6 +10,7 @@ import { template_choice } from '../components/templates/template_choice.js'
 import * as Sharing from 'expo-sharing';
 import * as MailComposer from 'expo-mail-composer';
 import Purchases from 'react-native-purchases';
+import { invoiceTriggerAtom } from '../lib/store';
 
 const PreviewInvoice = ({route}) => {
   const {tasks, tax, subtotal, total, choice, note, user, profile, number} = route.params;
@@ -19,6 +20,7 @@ const PreviewInvoice = ({route}) => {
   const [sharing, setSharing] = useState(false);
   const [temp, setTemp] = useState(null)
   const parsed_number = parseInt(number)
+  const [invoiceTrigger, setInvoiceTrigger] = useAtom(invoiceTriggerAtom)
 
   const dox = "Invoice";
 
@@ -74,7 +76,7 @@ const PreviewInvoice = ({route}) => {
         Alert.alert(error.message)
         setLoading(false)
       } else {
-        console.log(data)
+        setInvoiceTrigger(prev => !prev)
       }
     const file = await Print.printToFileAsync({
       html: temp,

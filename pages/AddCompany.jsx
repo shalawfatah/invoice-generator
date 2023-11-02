@@ -5,7 +5,7 @@ import InvoiceBtn from '../components/general/Button'
 import { TextInput } from 'react-native-paper';
 import { supabase } from '../lib/supabase'
 import { useAtom } from 'jotai';
-import { userAtom } from '../lib/store';
+import { triggerAtom, userAtom } from '../lib/store';
 
 const AddCompany = () => {
     const [user] = useAtom(userAtom)
@@ -13,6 +13,7 @@ const AddCompany = () => {
     const [address, setAddress] = useState('')
     const [email, setEmail] = useState('')
     const [loading, setLoading] = useState(false)
+    const [trigger, setTrigger] = useAtom(triggerAtom)
       
     const navigation = useNavigation()
     const add_company = async() => {
@@ -32,6 +33,7 @@ const AddCompany = () => {
                 setLoading(false)
             } else {
                 setLoading(false)
+                setTrigger(prev => !prev)
                 navigation.navigate('Client Archive')
             }
 
