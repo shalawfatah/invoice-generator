@@ -4,6 +4,8 @@ import { supabase } from '../../lib/supabase';
 import * as ImagePicker from 'expo-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { decode } from 'base64-arraybuffer';
+import { useAtom } from 'jotai';
+import { logoTriggerAtom } from '../../lib/store';
 
 const CompanyLogo = () => {
 
@@ -12,6 +14,7 @@ const CompanyLogo = () => {
   const [photo, setPhoto] = useState(null)
   const [photoURL, setPhotoURL] = useState('')
   const [loading, setLoading] = useState(false)
+  const [logoTrigger, setLogoTrigger] = useAtom(logoTriggerAtom)
 
   const pickImage = async () => {
     setLoading(true)
@@ -47,6 +50,7 @@ const CompanyLogo = () => {
             if(error) {
               console.log(error)
             } else {
+            setLogoTrigger(prev => !prev)
               setLoading(false)
             }
       }

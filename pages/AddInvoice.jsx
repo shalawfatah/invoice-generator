@@ -10,13 +10,14 @@ import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { useAtom } from 'jotai';
-import { companiesAtom, profileAtom, userAtom } from '../lib/store';
+import { companiesAtom, profileAtom, templateAtom, userAtom } from '../lib/store';
 
 const AddInvoice = () => {
   const [user] = useAtom(userAtom)
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useAtom(profileAtom)
   const [number, setNumber] = useState("1")
+  const [template, setTemplate] = useAtom(templateAtom)
 
   const invoice_number = async() => {
     const { data, error } = await supabase.rpc('get_last_invoice_for_user', {
@@ -44,7 +45,6 @@ const AddInvoice = () => {
       }
       setIsLoading(false);
   }
-
   const [text, setText] = useState('')
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
@@ -76,7 +76,7 @@ const AddInvoice = () => {
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [template])
 
   const filtered_companies = companies?.filter(item => item.company_name.includes(text));
 
@@ -249,7 +249,7 @@ const AddInvoice = () => {
             duty={prevInvoice} 
             icon="bookmark-outline" 
             mode="contained" 
-            text="Save" 
+            text="View" 
           /> 
           <View className="my-12"></View>
     </ScrollView>

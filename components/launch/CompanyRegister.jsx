@@ -8,7 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { supabase } from "../../lib/supabase";
 import { decode } from 'base64-arraybuffer';
 import { useAtom } from "jotai";
-import { userAtom } from "../../lib/store";
+import { logoTriggerAtom, userAtom } from "../../lib/store";
 
 const CompanyRegister = () => {
   
@@ -17,6 +17,7 @@ const CompanyRegister = () => {
   const [address, setAddress] = useState('');
   const [loading, setLoading] = useState('');
   const navigation = useNavigation();
+  const [logoTrigger, setLogoTrigger] = useAtom(logoTriggerAtom)
   
   const fetchSession = async () => {
     setLoading(true);
@@ -69,6 +70,7 @@ const CompanyRegister = () => {
             if(error) {
               console.log(error)
             } else {
+              setLogoTrigger(prev => !prev)
               setLoading(false)
             }
       }

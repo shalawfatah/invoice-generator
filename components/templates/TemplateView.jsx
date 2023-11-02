@@ -5,13 +5,14 @@ import InvoiceBtn from '../general/Button';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../lib/supabase';
 import { useAtom } from 'jotai';
-import { userAtom } from '../../lib/store';
+import { templateAtom, userAtom } from '../../lib/store';
 
 const TemplateView = ({route}) => {
     const [user] = useAtom(userAtom)
     const {item} = route.params;
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
+    const [temlpate, setTemplate] =  useAtom(templateAtom)
 
     const chooseTemplate = async() => {
       setLoading(true)
@@ -20,6 +21,7 @@ const TemplateView = ({route}) => {
         console.log(error)
       } else {
         setLoading(false)
+        setTemplate(prev => !prev)
         navigation.navigate('Add Invoice')
       }
     }

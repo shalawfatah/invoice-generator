@@ -10,12 +10,13 @@ import { supabase } from '../lib/supabase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { useAtom } from 'jotai';
-import { companiesAtom, profileAtom, userAtom } from '../lib/store';
+import { companiesAtom, profileAtom, templateAtom, userAtom } from '../lib/store';
 
 const AddEstimate = () => {
   const [user] = useAtom(userAtom)
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useAtom(profileAtom)
+  const [template, setTemplate] = useAtom(templateAtom)
 
   const [number, setNumber] = useState("1")
   
@@ -76,7 +77,7 @@ const AddEstimate = () => {
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [template])
   
   const filtered_companies = companies?.filter(item => item.company_name.includes(text));
   const [chosen, setChosen] = useState(null)
@@ -249,7 +250,7 @@ const AddEstimate = () => {
         <InvoiceBtn 
             duty={prevEstimate} 
             icon="add-circle-outline" 
-            text="Save" 
+            text="View" 
           /> 
           <View className="my-12"></View>
     </ScrollView></View>)}

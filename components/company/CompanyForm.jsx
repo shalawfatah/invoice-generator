@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { supabase } from '../../lib/supabase';
 import InvoiceBtn from '../general/Button';
@@ -7,8 +7,9 @@ import { ActivityIndicator, TextInput, MD2Colors } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { decode } from 'base64-arraybuffer';
 import { useAtom } from 'jotai';
-import { profileAtom, profileTriggerAtom, userAtom } from '../../lib/store';
+import { logoTriggerAtom, profileAtom, profileTriggerAtom, userAtom } from '../../lib/store';
 import * as FileSystem from 'expo-file-system'
+import Logos from '../account/Logos';
 
 const CompanyForm = () => {
   const [user] = useAtom(userAtom)
@@ -22,6 +23,7 @@ const CompanyForm = () => {
   const url = 'https://bkcsaqsiloxvfsnhymgk.supabase.co/storage/v1/object/public/avatars/';
   const [imgs, setImgs] = useState([])
   const [profileTrigger, setProfileTrigger] = useAtom(profileTriggerAtom)
+  const [logoTrigger, setLogoTrigger] = useAtom(logoTriggerAtom)
   
   const get_profile = async() => {
     if(profile === null) {
@@ -89,6 +91,7 @@ const CompanyForm = () => {
         } else {
           setPhotoURL(url + filePath)
           setReload(false)
+          setLogoTrigger(prev => !prev)
           console.log(data)
         }
   } else {
@@ -113,23 +116,13 @@ const fetch_images = async() => {
 
 useEffect(() => {
   fetch_images()
-}, [])
+}, [logoTrigger])
 
 const filtered_imgs = imgs.filter(item => {
   return item.name.toLowerCase().includes('.jpg') 
           || item.name.toLowerCase().includes('.jpeg') 
           || item.name.toLowerCase().includes('.png')
 })
-
-const removeImg = async(item) => {
-  const { data, error } = await supabase
-  .storage
-  .from('avatars')
-  .remove([`${user.id}/${item.name}`])
-  if(error) {
-    console.log(error)
-  }
-}
 
   return (
     <View>
@@ -178,17 +171,7 @@ const removeImg = async(item) => {
           <Text>{status === 'Done' ? 'Profile Updated' : ''}</Text>
     </View>
         <ScrollView className="px-4 py-1">
-        <View className="flex flex-col items-start ">
-        {filtered_imgs.map(item => {
-          const itemName = url + user.id + '/' + item.name;
-            return <View key={item.id} className="flex flex-row items-center justify-between w-full">
-                      <Image source={{ uri: itemName }} style={{ width: 70, height: 70 }} />
-                      <TouchableOpacity onPress={() => removeImg(item)} className="bg-indigo-600 text-white p-3 rounded-full">
-                        <Ionicons className=" " name="trash-outline" color={"white"} size={28} />
-                      </TouchableOpacity>
-                  </View>   
-        })}
-        </View>
+          <Logos filtered_imgs={filtered_imgs} />
         </ScrollView>
     </View>
   )
