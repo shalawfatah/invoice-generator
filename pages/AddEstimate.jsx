@@ -109,12 +109,12 @@ const AddEstimate = () => {
   const prevEstimate = async() => {
     if(typeof chosen === 'undefined' || chosen === null) {
       Alert.alert('Please add or select a client')
-    }
-    if(tasks.length === 0) {
+    } else if(tasks.length === 0) {
       Alert.alert('Please add at least one task')
-    }
+    } else {
     const choice = typeof chosen !== 'object' ? await JSON.parse(chosen) : chosen;
     await navigation.navigate('PreviewEstimate', {tasks, subtotal, tax, total, choice, note, user, profile, number})
+    }
   }
   return (
     <View>

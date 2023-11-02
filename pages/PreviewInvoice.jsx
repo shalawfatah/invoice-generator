@@ -11,6 +11,7 @@ import * as Sharing from 'expo-sharing';
 import * as MailComposer from 'expo-mail-composer';
 import Purchases from 'react-native-purchases';
 import { invoiceTriggerAtom } from '../lib/store';
+import { useAtom } from 'jotai';
 
 const PreviewInvoice = ({route}) => {
   const {tasks, tax, subtotal, total, choice, note, user, profile, number} = route.params;
@@ -130,6 +131,12 @@ const PreviewInvoice = ({route}) => {
         />}
     </ScrollView>
     <View className="m-2">
+    <InvoiceBtn 
+          text="Edit Invoice" 
+          icon="pencil-outline"
+          classes="my-2" 
+          duty={() => navigation.navigate('Add Invoice')} 
+        />
     {active.length !== 0 ? 
     <InvoiceBtn 
           text="Share Estimate" 

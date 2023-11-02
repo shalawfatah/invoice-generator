@@ -104,16 +104,16 @@ const AddInvoice = () => {
   const subtotal = amount.subtotal;
   const tax = amount.taxAmount.toFixed(2);
   const total = amount.total.toFixed(2);
-console.log('cc ', chosen, typeof chosen)
+
   const prevInvoice = async() => {
     if(typeof chosen === 'undefined' || chosen === null) {
       Alert.alert('Please add or select a client')
-    }
-    if(tasks.length === 0) {
+    } else if(tasks.length === 0) {
       Alert.alert('Please add at least one task')
+    } else {
+      const choice = typeof chosen !== 'object' ? await JSON.parse(chosen) : chosen;
+      await navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, choice, note, user, profile, number})
     }
-    const choice = typeof chosen !== 'object' ? await JSON.parse(chosen) : chosen;
-    await navigation.navigate('PreviewInvoice', {tasks, subtotal, tax, total, choice, note, user, profile, number})
   }
 
   return (

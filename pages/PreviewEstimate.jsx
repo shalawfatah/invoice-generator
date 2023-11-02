@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, Platform, Alert, Linking } from 'react-native'
+import { View, ScrollView, Platform, Alert, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { supabase } from '../lib/supabase'
 import * as Print from 'expo-print';
@@ -11,6 +11,7 @@ import { template_choice } from '../components/templates/template_choice.js'
 import * as Sharing from 'expo-sharing';
 import { useAtom } from 'jotai';
 import { estimateTriggerAtom } from '../lib/store';
+import Purchases from 'react-native-purchases';
 
 const PreviewEstimate = ({route}) => {
   const {tasks, tax, subtotal, total, choice, note, user, profile, number} = route.params;
@@ -153,7 +154,8 @@ const PreviewEstimate = ({route}) => {
           buttonColor='#dc143c' 
           textColor='#FFF'
           duty={generatePDF}
-        /> :
+        /> : <View>
+          <Text className="text-center font-bold my-4">To share your document, please subscribe</Text>
       <InvoiceBtn 
           text="Subscribe" 
           icon="rocket"
@@ -162,6 +164,7 @@ const PreviewEstimate = ({route}) => {
           textColor='#FFF'
           duty={() => navigation.navigate('Subscribe Packages')}
         />
+        </View>
         }
     </View>
     </View>
