@@ -154,7 +154,7 @@ const PreviewInvoice = ({route}) => {
           classes="my-2 " 
           buttonColor='#dc143c' 
           textColor='#FFF'
-          duty={() => navigation.navigate('Subscribe Packages', { customer })}
+          duty={() => navigation.navigate('Subscribe Packages')}
         />
         </View>
         }
