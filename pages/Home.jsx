@@ -83,8 +83,8 @@ const Home = () => {
           <Text className="text-black">Active</Text>
           </View> :
           <View className={`flex flex-row gap-x-2 items-center pr-4 `}>
-           <Ionicons name="stop-circle-outline" size={24} color={"black"}/>
-          <Text className="text-black ">Inactive</Text>
+           <Ionicons name="stop-circle-outline" size={24} color={"#E0115F"} />
+          <Text className="text-[#E0115F] ">Inactive</Text>
         </View>}
       </View>
         <Divider className="w-full my-2 bg-gray-400" />
