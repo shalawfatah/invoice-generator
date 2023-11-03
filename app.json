@@ -2,7 +2,7 @@
   "expo": {
     "name": "Invoice Generator",
     "slug": "invoice-generator",
-    "version": "1.0.37",
+    "version": "1.0.38",
     "description": "Generate invoices, estimates, PTOs on the go and send them to clients with a couple of taps",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -10,6 +10,14 @@
     "permissions": {
       "camera": null
     },
+    "plguins": [
+      [
+        "expo-updates",
+        {
+          "username": "shashankaf"
+        }
+      ]
+    ],
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -21,10 +29,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.shashankaf.invoicegenerator",
-      "buildNumber": "37" 
+      "buildNumber": "38" 
     },
     "android": {
-      "versionCode": 37,
+      "versionCode": 38,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
