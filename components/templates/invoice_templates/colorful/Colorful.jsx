@@ -41,7 +41,7 @@ const Colorful = ({
     <tbody>
     ${tasks.map(item => {
         return `<tr>
-            <td style="padding: 0.5rem 1rem; border: 1px solid black;">${item.text}</td>
+            <td style="padding: 0.5rem 1rem; border: 1px solid black; white-space: pre-line;">${item.text}</td>
             <td style="padding: 0.5rem 1rem; border: 1px solid black;">$${item.number} ${item.quantity > 1 ? (`<span style="color:gray;margin-left:4px; margin-right:4px; font-size:10px;"> (x${item.quantity})</span>`) : ''} ${item.tax === true ? (`<span style="background-color:aqua; color: gray;margin-left:4px; margin-right:4px; padding:4px; border-radius:4px;font-size:10px;"> GST $${((item.number * item.quantity) * 0.05).toFixed(2)}</span>`) : ''}</td>
         </tr>`
     }).join('')}

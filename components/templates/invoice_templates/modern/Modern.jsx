@@ -1,12 +1,23 @@
-import React from 'react'
-import {WebView} from 'react-native-webview';
+import React from "react";
+import { WebView } from "react-native-webview";
 
 const Modern = ({
-    company_name, company_address, company_email, company_logo, 
-    client_name, client_address, client_email, 
-    tasks, subtotal, tax, total, note, dox, document_number
-                }) => {
-    const htmlContent = `<html lang="en">
+  company_name,
+  company_address,
+  company_email,
+  company_logo,
+  client_name,
+  client_address,
+  client_email,
+  tasks,
+  subtotal,
+  tax,
+  total,
+  note,
+  dox,
+  document_number,
+}) => {
+  const htmlContent = `<html lang="en">
     
     <body style="padding: 2rem;">
     
@@ -37,12 +48,30 @@ const Modern = ({
           </tr>
         </thead>
         <tbody>
-        ${tasks.map(item => {
+        ${tasks
+          .map((item) => {
             return `<tr>
-                <td style="padding: 0.5rem 1rem; border: 1px solid black;">${item.text}</td>
-                <td style="padding: 0.5rem 1rem; border: 1px solid black;">$${item.number} ${item.quantity > 1 ? (`<span style="color:gray;margin-left:4px; margin-right:4px; font-size:10px;"> (x${item.quantity})</span>`) : ''} ${item.tax === true ? (`<span style="background-color:lightgray; color: white;margin-left:4px; margin-right:4px; padding:4px; border-radius:4px;font-size:10px;"> GST $${((item.number * item.quantity) * 0.05).toFixed(2)}</span>`) : ''}</td>
-                </tr>`
-        }).join('')}
+                <td style="padding: 0.5rem 1rem; border: 1px solid black; white-space: pre-line;">${
+                  item.text
+                }</td>
+                <td style="padding: 0.5rem 1rem; border: 1px solid black;">$${
+                  item.number
+                } ${
+              item.quantity > 1
+                ? `<span style="color:gray;margin-left:4px; margin-right:4px; font-size:10px;"> (x${item.quantity})</span>`
+                : ""
+            } ${
+              item.tax === true
+                ? `<span style="background-color:lightgray; color: white;margin-left:4px; margin-right:4px; padding:4px; border-radius:4px;font-size:10px;"> GST $${(
+                    item.number *
+                    item.quantity *
+                    0.05
+                  ).toFixed(2)}</span>`
+                : ""
+            }</td>
+                </tr>`;
+          })
+          .join("")}
         <tr>
             <td style="padding: 0.5rem 1rem; border: 1px solid black;">${note}</td>
         </tr>
@@ -64,11 +93,11 @@ const Modern = ({
     </html>
     `;
   return (
-        <WebView 
-            source={{html: htmlContent}}
-            className="w-screen min-h-[400px]"
-            />
-  )
-}
+    <WebView
+      source={{ html: htmlContent }}
+      className="w-screen min-h-[400px]"
+    />
+  );
+};
 
-export default Modern
+export default Modern;

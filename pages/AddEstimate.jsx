@@ -21,17 +21,16 @@ const AddEstimate = () => {
   const [number, setNumber] = useState("1")
   
   const invoice_number = async() => {
-    const { data, error } = await supabase.rpc('get_last_invoice_for_user', {
+    const { data, error } = await supabase.rpc('get_last_invoice_document_number_for_user', {
       p_user_id: user.id,
       p_type: "estimate"
     })    
     if(error) {
       console.log(error)
     };
-    if(data.length > 0) {
-      const stringed = data[0]?.document_number + 1;
-      const strified = stringed.toString()
-      setNumber(strified)
+    if(data) {
+      const n = JSON.stringify(data[0].document_number + 1);
+      setNumber(n)
     } else {
       setNumber("1")
     }

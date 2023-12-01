@@ -7,8 +7,8 @@ export const creative_template = (
 <body style="padding: 2rem;">
 
   <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 3rem;">
-  <div style="height: 4rem; width: 4rem; border-radius: 50%; overflow: hidden;">
-  <img src=${company_logo} alt="Company Logo" style="height: 100%; width: 100%; object-fit: cover;">
+  <div style="height: 4rem; width: 4rem; overflow: hidden;">
+    <img src=${company_logo} alt="Company Logo" style="height: 100%; width: 100%; object-fit: cover;">
   </div>
   <p style="font-size: 1.25rem; font-weight: bold; margin: 0;">${dox} Number: ${document_number}</p>
     <div style="text-align: right;">
@@ -37,7 +37,7 @@ export const creative_template = (
     <tbody>
     ${tasks.map(item => {
         return `<tr>
-            <td style="padding: 0.5rem 1rem; border: 1px solid black;"><span>${item.text}</td>
+            <td style="padding: 0.5rem 1rem; border: 1px solid black; white-space: pre-line;"><span>${item.text}</td>
             <td style="padding: 0.5rem 1rem; border: 1px solid black;">$${item.number} ${item.quantity > 1 ? (`<span style="color:gray;margin-left:4px; margin-right:4px; font-size:10px;"> (x${item.quantity})</span>`) : ''} ${item.tax === true ? (`<span style="background-color:lightgray; color: white;margin-left:4px; margin-right:4px; padding:4px; border-radius:4px;font-size:10px;"> GST $${((item.number * item.quantity) * 0.05).toFixed(2)}</span>`) : ''}</td>
         </tr>`
     }).join('')}

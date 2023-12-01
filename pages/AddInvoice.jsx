@@ -20,17 +20,16 @@ const AddInvoice = () => {
   const [template, setTemplate] = useAtom(templateAtom)
 
   const invoice_number = async() => {
-    const { data, error } = await supabase.rpc('get_last_invoice_for_user', {
+    const { data, error } = await supabase.rpc('get_last_invoice_document_number_for_user', {
       p_user_id: user.id,
       p_type: "invoice"
     })    
     if(error) {
       console.log(error)
     };
-    if(data.length > 0) {
-      const stringed = data[0]?.document_number + 1;
-      const strified = stringed.toString()
-      setNumber(strified)
+    if(data) {
+      const n = JSON.stringify(data[0].document_number + 1);
+      setNumber(n)
     } else {
       setNumber("1")
     }
@@ -164,6 +163,7 @@ const AddInvoice = () => {
               style={{  }}
               label="Task description"
               value={task.text}
+              multiline={true}
               onChangeText={(text) => updateTask(task.id, 'text', text)}
               backgroundColor="#f5f5f5"
             />
