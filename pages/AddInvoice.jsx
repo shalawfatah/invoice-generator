@@ -31,16 +31,17 @@ const AddInvoice = () => {
       const n = JSON.stringify(data[0].document_number + 1);
       setNumber(n)
     } else {
-      setNumber("1")
+      setNumber("1");
     }
   }
 
   const checkUser = async() => {
       const {data, error} = await supabase.from('profile').select().eq('email', user.email).single();
       if(error) {
-        console.log(error)
+        console.log('user err ', error)
       } else {
         setProfile(data)
+        setTemplate(data.template)
       }
       setIsLoading(false);
   }

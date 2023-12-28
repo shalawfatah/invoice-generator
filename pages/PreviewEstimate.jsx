@@ -21,7 +21,7 @@ const PreviewEstimate = ({route}) => {
   const [loading, setLoading] = useState(false)
   const [temp, setTemp] = useState(null)
   const [sharing, setSharing] = useState(false);
-  const parsed_number = parseInt(number)
+  const document_number = parseInt(number)
   const [estimateTrigger, setEstimateTrigger] = useAtom(estimateTriggerAtom)
 
   const dox = "Estimate";
@@ -38,7 +38,7 @@ const PreviewEstimate = ({route}) => {
         setIsAvailable(mailAvailable);
 
         if (tasks !== undefined) {
-          setTemp(template_choice(profile, client, tasks, subtotal, tax, total, note, dox, profile.template));
+          setTemp(template_choice(profile, client, tasks, subtotal, tax, total, note, dox, profile.template, document_number));
         }
       } catch (error) {
         console.error(error);
@@ -76,7 +76,7 @@ const PreviewEstimate = ({route}) => {
             tax_amount: tax,
             tasks: tasks,
             type: 'estimate',
-            document_number: parsed_number
+            document_number: document_number
           },
         ])
         .select()
@@ -137,6 +137,10 @@ const PreviewEstimate = ({route}) => {
         note={note}
         dox={dox}
         document_number={number}
+        gst={profile.gst_number}
+        phone={profile.phone}
+        website={profile.website}
+        signature={profile.signature}
         />}
     </ScrollView>
     <View className="m-2">

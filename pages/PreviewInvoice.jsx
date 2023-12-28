@@ -20,7 +20,7 @@ const PreviewInvoice = ({route}) => {
   const [loading, setLoading] = useState(false)
   const [sharing, setSharing] = useState(false);
   const [temp, setTemp] = useState(null)
-  const parsed_number = parseInt(number)
+  const document_number = parseInt(number)
   const [invoiceTrigger, setInvoiceTrigger] = useAtom(invoiceTriggerAtom)
 
   const dox = "Invoice";
@@ -32,7 +32,7 @@ const PreviewInvoice = ({route}) => {
         const sharingAvailable = await Sharing.isAvailableAsync();
         setSharing(sharingAvailable);
         if (tasks !== undefined) {
-          setTemp(template_choice(profile, client, tasks, subtotal, tax, total, note, dox, profile.template));
+          setTemp(template_choice(profile, client, tasks, subtotal, tax, total, note, dox, profile.template, document_number));
         }
       } catch (error) {
         console.error(error);
@@ -69,7 +69,7 @@ const PreviewInvoice = ({route}) => {
           tax_amount: tax,
           tasks: tasks,
           type: 'invoice',
-          document_number: parsed_number
+          document_number: document_number
         },
       ])
       .select()
@@ -128,6 +128,10 @@ const PreviewInvoice = ({route}) => {
         note={note}
         dox={dox}
         document_number={number}
+        gst={profile.gst_number}
+        phone={profile.phone}
+        website={profile.website}
+        signature={profile.signature}
         />}
     </ScrollView>
     <View className="m-2">

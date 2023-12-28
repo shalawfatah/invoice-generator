@@ -42,6 +42,7 @@ const AddEstimate = () => {
         console.log(error)
       } else {
         setProfile(data)
+        setTemplate(data.template)
       }
       setIsLoading(false);
   }
