@@ -8,18 +8,18 @@ const Colorful = ({
                 }) => {
     const htmlContent = `
 <html lang="en">
-<body style="padding: 2rem;">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-    <img src=${company_logo} alt="Company Logo" style="height: 5rem;">
-    <p style="font-size: 2.25rem; font-weight: bold; margin: 0;">${dox}</p>
+<body style="padding: 1rem;">
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <img src=${company_logo} alt="Company Logo" style="height: 4rem;">
+    <p style="font-size: 2rem; font-weight: bold; margin: 0; margin-left: -5rem;">${dox}</p>
     <p></p>
   </div>
   <div style="display: flex; justify-content: center;">
-    <h1 style="font-size: 3.25rem;">${company_name}</h1>
+    <h1 style="font-size: 2rem;">${company_name}</h1>
   </div>
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
+  <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 3rem;">
     <div style="text-align: left;">
-      <p style="color: #34D399;">Address: ${company_address}</p>
+      <p style="font-size:1.2rem">Address: ${company_address}</p>
     </div>
     <div style="text-align: right;">
       <p>GST: ${gst}</p>
@@ -35,7 +35,7 @@ const Colorful = ({
 
   <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
     <thead>
-      <tr style="background-color: #d4145a;">
+      <tr style="background-color: darkmagenta;">
         <th style="padding: 0.5rem 1rem; border: 1px solid black; text-align: left;color:white;">Task</th>
         <th style="padding: 0.5rem 1rem; border: 1px solid black; text-align: left;color:white;">Amount</th>
       </tr>
@@ -58,14 +58,14 @@ const Colorful = ({
       <td style="padding: 0.5rem 1rem; border: 1px solid black;">GST</td>
       <td style="padding: 0.5rem 1rem; border: 1px solid black;">$${tax}</td>
     </tr>
-    <tr style="background-color: #d4145a;">
-      <td style="padding: 0.5rem 1rem; border: 1px solid black; font-weight:bold; color:white;font-size:2rem;">Total</td>
-      <td style="padding: 0.5rem 1rem; border: 1px solid black; font-weight:bold; color:white;font-size:2rem;">$${total}</td>
+    <tr style="background-color: darkmagenta;">
+      <td style="padding: 0.5rem 1rem; border: 1px solid black; font-weight:bold; color:white;">Total</td>
+      <td style="padding: 0.5rem 1rem; border: 1px solid black; font-weight:bold; color:white;">$${total}</td>
     </tr>
     </tbody>
   </table>
-  <div style="margin-top: 5rem; margin-bottom: 5rem;">
-      <p>For questions regarding this invoice, please contact ${company_name}</p>
+  <div style="margin-top: 3rem; margin-bottom: 3rem;">
+      <p style="text-align: center;">For questions regarding this invoice, please contact ${company_name}</p>
       <p>Phone: ${phone}</p>
       <p>Email: ${company_email}</p>
       <p>Website: ${website}</p>
@@ -81,10 +81,10 @@ const Colorful = ({
       <p style="font-weight:bold;">Client Signature</p>
     </div>
   </div>
-  <div style="margin-top: 3rem; text-align: center; font-size: 0.75rem;">
+  <div style="text-align: center; font-size: 0.75rem;">
     <p>Make all payable checks to ${company_name}.</p>
   </div>
-  <div style="margin-top: 3rem; text-align: center; font-size: 0.75rem; color: #6B7280;">
+  <div style="text-align: center; font-size: 0.75rem; color: #6B7280;">
     <p>&copy; 2023 ${company_name}. All rights reserved.</p>
   </div>
 </body>
