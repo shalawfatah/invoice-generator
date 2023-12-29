@@ -5,12 +5,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { format } from 'date-fns';
 import { supabase } from '../lib/supabase';
 import { useNavigation } from '@react-navigation/native';
+import { useAtom } from 'jotai';
+import { invoiceTriggerAtom } from '../lib/store';
 
 const SingleInvoice = ({route}) => {
   const {item} = route.params;
   const time = format(new Date(item.created_at), "dd MMMM yyyy 'at' HH:mm ")
   const navigation = useNavigation();
   const [type, setType] = useState('invoice')
+  const [invoiceTrigger, setInvoiceTrigger] = useAtom(invoiceTriggerAtom)
 
   useEffect(() => {
     setType(item.type)
@@ -24,6 +27,7 @@ const SingleInvoice = ({route}) => {
       if(error) {
         console.log(error)
       } else {
+        setInvoiceTrigger(prev => !prev)
         type === 'invoice' ? navigation.navigate('Archive') : navigation.navigate('EstimateArchive')
       }
   }
