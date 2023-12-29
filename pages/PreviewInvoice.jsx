@@ -24,7 +24,7 @@ const PreviewInvoice = ({route}) => {
   const [invoiceTrigger, setInvoiceTrigger] = useAtom(invoiceTriggerAtom)
 
   const dox = "Invoice";
-
+console.log('uu ', user)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -82,6 +82,8 @@ const PreviewInvoice = ({route}) => {
     const file = await Print.printToFileAsync({
       html: temp,
         base64:false,
+        width: 595, 
+        height: 900, 
     })
     const contentUri = await FileSystem.getContentUriAsync(file.uri);
     const parts = contentUri.split('/')
@@ -141,6 +143,14 @@ const PreviewInvoice = ({route}) => {
           classes="my-2" 
           duty={() => navigation.navigate('Add Invoice')} 
         />
+    {(user.email === 'shalaw.fatah@gmail.com') && <InvoiceBtn 
+          text="Share Estimate" 
+          icon="rocket"
+          classes="my-2 " 
+          buttonColor='#dc143c' 
+          textColor='#FFF'
+          duty={generatePDF}
+        />}
     {active.length !== 0 ? 
     <InvoiceBtn 
           text="Share Estimate" 

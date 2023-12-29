@@ -8,13 +8,13 @@ export const colorful_template = (
 <body style="padding: 1rem;">
   <div style="display: flex; justify-content: space-between; align-items: center;">
     <img src=${company_logo} alt="Company Logo" style="height: 4rem;">
-    <p style="font-size: 2rem; font-weight: bold; margin: 0; margin-left: -5rem;">${dox}</p>
+    <p style="font-size: 1.8rem; font-weight: bold; margin: 0; margin-left: -5rem;">${dox}</p>
     <p></p>
   </div>
   <div style="display: flex; justify-content: center;">
     <h1 style="font-size: 2rem;">${company_name}</h1>
   </div>
-  <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 3rem;">
+  <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
     <div style="text-align: left;">
       <p style="font-size:1.2rem">Address: ${company_address}</p>
     </div>
@@ -23,25 +23,25 @@ export const colorful_template = (
       <p>${dox} Number: ${document_number}</p>
     </div>
   </div>
-  <div style="margin-bottom: 3rem;">
-    <h2 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 0.5rem;">Bill To:</h2>
-    <p>${client_name}</p>
-    <p>${client_address}</p>
-    <p>${client_email}</p>
+  <div style="margin-bottom: 1rem;">
+    <h2 style="font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">Bill To:</h2>
+    <p style="font-size:1rem;">${client_name}</p>
+    <p style="font-size:1rem;">${client_address}</p>
+    <p style="font-size:1rem;">${client_email}</p>
   </div>
 
-  <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+  <table style="width: 100%; border-collapse: collapse; border: .5px solid black;">
     <thead>
-      <tr style="background-color: darkmagenta;">
-        <th style="padding: 0.5rem 1rem; border: 1px solid black; text-align: left;color:white;">Task</th>
-        <th style="padding: 0.5rem 1rem; border: 1px solid black; text-align: left;color:white;">Amount</th>
+      <tr style="background-color: aqua;">
+        <th style="padding: 0.5rem 1rem; border: 1px solid black; text-align: left;color:black;">Task</th>
+        <th style="padding: 0.5rem 1rem; border: 1px solid black; text-align: left;color:black;">Amount</th>
       </tr>
     </thead>
     <tbody>
     ${tasks.map(item => {
         return `<tr>
             <td style="padding: 0.5rem 1rem; border: 1px solid black; white-space: pre-line;">${item.text}</td>
-            <td style="padding: 0.5rem 1rem; border: 1px solid black;">$${item.number} ${item.quantity > 1 ? (`<span style="color:gray;margin-left:4px; margin-right:4px; font-size:10px;"> (x${item.quantity})</span>`) : ''} ${item.tax === true ? (`<span style="background-color:aqua; color: gray;margin-left:4px; margin-right:4px; padding:4px; border-radius:4px;font-size:10px;"> GST $${((item.number * item.quantity) * 0.05).toFixed(2)}</span>`) : ''}</td>
+            <td style="padding: 0.5rem 1rem; border: 1px solid black;">$${item.number} ${item.quantity > 1 ? (`<span style="color:black;margin-left:4px; margin-right:4px; font-size:10px;"> (x${item.quantity})</span>`) : ''} ${item.tax === true ? (`<span style="background-color:aqua; color: black;margin-left:4px; margin-right:4px; padding:4px; border-radius:4px;font-size:10px;"> GST $${((item.number * item.quantity) * 0.05).toFixed(2)}</span>`) : ''}</td>
         </tr>`
     }).join('')}
     <tr>
@@ -55,13 +55,13 @@ export const colorful_template = (
       <td style="padding: 0.5rem 1rem; border: 1px solid black;">GST</td>
       <td style="padding: 0.5rem 1rem; border: 1px solid black;">$${tax}</td>
     </tr>
-    <tr style="background-color: darkmagenta;">
-      <td style="padding: 0.5rem 1rem; border: 1px solid black; font-weight:bold; color:white;">Total</td>
-      <td style="padding: 0.5rem 1rem; border: 1px solid black; font-weight:bold; color:white;">$${total}</td>
+    <tr style="background-color: aqua;">
+      <td style="padding: 0.5rem 1rem; border: 1px solid black; font-weight:bold; color:black;">Total</td>
+      <td style="padding: 0.5rem 1rem; border: 1px solid black; font-weight:bold; color:black;">$${total}</td>
     </tr>
     </tbody>
   </table>
-  <div style="margin-top: 3rem; margin-bottom: 3rem;">
+  <div style="margin-top: 3rem;">
       <p style="text-align: center;">For questions regarding this invoice, please contact ${company_name}</p>
       <p>Phone: ${phone}</p>
       <p>Email: ${company_email}</p>
@@ -70,7 +70,7 @@ export const colorful_template = (
   <div style="display: flex; justify-content: end;">
     <div>
       <p style="font-weight:bold;">Service Person Signature</p>
-      <img src=${signature} alt="Company Logo" style="height: 5rem;">
+      <img src=${signature} alt="Company Logo" style="height: 4rem;">
     </div>
   </div>
   <div style="display: flex; justify-content: end;">
