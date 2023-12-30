@@ -8,6 +8,7 @@ import MenuButtons from '../components/general/MenuButtons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { invoiceTriggerAtom, userAtom } from '../lib/store';
 import { useAtom } from 'jotai';
+import InvoiceBtn from '../components/general/Button';
 
 const InvoiceArchive = () => {
   const [user] = useAtom(userAtom);
@@ -38,9 +39,10 @@ const InvoiceArchive = () => {
   useEffect(() => {
     fetch_invoices()
   }, [invoiceTrigger])
-
+  
   return (
     <View>
+      {/* <InvoiceBtn text="Register" duty={() => navigation.navigate('Company Register')} /> */}
     {isLoading ? (
         <ActivityIndicator 
             animating={true} 
