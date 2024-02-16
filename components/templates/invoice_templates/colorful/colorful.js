@@ -27,7 +27,7 @@ export const colorful_template = (
 </div>
 </div>
 <div style="margin-bottom: .5rem;">
-<h2 style="font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">Bill To:</h2>
+<h2 style="font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">${dox} To:</h2>
 <p style="font-size:1rem;">${client_name}</p>
 <p style="font-size:1rem;">${client_address}</p>
 <p style="font-size:1rem;">${client_email}</p>
@@ -65,7 +65,7 @@ ${tasks.map(item => {
 </tbody>
 </table>
 <div style="margin-top: 3rem;">
-<p style="text-align: center;">For questions regarding this invoice, please contact ${company_name}</p>
+<p style="text-align: center;">For questions regarding this ${dox}, please contact ${company_name}</p>
 <p>Phone: ${phone}</p>
 <p>Email: ${company_email}</p>
 <p>Website: ${website}</p>
