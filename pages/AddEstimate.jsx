@@ -165,6 +165,7 @@ const AddEstimate = () => {
               style={{  }}
               label="Task description"
               value={task.text}
+              multiline={true}
               onChangeText={(text) => updateTask(task.id, 'text', text)}
               backgroundColor="#f5f5f5"
             />
