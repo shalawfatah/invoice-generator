@@ -1,41 +1,40 @@
-import React, { useState } from 'react'
-import { View } from 'react-native'
-import { TextInput } from 'react-native-paper';
-import InvoiceBtn from '../components/general/Button';
-import { useNavigation } from '@react-navigation/native';
-import { supabase } from '../lib/supabase';
-import { useAtom } from 'jotai';
-import { sessionAtom } from '../lib/store';
+import React, { useState } from "react";
+import { View } from "react-native";
+import { TextInput } from "react-native-paper";
+import InvoiceBtn from "../components/general/Button";
+import { useNavigation } from "@react-navigation/native";
+import { supabase } from "../lib/supabase";
+import { useAtom } from "jotai";
+import { sessionAtom } from "../lib/store";
 
-const EditProfile = ({route}) => {
+const EditProfile = () => {
   const [session] = useAtom(sessionAtom);
-  const {user} = route.params;
-  const [company, setCompany] = useState('');
-  const [address, setAddress] = useState('');
+  const [company, setCompany] = useState("");
+  const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
-  const [reload, setReload] = useState(false)
+  const [reload, setReload] = useState(false);
 
-  const updateUser = async() => {
-    setReload(true)
-    if(session !== null) {
+  const updateUser = async () => {
+    setReload(true);
+    if (session !== null) {
       const { data, error } = await supabase.auth.updateUser({
-        data: { company, address }
-      })
-      if(error) {
-        console.log(error)
-        setReload(false)
+        data: { company, address },
+      });
+      if (error) {
+        console.log(error);
+        setReload(false);
       } else {
-        setReload(false)
-        navigation.navigate('Account')
+        setReload(false);
+        navigation.navigate("Account");
       }
     }
-  }
+  };
 
   return (
     <View className="bg-white p-2">
       <View>
-      <TextInput
+        <TextInput
           mode={"outlined"}
           label={"Company Name"}
           placeholder={"Write your compmany name"}
@@ -44,11 +43,11 @@ const EditProfile = ({route}) => {
           disabled={loading}
           className="w-full my-2"
           outlineColor="#81F3FA"
-          theme={{ colors: { onSurfaceVariant: '#D3D3D3'} }}
-          />
+          theme={{ colors: { onSurfaceVariant: "#D3D3D3" } }}
+        />
       </View>
       <View>
-      <TextInput
+        <TextInput
           mode={"outlined"}
           label={"Company Address"}
           placeholder={"Write your compmany address"}
@@ -57,23 +56,22 @@ const EditProfile = ({route}) => {
           disabled={loading}
           className="w-full my-2"
           outlineColor="#81F3FA"
-          theme={{ colors: { onSurfaceVariant: '#D3D3D3'} }}
-          />
+          theme={{ colors: { onSurfaceVariant: "#D3D3D3" } }}
+        />
       </View>
       <View>
-        <InvoiceBtn  
-            textColor='#FFF' 
-            icon="person-circle-outline" 
-            classes="my-2" 
-            text="Sign Up" 
-            duty={updateUser}
-            loading={reload}
-          />
+        <InvoiceBtn
+          textColor="#FFF"
+          icon="person-circle-outline"
+          classes="my-2"
+          text="Sign Up"
+          duty={updateUser}
+          loading={reload}
+        />
       </View>
-      <View >
+      <View></View>
     </View>
-    </View>
-  )
-}
+  );
+};
 
-export default EditProfile
+export default EditProfile;
